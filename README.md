@@ -1,3 +1,3 @@
 # TestfUIness
 
-Proyecto para la gestión de los trabajos relacionados con la generación y reparación de los test de interfaz de usuario en dispositivos Android
+Project for the management of work related to the generation and reparison of user interface tests on Android devices
