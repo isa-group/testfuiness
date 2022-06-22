@@ -1,0 +1,21 @@
+com.google.android.keep
+-1
+17
+BUTTON, UiSelector[TEXT=title], 
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/menu_reminder], 
+BUTTON, UiSelector[DESCRIPTION=Date - Currently selected],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/text], Tomorrow
+BUTTON, UiSelector[DESCRIPTION=Time - Currently selected],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/reminder_time_custom], Pick a time…
+BUTTON, UiSelector[DESCRIPTION=12], 12
+BUTTON, UiSelector[DESCRIPTION=30], 30
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
+BUTTON, UiSelector[DESCRIPTION=Recurrence - Currently selected - Does not repeat],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/text], Weekly
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/radio_location], Place
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/location_reminder_edit_text], Edit location
+TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/places_autocomplete_search_bar], Avenida Reina Mercedes
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/places_autocomplete_prediction_secondary_text], Seville, Spain
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/save], Save
+BUTTON, UiSelector[DESCRIPTION=Open navigation drawer], Open navigation drawer
+finalState.contains(testActions[1].value)

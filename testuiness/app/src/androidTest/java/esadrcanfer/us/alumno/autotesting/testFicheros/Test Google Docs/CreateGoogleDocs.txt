@@ -1,0 +1,8 @@
+com.google.android.apps.docs.editors.docs
+-1
+4
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.docs:id/fab_base_button], 
+BUTTON, UiSelector[TEXT=New document], 
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.docs:id/action_mode_close_button], 
+BUTTON, UiSelector[DESCRIPTION=Navigate up],
+finalState.contains(testActions[1].value)

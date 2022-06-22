@@ -1,0 +1,9 @@
+com.android.chrome
+-1
+5
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/search_box_text], Search or type web address
+TEXT, UiSelector[RESOURCE_ID=com.android.chrome:id/url_bar], Android Studio
+BUTTON, UiSelector[TEXT=Android Studio],
+SCROLL_DOWN, UiSelector[TEXT=Android Studio - Google Search], toElementByText=Android Studio download
+BUTTON, UiSelector[TEXT=Android › developer], Android
+finalState.contains(testActions[1].value)

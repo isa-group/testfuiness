@@ -1,0 +1,12 @@
+com.google.android.calendar
+-1
+8
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/date_picker_text_view],
+BUTTON, UiSelector[DESCRIPTION=30],
+BUTTON, UiSelector[DESCRIPTION=Show Calendar],
+BUTTON, UiSelector[TEXT=Schedule],
+BUTTON, UiSelector[DESCRIPTION=Prueba ficheros],
+BUTTON, UiSelector[DESCRIPTION=More options],
+BUTTON, UiSelector[TEXT=Delete],
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], Delete
+finalState.size() < initialState.size()

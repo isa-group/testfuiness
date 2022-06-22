@@ -1,0 +1,15 @@
+com.google.android.youtube
+-1
+11
+BUTTON, UiSelector[DESCRIPTION=Explore],
+BUTTON, UiSelector[DESCRIPTION=Trending],
+BUTTON, UiSelector[TEXT=Gaming],
+BUTTON, UiSelector[TEXT=PRESS START],
+BUTTON, UiSelector[TEXT=WATCH],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.youtube:id/watch_player],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.youtube:id/player_control_play_pause_replay_button], Pause video
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.youtube:id/player_share_button], Share
+BUTTON, UiSelector[TEXT=Messages],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/name], Gonzalo Aguilar Hermoso
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/message_indicator], SMS
+finalState.contains(testActions[1].value)

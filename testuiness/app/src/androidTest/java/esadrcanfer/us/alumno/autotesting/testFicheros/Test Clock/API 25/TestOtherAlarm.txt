@@ -1,0 +1,15 @@
+com.android.deskclock
+-1
+11
+BUTTON, UiSelector[DESCRIPTION=Alarm],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/arrow],
+BUTTON, UiSelector[DESCRIPTION=Sunday],
+BUTTON, UiSelector[DESCRIPTION=Monday],
+BUTTON, UiSelector[DESCRIPTION=Tuesday],
+BUTTON, UiSelector[DESCRIPTION=Wednesday],
+BUTTON, UiSelector[DESCRIPTION=Thursday],
+BUTTON, UiSelector[DESCRIPTION=Friday],
+BUTTON, UiSelector[DESCRIPTION=Saturday],
+CHECKBOX, UiSelector[RESOURCE_ID=com.android.deskclock:id/repeat_onoff],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/arrow],
+finalState.contains(testActions[1].value)

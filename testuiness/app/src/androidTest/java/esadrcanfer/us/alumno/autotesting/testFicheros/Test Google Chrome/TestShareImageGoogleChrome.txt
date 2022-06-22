@@ -1,0 +1,13 @@
+com.android.chrome
+-1
+9
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/search_box_text], Search or type web address
+TEXT, UiSelector[RESOURCE_ID=com.android.chrome:id/url_bar], SCRUM
+BUTTON, UiSelector[TEXT=SCRUM],
+BUTTON, UiSelector[TEXT=IMAGES],
+BUTTON, UiSelector[TEXT=What is Scrum?],
+BUTTON, UiSelector[TEXT=Share],
+BUTTON, UiSelector[TEXT=Save to Drive],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/upload_edittext_document_title], SCRUM 2.0
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], Save
+finalState.contains(testActions[1].value)

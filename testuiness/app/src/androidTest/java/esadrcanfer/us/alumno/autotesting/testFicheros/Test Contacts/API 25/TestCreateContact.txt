@@ -1,0 +1,13 @@
+com.android.contacts
+-1
+9
+BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/floating_action_button],
+BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/expansion_view],
+TEXT, UiSelector[TEXT=First name], Gonzalo
+TEXT, UiSelector[TEXT=Middle name], Aguilar
+TEXT, UiSelector[TEXT=Last name], Hermoso
+BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/expansion_view],
+TEXT, UiSelector[TEXT=Phone], 654123987
+TEXT, UiSelector[TEXT=Email], automator@gmail.com
+BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/menu_save], Save
+finalState.contains(testActions[1].value)

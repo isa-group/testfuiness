@@ -1,0 +1,12 @@
+com.google.android.apps.maps
+-1
+8
+BUTTON, UiSelector[TEXT=Search here],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.maps:id/search_omnibox_edit_text], Avenida de la Reina Mercedes
+BUTTON, UiSelector[TEXT=Seville, Spain],
+BUTTON, UiSelector[TEXT=Share],
+BUTTON, UiSelector[TEXT=Messages],
+BUTTON, UiSelector[TEXT=Continue],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/name], 654123987
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/send_message_button_icon],
+finalState.contains(testActions[1].value)

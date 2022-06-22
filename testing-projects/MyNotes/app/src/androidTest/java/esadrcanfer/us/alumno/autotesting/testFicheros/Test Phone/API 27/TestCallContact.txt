@@ -1,0 +1,9 @@
+com.google.android.dialer
+-1
+5
+BUTTON, UiSelector[DESCRIPTION=Contacts tab.],
+BUTTON, UiSelector[TEXT=Gonzalo Aguilar Hermoso],
+BUTTON, UiSelector[TEXT=(654) 123-987],
+COUNT_DOWN, UiSelector[RESOURCE_ID=com.google.android.dialer:id/incall_end_call], 20
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.dialer:id/incall_end_call],
+finalState.contains(testActions[1].value)

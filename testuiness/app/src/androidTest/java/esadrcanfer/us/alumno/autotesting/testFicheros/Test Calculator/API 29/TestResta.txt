@@ -1,0 +1,12 @@
+com.google.android.calculator
+-1
+8
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/digit_8],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/dec_point],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/digit_5],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/op_sub],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/digit_3],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/dec_point],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/digit_2],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calculator:id/eq],
+finalState.contains(testActions[1].value)

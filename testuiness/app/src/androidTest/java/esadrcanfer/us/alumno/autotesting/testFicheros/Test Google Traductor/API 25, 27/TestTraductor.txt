@@ -1,0 +1,7 @@
+com.google.android.apps.translate
+-1
+3
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/lyt_home],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/edit_input], Can i go to the toilet please?
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/result_selector],
+finalState.contains(testActions[1].value)

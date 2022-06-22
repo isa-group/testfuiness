@@ -1,0 +1,16 @@
+com.android.deskclock
+-1
+12
+BUTTON, UiSelector[DESCRIPTION=Alarm],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/arrow],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/choose_ringtone],
+SCROLL_DOWN, UiSelector[RESOURCE_ID=android:id/select_dialog_listview], toElementByText=Krypton
+BUTTON, UiSelector[TEXT=Krypton],
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/edit_label],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/custom],
+TEXT, UiSelector[RESOURCE_ID=com.android.deskclock:id/custom], Prueba ficheros test
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
+CHECKBOX, UiSelector[RESOURCE_ID=com.android.deskclock:id/repeat_onoff],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/arrow],
+finalState.contains(testActions[1].value)

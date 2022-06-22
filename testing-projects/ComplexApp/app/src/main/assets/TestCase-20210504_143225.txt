@@ -1,0 +1,6 @@
+esadrcanfer.us.complexapp
+-1
+2
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.complexapp:id/button5], Botón 5
+CHECKBOX, UiSelector[RESOURCE_ID=esadrcanfer.us.complexapp:id/checkBox3], CheckBox3
+finalState.contains("CheckBox3")
