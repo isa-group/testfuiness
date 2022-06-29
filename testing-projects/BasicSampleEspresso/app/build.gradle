@@ -109,4 +109,5 @@ dependencies {
 
     testImplementation project(":parserLibrary4")
     androidTestImplementation project(":readerLibrary2")
+    androidTestImplementation project(path: ':app')
 }
