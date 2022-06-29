@@ -1,0 +1,6 @@
+com.example.android.testing.espresso.BasicSample
+-1
+2
+TEXT, UiSelector[RESOURCE_ID=com.example.android.testing.espresso.BasicSample:id/editTextUserInput], Texto cambiado
+BUTTON, UiSelector[RESOURCE_ID=com.example.android.testing.espresso.BasicSample:id/changeTextBt], Change text
+finalState.contains("Texto cambiado")

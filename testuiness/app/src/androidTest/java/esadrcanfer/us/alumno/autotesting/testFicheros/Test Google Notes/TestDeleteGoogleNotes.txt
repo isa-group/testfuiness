@@ -1,0 +1,7 @@
+com.google.android.keep
+-1
+3
+BUTTON, UiSelector[TEXT=title],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/bs_action_button], 
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/menu_text], Delete
+finalState.size() < initialState.size()

@@ -1,0 +1,10 @@
+com.google.android.apps.messaging
+-1
+6
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/start_new_conversation_button], Start chat
+BUTTON, UiSelector[TEXT=Gonzalo Aguilar Hermoso],
+BUTTON, UiSelector[TEXT=654123987],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/emoji_gallery_button],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/emoji_image],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/send_message_button_icon],
+finalState.contains(testActions[1].value)

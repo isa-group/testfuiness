@@ -1,0 +1,8 @@
+com.google.android.gm
+-1
+4
+BUTTON, UiSelector[DESCRIPTION=Open navigation drawer],
+BUTTON, UiSelector[TEXT=Sent], Sent
+BUTTON, UiSelector[TEXT=me], me
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/delete],
+finalState.contains(testActions[1].value)

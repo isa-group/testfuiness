@@ -1,0 +1,7 @@
+com.google.android.dialer
+-1
+3
+BUTTON, UiSelector[TEXT=Favorites],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.dialer:id/contact_tile_secondary_button],
+BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/menu_star],
+finalState.contains(testActions[1].value)
