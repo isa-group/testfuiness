@@ -23,4 +23,10 @@ public class ReaderLibraryInstrumentedTests {
         ReadTestCase read = new ReadTestCase();
         read.read("TestCase-20210504_142939", true);
     }
+
+    @Test
+    public void changeTextAndChangeActivityTestPrueba() throws UiObjectNotFoundException, IOException {
+        ReadTestCase read = new ReadTestCase();
+        read.read("TestCase-20220702_115920", true);
+    }
 }

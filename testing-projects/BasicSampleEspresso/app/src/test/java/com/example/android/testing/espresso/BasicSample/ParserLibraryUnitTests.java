@@ -18,4 +18,10 @@ public class ParserLibraryUnitTests {
         TextualUITestGenerator parse = new TextualUITestGenerator();
         parse.textualUITestGenerator("src\\androidTest\\java\\com\\example\\android\\testing\\espresso\\BasicSample\\MainActivityTest2.java", BuildConfig.APPLICATION_ID);
     }
+
+    @Test
+    public void changeTextAndChangeActivityTestPrueba() throws IOException {
+        TextualUITestGenerator parse = new TextualUITestGenerator();
+        parse.textualUITestGenerator("src/androidTest/java/com/example/android/testing/espresso/BasicSample/MainActivityTestPrueba.java", BuildConfig.APPLICATION_ID);
+    }
 }
