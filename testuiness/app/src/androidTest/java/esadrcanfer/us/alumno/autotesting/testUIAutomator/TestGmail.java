@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -77,7 +78,7 @@ public class TestGmail {
         email.clickAndWaitForNewWindow();
 
         UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-        user.setText("zalo.agui3@gmail.com");
+        user.setText("yalejandro9@gmail.com");
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
         subject.setText("UI Automator");
@@ -92,6 +93,7 @@ public class TestGmail {
     }
 
     @Test
+    // MODIFIED
     public void testEditDraft() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
@@ -111,36 +113,42 @@ public class TestGmail {
         UiObject drafts = mDevice.findObject(new UiSelector().text("Drafts"));
         drafts.clickAndWaitForNewWindow();
 
-        //UiObject email = mDevice.findObject(new UiSelector().descriptionStartsWith(" me, UI Automator, Test probando aplicación de Gmail"));
-        UiObject email = mDevice.findObject(new UiSelector().text("Draft"));
-        email.clickAndWaitForNewWindow();
+        try {
+            //UiObject email = mDevice.findObject(new UiSelector().descriptionStartsWith(" me, UI Automator, Test probando aplicación de Gmail"));
+            UiObject email = mDevice.findObject(new UiSelector().text("Draft"));
+            email.clickAndWaitForNewWindow();
 
-        UiObject edit = mDevice.findObject(new UiSelector().description("Edit"));
-        edit.clickAndWaitForNewWindow();
+            UiObject edit = mDevice.findObject(new UiSelector().description("Edit"));
+            edit.clickAndWaitForNewWindow();
 
-        UiObject text = mDevice.findObject(new UiSelector().description("Attach file"));
-        text.clickAndWaitForNewWindow();
+            UiObject text = mDevice.findObject(new UiSelector().description("Attach file"));
+            text.clickAndWaitForNewWindow();
 
-        UiObject attachment = mDevice.findObject(new UiSelector().text("Attach file"));
-        attachment.clickAndWaitForNewWindow();
+            UiObject attachment = mDevice.findObject(new UiSelector().text("Attach file"));
+            attachment.clickAndWaitForNewWindow();
 
-        UiObject root = mDevice.findObject(new UiSelector().description("Show roots"));
-        root.clickAndWaitForNewWindow();
+            UiObject root = mDevice.findObject(new UiSelector().description("Show roots"));
+            root.clickAndWaitForNewWindow();
 
-        UiObject drive = mDevice.findObject(new UiSelector().text("Drive"));
-        drive.clickAndWaitForNewWindow();
+            UiObject drive = mDevice.findObject(new UiSelector().text("Drive"));
+            drive.clickAndWaitForNewWindow();
 
-        UiObject drive2 = mDevice.findObject(new UiSelector().text("My Drive"));
-        drive2.clickAndWaitForNewWindow();
+            UiObject drive2 = mDevice.findObject(new UiSelector().text("My Drive"));
+            drive2.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(false));
-        app.scrollIntoView(new UiSelector().text("SCRUM.png"));
+            UiScrollable app = new UiScrollable(new UiSelector().scrollable(false));
+            app.scrollIntoView(new UiSelector().text("SCRUM.png"));
 
-        UiObject file = mDevice.findObject(new UiSelector().text("SCRUM.png"));
-        file.clickAndWaitForNewWindow();
+            UiObject file = mDevice.findObject(new UiSelector().text("SCRUM.png"));
+            file.clickAndWaitForNewWindow();
 
-        UiObject save = mDevice.findObject(new UiSelector().description("Navigate up"));
-        save.clickAndWaitForNewWindow();
+            UiObject save = mDevice.findObject(new UiSelector().description("Navigate up"));
+            save.clickAndWaitForNewWindow();
+
+        }catch(Exception e){
+            UiObject noDrafts = mDevice.findObject(new UiSelector().text("Nothing in Drafts"));
+            assertNotNull(noDrafts);
+        }
     }
 
     @Test
@@ -173,6 +181,7 @@ public class TestGmail {
     }
 
     @Test
+    // MODIFIED
     public void testEmptyTrash() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
@@ -195,13 +204,18 @@ public class TestGmail {
         UiObject sent = mDevice.findObject(new UiSelector().text("Trash"));
         sent.clickAndWaitForNewWindow();
 
-        // UiObject trash = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/empty_trash_spam_action")); // API 25
-        UiObject trash = mDevice.findObject(new UiSelector().text("Empty trash now"));
-        trash.clickAndWaitForNewWindow();
+        try {
+            // UiObject trash = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/empty_trash_spam_action")); // API 25
+            UiObject trash = mDevice.findObject(new UiSelector().text("Empty trash now"));
+            trash.clickAndWaitForNewWindow();
 
-        // UiObject confirm = mDevice.findObject(new UiSelector().resourceId("android:id/button1")); // API 25
-        UiObject confirm = mDevice.findObject(new UiSelector().text("Empty"));
-        confirm.clickAndWaitForNewWindow();
+            // UiObject confirm = mDevice.findObject(new UiSelector().resourceId("android:id/button1")); // API 25
+            UiObject confirm = mDevice.findObject(new UiSelector().text("Empty"));
+            confirm.clickAndWaitForNewWindow();
+        }catch (Exception e){
+            UiObject emptyTrash = mDevice.findObject(new UiSelector().text("Nothing in Trash"));
+            assertNotNull(emptyTrash);
+        }
     }
 
 }

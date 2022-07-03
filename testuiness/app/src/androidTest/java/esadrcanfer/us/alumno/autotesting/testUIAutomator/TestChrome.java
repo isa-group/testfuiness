@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -129,6 +130,7 @@ public class TestChrome {
     }
 
     @Test
+    //MODIFIED
     public void testClearHistoryGoogleChrome() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
@@ -145,16 +147,18 @@ public class TestChrome {
         UiObject history = mDevice.findObject(new UiSelector().text("History"));
         history.click();
 
-        UiObject clear = mDevice.findObject(new UiSelector().text("Clear browsing data…"));
-        clear.click();
+        try {
+            UiObject clear = mDevice.findObject(new UiSelector().text("CLEAR BROWSING DATA…"));
+            clear.click();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("Clear data"));
-        button.click();
+            UiObject button = mDevice.findObject(new UiSelector().text("CLEAR DATA"));
+            button.click();
 
-        // UiObject confirm = mDevice.findObject(new UiSelector().text("Clear"));
-        // confirm.click();
-
-        UiObject confirm = mDevice.findObject(new UiSelector().description("Close"));
-        confirm.click();
+            UiObject confirm = mDevice.findObject(new UiSelector().text("CLEAR"));
+            confirm.click();
+        }catch(Exception e){
+            UiObject noHistory = mDevice.findObject(new UiSelector().text("No history here"));
+            assertNotNull(noHistory);
+        }
     }
 }

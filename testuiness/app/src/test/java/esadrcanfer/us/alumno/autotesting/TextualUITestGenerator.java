@@ -26,7 +26,7 @@ import java.util.Optional;
 
 public class TextualUITestGenerator {
 
-    private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\SimpleTest.java";
+    private static final String FILE_PATH = "src/androidTest/java/esadrcanfer/us/alumno/autotesting/tests/SimpleTest.java";
 
     WriterUtil writerUtil = new WriterUtil();
 

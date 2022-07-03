@@ -61,6 +61,7 @@ public class TestContacts {
     }
 
     @Test
+    //MODIFIED
     public void testCreateContact() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
@@ -92,9 +93,6 @@ public class TestContacts {
         lastName.setText("Serna");    // Hermoso
 
         expansion.click();
-
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
-        appViews.scrollIntoView(new UiSelector().text("Phone"));
 
         UiObject phone = mDevice.findObject(new UiSelector().text("Phone"));
         phone.setText("654123987");
@@ -312,6 +310,7 @@ public class TestContacts {
     }
 
     @Test
+    //MODIFIED
     public void testAddFavourites() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
@@ -326,7 +325,7 @@ public class TestContacts {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject contact = mDevice.findObject(new UiSelector().description("Gonzalo Aguilar Hermoso"));
+        UiObject contact = mDevice.findObject(new UiSelector().description("Pedro Martín Chávez"));
         contact.click();
 
         // UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star"));
@@ -352,7 +351,7 @@ public class TestContacts {
         // UiObject favorites = mDevice.findObject(new UiSelector().text("FAVORITES"));
         // favorites.click();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Gonzalo Aguilar Hermoso"));
+        UiObject contact = mDevice.findObject(new UiSelector().text("Pedro Martín Chávez"));
         contact.click();
 
         // UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star"));

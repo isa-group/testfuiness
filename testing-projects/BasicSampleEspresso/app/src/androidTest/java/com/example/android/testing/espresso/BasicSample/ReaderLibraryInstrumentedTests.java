@@ -47,7 +47,8 @@ public class ReaderLibraryInstrumentedTests {
     public void changeTextActivityTestPruebaWithRepair() throws UiObjectNotFoundException, IOException{
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("TestCase-20220702_115920_broken.txt", true);
+        //ReadUtil readUtil = new ReadUtil("Download/tests/firstTest.txt", false);
+        ReadUtil readUtil = new ReadUtil("TestCase-20220702_115920_broken.txt", false);
 
         TestCase testCase = readUtil.generateTestCase();
         Log.d("ISA", "Loaded test case from file!");

@@ -78,24 +78,26 @@ public class TestPhone {
         //UiObject button = mDevice.findObject(new UiSelector().description("dial pad")); // API 25
         button.click();
 
+        UiObject numero0 = mDevice.findObject(new UiSelector().text("0"));
         UiObject numero2 = mDevice.findObject(new UiSelector().text("2"));
         UiObject numero3 = mDevice.findObject(new UiSelector().text("3"));
         UiObject numero5 = mDevice.findObject(new UiSelector().text("5"));
         UiObject numero6 = mDevice.findObject(new UiSelector().text("6"));
+        UiObject numero8 = mDevice.findObject(new UiSelector().text("8"));
         UiObject numero9 = mDevice.findObject(new UiSelector().text("9"));
 
         numero6.click();
-        numero9.click();
         numero2.click();
+        numero0.click();
 
-        numero5.click();
-        numero2.click();
-
-        numero5.click();
+        numero8.click();
         numero3.click();
 
+        numero2.click();
         numero5.click();
-        numero5.click();
+
+        numero2.click();
+        numero8.click();
 
         UiObject call = mDevice.findObject(new UiSelector().description("dial"));
         call.clickAndWaitForNewWindow();
@@ -124,10 +126,10 @@ public class TestPhone {
         UiObject button = mDevice.findObject(new UiSelector().text("Contacts")); // API 28, 29
         button.click();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Gonzalo Aguilar Hermoso"));
+        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
         contact.click();
 
-        UiObject call = mDevice.findObject(new UiSelector().text("(654) 123-987"));
+        UiObject call = mDevice.findObject(new UiSelector().text("(620) 832-528"));
         call.click();
 
         UiObject end = mDevice.findObject(new UiSelector().description("End call"));
@@ -182,7 +184,7 @@ public class TestPhone {
         UiObject button = mDevice.findObject(new UiSelector().text("Contacts")); // API 28, 29
         button.click();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Gonzalo Aguilar Hermoso"));
+        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
         contact.click();
 
         UiObject favorite = mDevice.findObject(new UiSelector().description("Add to favorites"));

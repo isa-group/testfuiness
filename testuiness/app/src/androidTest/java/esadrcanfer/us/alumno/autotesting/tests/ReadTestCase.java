@@ -20,7 +20,7 @@ public class ReadTestCase {
     @Test
     public void read() throws UiObjectNotFoundException {
         UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/TestCase-20210112_135747.txt", true);
+        ReadUtil readUtil = new ReadUtil("Download/Test Calculator/API 25, 27, 28/TestDivisión.txt", true);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("TFG","Test case found: "+testCase);
         Log.d("TFG","Runnig it...");

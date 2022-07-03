@@ -33,7 +33,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 public class SimpleTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
     @Test
     public void simpleTest() {
