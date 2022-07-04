@@ -1,0 +1,14 @@
+com.android.chrome
+-1
+10
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/menu_button],
+BUTTON, UiSelector[TEXT=History],
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/clear_browsing_data_button], Clear browsing data…
+BUTTON, UiSelector[TEXT=BASIC],
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/spinner],
+BUTTON, UiSelector[TEXT=All time],
+BUTTON, UiSelector[TEXT=ADVANCED],
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/spinner],
+BUTTON, UiSelector[TEXT=All time],
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/clear_button], Clear data
+finalState.contains(testActions[1].value)

@@ -1,0 +1,9 @@
+com.android.vending
+-1
+5
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/main_nav_item],
+BUTTON, UiSelector[TEXT=My apps & games],
+BUTTON, UiSelector[TEXT=Library],
+BUTTON, UiSelector[TEXT=Contacts],
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/right_button], Install
+finalState.contains(testActions[1].value)

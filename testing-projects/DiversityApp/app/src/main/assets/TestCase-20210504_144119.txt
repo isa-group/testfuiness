@@ -1,0 +1,10 @@
+esadrcanfer.us.diversityapp
+-1
+6
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/button5], Botón 5
+TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/editText], Texto 3
+RADIO_BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/radioButton3], RadioButton3
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/button13], Send
+CHECKBOX, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/checkBox], CheckBox
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/button14], Button
+finalState.contains("Ha marcado el checkbox y pulsado el botón")

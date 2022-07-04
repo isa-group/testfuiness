@@ -1,0 +1,7 @@
+esadrcanfer.us.complexapp
+-1
+3
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.complexapp:id/button5], Botón 5
+CHECKBOX, UiSelector[RESOURCE_ID=esadrcanfer.us.complexapp:id/checkBox1], CheckBox1
+CHECKBOX, UiSelector[RESOURCE_ID=esadrcanfer.us.complexapp:id/checkBox2], CheckBox2
+finalState.contains("Seleccionado CheckBox 2")

@@ -1,0 +1,15 @@
+com.google.android.deskclock
+-1
+11
+BUTTON, UiSelector[TEXT=Timer],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/timer_setup_digit_3],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/timer_setup_digit_7],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/timer_setup_digit_2],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/timer_setup_digit_8],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/timer_setup_digit_6],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/timer_setup_digit_1],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/fab],
+COUNT_DOWN, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/fab],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/fab],
+BUTTON, UiSelector[DESCRIPTION=Delete],
+finalState.contains(testActions[1].value)

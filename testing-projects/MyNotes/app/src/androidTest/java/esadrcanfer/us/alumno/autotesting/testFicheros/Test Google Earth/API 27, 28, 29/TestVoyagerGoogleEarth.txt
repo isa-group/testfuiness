@@ -1,0 +1,9 @@
+com.google.earth
+-1
+5
+BUTTON, UiSelector[DESCRIPTION=Voyager],
+BUTTON, UiSelector[DESCRIPTION=Nature],
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.earth:id/earth_feed_grid], toElementByText=Visit Yellowstone National Park
+BUTTON, UiSelector[TEXT=Visit Yellowstone National Park],
+BUTTON, UiSelector[TEXT=LET'S GO],
+finalState.contains(testActions[1].value)

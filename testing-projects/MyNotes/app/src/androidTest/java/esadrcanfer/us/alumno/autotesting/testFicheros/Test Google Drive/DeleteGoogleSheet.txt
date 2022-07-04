@@ -1,0 +1,9 @@
+com.google.android.apps.docs
+-1
+5
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/drives_pager], toElementByText=Trabajo Fin de Grado 2.0
+BUTTON, UiSelector[TEXT=Trabajo Fin de Grado 2.0], Trabajo Fin de Grado 2.0
+BUTTON, UiSelector[DESCRIPTION=More actions for Untitled spreadsheet],
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/menu_recycler_view], Elements=10
+BUTTON, UiSelector[TEXT=Remove], Remove
+finalState.size() < initialState.size()

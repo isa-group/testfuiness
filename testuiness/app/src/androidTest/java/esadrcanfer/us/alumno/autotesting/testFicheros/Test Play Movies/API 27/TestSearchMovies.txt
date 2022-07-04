@@ -1,0 +1,8 @@
+com.google.android.videos
+-1
+4
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/com.google.android.videos:id/menu_search], 
+TEXT, UiSelector[RESOURCE_ID=com.google.android.videos:id/search_box_text_input], Megalodon
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/title],
+BUTTON, UiSelector[TEXT=The Meg],
+finalState.contains(testActions[1].value)

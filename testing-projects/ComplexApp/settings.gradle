@@ -1,0 +1,6 @@
+include ':parserLibrary3'
+include ':readerLibrary2'
+include ':parserLibrary2'
+include ':readerLibrary'
+include ':parserLibrary'
+include ':app'

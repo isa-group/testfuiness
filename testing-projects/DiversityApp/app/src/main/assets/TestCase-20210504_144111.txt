@@ -1,0 +1,8 @@
+esadrcanfer.us.diversityapp
+-1
+4
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/button5], Botón 5
+TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/editText], Texto 1
+RADIO_BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/radioButton], RadioButton1
+RADIO_BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.diversityapp:id/radioButton3], RadioButton3
+finalState.contains("RadioButton3")
