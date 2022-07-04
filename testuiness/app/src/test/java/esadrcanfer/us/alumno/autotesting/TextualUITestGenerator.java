@@ -35,6 +35,7 @@ public class TextualUITestGenerator {
 
     @Test
     public void textualUITestGenerator() throws FileNotFoundException {
+        System.out.println(writerUtil.getLogFile());
         // Parser configuration:
         TypeSolver typeSolver = new CombinedTypeSolver();
         JavaSymbolSolver symbolSolver = new JavaSymbolSolver(typeSolver);

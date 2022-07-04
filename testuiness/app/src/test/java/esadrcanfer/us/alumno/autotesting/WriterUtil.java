@@ -18,7 +18,14 @@ public class WriterUtil {
 	public WriterUtil() {
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		String filename = "TestCase-" + timeLog+".txt";
-		this.logFile = new File(filename);
+		File testFile = new File("src/main/assets/tests/", filename+timeLog+".txt");
+		testFile.getParentFile().mkdirs();
+		try {
+			System.out.println(testFile.createNewFile());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		this.logFile = testFile;
 	}
 
 	public File getLogFile() {
