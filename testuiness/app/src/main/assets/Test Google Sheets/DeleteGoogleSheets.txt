@@ -1,0 +1,7 @@
+com.google.android.apps.docs.editors.sheets
+-1
+3
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.sheets:id/more_actions_button], More actions
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.sheets:id/menu_recycler_view], Elements=10
+BUTTON, UiSelector[TEXT=Remove], Remove
+finalState.size() < initialState.size()

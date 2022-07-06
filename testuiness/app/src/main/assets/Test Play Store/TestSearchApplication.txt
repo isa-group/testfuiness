@@ -1,0 +1,8 @@
+com.android.vending
+-1
+4
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/search_bar_hint],
+TEXT, UiSelector[RESOURCE_ID=com.android.vending:id/search_bar_text_input], Google Classroom
+BUTTON, UiSelector[TEXT=Google Classroom],
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/right_button], Install
+finalState.contains(testActions[1].value)
