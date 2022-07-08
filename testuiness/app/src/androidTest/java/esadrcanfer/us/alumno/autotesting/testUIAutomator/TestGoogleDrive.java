@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleDrive {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestGoogleDrive {
     }
 
     @Test
-    public void testCreateFolder() throws UiObjectNotFoundException {
+    public void test01CreateFolder() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -63,21 +66,21 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/branded_fab"));
+        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/extended_fab"));
         button.click();
 
         UiObject folder = mDevice.findObject(new UiSelector().description("Folder"));
         folder.click();
 
         UiObject text = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/edit_text"));
-        text.setText("Trabajo Fin de Grado 3.0");
+        text.setText("UI Automator Folder");
 
         UiObject create = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/positive_button"));
         create.click();
     }
 
     @Test
-    public void testDeleteFolder() throws UiObjectNotFoundException {
+    public void test02DeleteFolder() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -91,9 +94,9 @@ public class TestGoogleDrive {
         testingApp.clickAndWaitForNewWindow();
 
         UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
-        scroll.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 3.0"));
+        scroll.scrollIntoView(new UiSelector().text("UI Automator"));
 
-        UiObject folder = mDevice.findObject(new UiSelector().description("More actions for Trabajo Fin de Grado 3.0"));
+        UiObject folder = mDevice.findObject(new UiSelector().description("More actions for UI Automator Folder"));
         folder.click();
 
         UiScrollable scroll2 = new UiScrollable(new UiSelector().scrollable(false));
@@ -101,10 +104,13 @@ public class TestGoogleDrive {
 
         UiObject delete = mDevice.findObject(new UiSelector().text("Remove"));
         delete.click();
+
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.click();
     }
 
     @Test
-    public void testCreateGoogleDoc() throws UiObjectNotFoundException {
+    public void test03CreateGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -118,12 +124,12 @@ public class TestGoogleDrive {
         testingApp.clickAndWaitForNewWindow();
 
         UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
+        app.scrollIntoView(new UiSelector().text("UI Automator Tests"));
 
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
+        UiObject testing = mDevice.findObject(new UiSelector().text("UI Automator Tests"));
         testing.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/branded_fab"));
+        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/extended_fab"));
         button.click();
 
         UiObject document = mDevice.findObject(new UiSelector().description("Google Docs"));
@@ -132,13 +138,13 @@ public class TestGoogleDrive {
         UiObject save = mDevice.findObject(new UiSelector().description("Done"));
         save.click();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().description("Close"));
         close.click();
 
     }
 
     @Test
-    public void testEditGoogleDoc() throws UiObjectNotFoundException {
+    public void test04EditGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -150,12 +156,6 @@ public class TestGoogleDrive {
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
-
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
 
         UiObject option = mDevice.findObject(new UiSelector().description("More actions for Untitled document"));
         option.click();
@@ -167,7 +167,7 @@ public class TestGoogleDrive {
         document.clickAndWaitForNewWindow();
 
         UiObject text = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/edit_text"));
-        text.setText("UI Automator");
+        text.setText("UI Automator New Doc");
 
         UiObject rename = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/positive_button"));
         rename.click();
@@ -175,7 +175,7 @@ public class TestGoogleDrive {
     }
 
     @Test
-    public void testDeleteGoogleDoc() throws UiObjectNotFoundException {
+    public void test05DeleteGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -188,13 +188,7 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
-
-        UiObject option = mDevice.findObject(new UiSelector().description("More actions for UI Automator"));
+        UiObject option = mDevice.findObject(new UiSelector().description("More actions for UI Automator New Doc"));
         option.click();
 
         UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(false));
@@ -203,16 +197,13 @@ public class TestGoogleDrive {
         UiObject document = mDevice.findObject(new UiSelector().text("Remove"));
         document.clickAndWaitForNewWindow();
 
-        // UiObject option = mDevice.findObject(new UiSelector().description("UI Automator, Google Docs"));
-        // option.longClick();
-
-        // UiObject remove = mDevice.findObject(new UiSelector().description("Remove"));
-        //remove.clickAndWaitForNewWindow();
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.click();
 
     }
 
     @Test
-    public void testCreateGoogleSheet() throws UiObjectNotFoundException {
+    public void test06CreateGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -225,26 +216,19 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
-
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/branded_fab"));
+        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/extended_fab"));
         button.click();
 
         UiObject sheet = mDevice.findObject(new UiSelector().description("Google Sheets"));
-        sheet.click();
+        sheet.clickAndWaitForNewWindow();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
-        close.waitUntilGone(20000);
+        UiObject close = mDevice.findObject(new UiSelector().description("Close"));
         close.click();
 
     }
 
     @Test
-    public void testEditGoogleSheet() throws UiObjectNotFoundException {
+    public void test07EditGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -256,12 +240,6 @@ public class TestGoogleDrive {
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
-
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
 
         UiObject option = mDevice.findObject(new UiSelector().description("More actions for Untitled spreadsheet"));
         option.click();
@@ -273,7 +251,7 @@ public class TestGoogleDrive {
         document.clickAndWaitForNewWindow();
 
         UiObject text = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/edit_text"));
-        text.setText("UI Automator");
+        text.setText("UI Automator Sheet");
 
         UiObject rename = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/positive_button"));
         rename.click();
@@ -281,7 +259,7 @@ public class TestGoogleDrive {
     }
 
     @Test
-    public void testDeleteGoogleSheet() throws UiObjectNotFoundException {
+    public void test08DeleteGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -294,22 +272,22 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado"));
+        UiObject option = mDevice.findObject(new UiSelector().description("More actions for UI Automator Sheet"));
+        option.click();
 
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
+        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
+        scroll.scrollToEnd(10);
 
-        UiObject option = mDevice.findObject(new UiSelector().description("UI Automator, Google Sheets"));
-        option.longClick();
-
-        UiObject remove = mDevice.findObject(new UiSelector().description("Remove"));
+        UiObject remove = mDevice.findObject(new UiSelector().text("Remove"));
         remove.clickAndWaitForNewWindow();
+
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.click();
 
     }
 
     @Test
-    public void testCreateGoogleSlide() throws UiObjectNotFoundException {
+    public void test09CreateGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -322,25 +300,19 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
-
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/branded_fab"));
+        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/extended_fab"));
         button.click();
 
         UiObject document = mDevice.findObject(new UiSelector().description("Google Slides"));
         document.clickAndWaitForNewWindow();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().description("Close"));
         close.click();
 
     }
 
     @Test
-    public void testEditGoogleSlide() throws UiObjectNotFoundException {
+    public void test10EditGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -353,23 +325,17 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
-
         UiObject option = mDevice.findObject(new UiSelector().description("More actions for Untitled presentation"));
         option.click();
 
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(false));
+        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
         scroll.scrollToEnd(5);
 
         UiObject document = mDevice.findObject(new UiSelector().text("Rename"));
         document.clickAndWaitForNewWindow();
 
         UiObject text = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/edit_text"));
-        text.setText("UI Automator");
+        text.setText("UI Automator Slide");
 
         UiObject rename = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/positive_button"));
         rename.click();
@@ -377,7 +343,7 @@ public class TestGoogleDrive {
     }
 
     @Test
-    public void testDeleteGoogleSlide() throws UiObjectNotFoundException {
+    public void test11DeleteGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -390,17 +356,16 @@ public class TestGoogleDrive {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Drive"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable app = new UiScrollable(new UiSelector().scrollable(true));
-        app.scrollIntoView(new UiSelector().text("Trabajo Fin de Grado 2.0"));
+        UiObject option = mDevice.findObject(new UiSelector().description("More actions for UI Automator Slide"));
+        option.click();
 
-        UiObject testing = mDevice.findObject(new UiSelector().text("Trabajo Fin de Grado 2.0"));
-        testing.clickAndWaitForNewWindow();
+        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
+        scroll.scrollToEnd(10);
 
-        UiObject option = mDevice.findObject(new UiSelector().description("UI Automator, Google Slides"));
-        option.longClick();
-
-        UiObject remove = mDevice.findObject(new UiSelector().description("Remove"));
+        UiObject remove = mDevice.findObject(new UiSelector().text("Remove"));
         remove.clickAndWaitForNewWindow();
 
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.click();
     }
 }

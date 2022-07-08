@@ -13,8 +13,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestContacts {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -156,6 +159,8 @@ public class TestContacts {
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
         testingApp.clickAndWaitForNewWindow();
+
+        mDevice.pressBack();
 
         UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/floating_action_button"));
         button.clickAndWaitForNewWindow();
@@ -296,6 +301,8 @@ public class TestContacts {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
         testingApp.clickAndWaitForNewWindow();
 
+        mDevice.pressBack();
+
         UiObject contact = mDevice.findObject(new UiSelector().text("Juan Parra Serna"));
         contact.click();
 
@@ -310,8 +317,7 @@ public class TestContacts {
     }
 
     @Test
-    //MODIFIED
-    public void testAddFavourites() throws UiObjectNotFoundException {
+    public void testEndAddFavourites() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -334,7 +340,7 @@ public class TestContacts {
     }
 
     @Test
-    public void testDeleteFavourites() throws UiObjectNotFoundException {
+    public void testEndDeleteFavourites() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -347,6 +353,8 @@ public class TestContacts {
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
         testingApp.clickAndWaitForNewWindow();
+
+        mDevice.pressBack();
 
         // UiObject favorites = mDevice.findObject(new UiSelector().text("FAVORITES"));
         // favorites.click();

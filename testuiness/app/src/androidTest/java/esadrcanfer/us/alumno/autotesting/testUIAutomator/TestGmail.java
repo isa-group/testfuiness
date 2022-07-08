@@ -13,8 +13,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -24,6 +26,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGmail {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -61,7 +64,7 @@ public class TestGmail {
     }
 
     @Test
-    public void testSendEmail() throws UiObjectNotFoundException {
+    public void test1SendEmail() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -77,8 +80,17 @@ public class TestGmail {
         UiObject email = mDevice.findObject(new UiSelector().description("Compose"));
         email.clickAndWaitForNewWindow();
 
-        UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-        user.setText("yalejandro9@gmail.com");
+        try {
+            UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
+            user.setText("yalejandro9@gmail.com");
+        }catch(Exception e){
+
+            UiObject okButton = mDevice.findObject(new UiSelector().text("OK"));
+            okButton.click();
+
+            UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
+            user.setText("yalejandro9@gmail.com");
+        }
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
         subject.setText("UI Automator");
@@ -93,8 +105,7 @@ public class TestGmail {
     }
 
     @Test
-    // MODIFIED
-    public void testEditDraft() throws UiObjectNotFoundException {
+    public void test2EditDraft() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -152,7 +163,7 @@ public class TestGmail {
     }
 
     @Test
-    public void testDeleteEmail() throws UiObjectNotFoundException {
+    public void test3DeleteEmail() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -173,7 +184,7 @@ public class TestGmail {
 
         // UiObject body = mDevice.findObject(new UiSelector().text("me"));
         // UiObject body = mDevice.findObject(new UiSelector().descriptionContains("me"));
-        UiObject body = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/viewified_conversation_item_view").index(1));
+        UiObject body = mDevice.findObject(new UiSelector().className("android.view.View").index(0));
         body.click();
 
         UiObject delete = mDevice.findObject(new UiSelector().description("Delete"));
@@ -181,8 +192,7 @@ public class TestGmail {
     }
 
     @Test
-    // MODIFIED
-    public void testEmptyTrash() throws UiObjectNotFoundException {
+    public void test4EmptyTrash() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -204,18 +214,15 @@ public class TestGmail {
         UiObject sent = mDevice.findObject(new UiSelector().text("Trash"));
         sent.clickAndWaitForNewWindow();
 
-        try {
-            // UiObject trash = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/empty_trash_spam_action")); // API 25
-            UiObject trash = mDevice.findObject(new UiSelector().text("Empty trash now"));
-            trash.clickAndWaitForNewWindow();
 
-            // UiObject confirm = mDevice.findObject(new UiSelector().resourceId("android:id/button1")); // API 25
-            UiObject confirm = mDevice.findObject(new UiSelector().text("Empty"));
-            confirm.clickAndWaitForNewWindow();
-        }catch (Exception e){
-            UiObject emptyTrash = mDevice.findObject(new UiSelector().text("Nothing in Trash"));
-            assertNotNull(emptyTrash);
-        }
+        // UiObject trash = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/empty_trash_spam_action")); // API 25
+        UiObject trash = mDevice.findObject(new UiSelector().text("EMPTY TRASH NOW"));
+        trash.clickAndWaitForNewWindow();
+
+        // UiObject confirm = mDevice.findObject(new UiSelector().resourceId("android:id/button1")); // API 25
+        UiObject confirm = mDevice.findObject(new UiSelector().text("EMPTY"));
+        confirm.clickAndWaitForNewWindow();
+
     }
 
 }
