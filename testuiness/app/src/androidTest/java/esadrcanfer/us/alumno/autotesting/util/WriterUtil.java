@@ -28,8 +28,9 @@ public class WriterUtil {
 		File testFile = new File("src/main/assets/tests/", fileName);
 		testFile.getParentFile().mkdirs();
 		try {
-			System.out.println(testFile.createNewFile());
+			testFile.createNewFile();
 		}catch (Exception e){
+			Log.e("ISA", "An error while creating the .txt file has occurred.");
 			e.printStackTrace();
 		}
 		this.logFile = testFile;
@@ -43,8 +44,9 @@ public class WriterUtil {
 		File testFile = new File("src/main/assets/tests/", fileName);
 		testFile.getParentFile().mkdirs();
 		try {
-			System.out.println(testFile.createNewFile());
+			testFile.createNewFile();
 		}catch (Exception e){
+			Log.e("ISA", "An error while creating the .txt file has occurred.");
 			e.printStackTrace();
 		}
 		this.logFile = testFile;
