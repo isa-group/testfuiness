@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestMessage {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestMessage {
     }
 
     @Test
-    public void testSendMessage() throws UiObjectNotFoundException {
+    public void test1SendMessage() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -67,25 +70,21 @@ public class TestMessage {
         button.click();
 
         UiObject number = mDevice.findObject(new UiSelector().text("Type a name, phone number, or email"));
-        number.setText("654123987");
+        number.setText("620832528");
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("654987123 (+1 more)"));
+        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
         contact.click();
 
-        UiObject select = mDevice.findObject(new UiSelector().text("Home - 654987123"));
-        select.click();
-
-        UiObject message = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/compose_message_text"));
+        UiObject message = mDevice.findObject(new UiSelector().text("Text message"));
         message.setText("UI Automator");
 
-        // UiObject send = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/self_send_icon"));
         UiObject send = mDevice.findObject(new UiSelector().text("SMS"));
-        send.clickAndWaitForNewWindow();
+        send.click();
 
     }
 
     @Test
-    public void testSendIcon() throws UiObjectNotFoundException {
+    public void test2SendIcon() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -102,21 +101,15 @@ public class TestMessage {
         button.click();
 
         UiObject number = mDevice.findObject(new UiSelector().text("Type a name, phone number, or email"));
-        number.setText("654123987");
+        number.setText("620832528");
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("654987123 (+1 more)"));
+        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
         contact.click();
 
-        UiObject select = mDevice.findObject(new UiSelector().text("Home - 654987123"));
-        select.click();
-
-        UiObject icon = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_gallery_button"));
-        // UiObject icon = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_keyboard_button"));
-        // UiObject icon = mDevice.findObject(new UiSelector().description("Explore emoji"));
+        UiObject icon = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/attach_media_button"));
         icon.click();
 
-        // UiObject emoji = mDevice.findObject(new UiSelector().className("android.widget.ImageView").index(0));
-        UiObject emoji = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_image"));
+        UiObject emoji = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_text"));
         emoji.click();
 
         UiObject send = mDevice.findObject(new UiSelector().text("SMS"));
@@ -125,7 +118,7 @@ public class TestMessage {
     }
 
     @Test
-    public void testDeleteMessage() throws UiObjectNotFoundException {
+    public void test3DeleteMessage() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -138,7 +131,7 @@ public class TestMessage {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Messages"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("Gonzalo Aguilar Hermoso"));
+        UiObject button = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
         button.click();
 
         UiObject options = mDevice.findObject(new UiSelector().description("More options"));

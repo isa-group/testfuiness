@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestPlayBooks {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,39 +53,7 @@ public class TestPlayBooks {
     }
 
     @Test
-    public void testSearchGender() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
-        appViews.scrollForward();
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Books"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiObject genres = mDevice.findObject(new UiSelector().text("Genres"));
-        genres.click();
-
-        // UiObject science = mDevice.findObject(new UiSelector().text("Science & technology"));
-        UiObject science = mDevice.findObject(new UiSelector().textContains("Science"));
-        science.click();
-
-        UiObject select = mDevice.findObject(new UiSelector().className("android.widget.RelativeLayout").index(2));
-        select.click();
-
-        // UiObject book = mDevice.findObject(new UiSelector().text("Preview"));
-        // UiObject book = mDevice.findObject(new UiSelector().text("Free sample"));
-        UiObject book = mDevice.findObject(new UiSelector().resourceId("com.android.vending:id/left_button"));
-        book.click();
-
-    }
-
-    @Test
-    public void testSearchBook() throws UiObjectNotFoundException {
+    public void test1SearchBook() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -102,24 +73,22 @@ public class TestPlayBooks {
         UiObject search2 = mDevice.findObject(new UiSelector().text("Search Play Books"));
         search2.setText("el archivo de las tormentas");
 
-        UiObject book = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.books:id/replay__listitem__body"));
-        book.click();
+        mDevice.pressEnter();
 
-        UiObject book2 = mDevice.findObject(new UiSelector().textContains("El Archivo de las Tormentas"));
+        UiObject book2 = mDevice.findObject(new UiSelector().text("El Archivo de las Tormentas (Flash Relatos): Una guía de bolsillo para El camino de los reyes y Palabras radiantes"));
         book2.click();
 
     }
 
     @Test
-    public void testDeleteBook() throws UiObjectNotFoundException {
+    public void test2DeleteBook() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollForward();
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Books"));
@@ -128,10 +97,10 @@ public class TestPlayBooks {
         UiObject options = mDevice.findObject(new UiSelector().descriptionContains("Options for"));
         options.click();
 
-        UiObject remove = mDevice.findObject(new UiSelector().text("Remove download"));
+        UiObject remove = mDevice.findObject(new UiSelector().text("Delete from library"));
         remove.click();
 
-        UiObject confirm = mDevice.findObject(new UiSelector().text("Remove"));
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Delete"));
         confirm.click();
 
     }
