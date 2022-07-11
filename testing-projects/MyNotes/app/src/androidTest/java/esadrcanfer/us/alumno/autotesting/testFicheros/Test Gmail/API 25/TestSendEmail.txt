@@ -1,0 +1,9 @@
+com.google.android.gm
+-1
+5
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/compose_button],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/to], zalo.agui3@gmail.com
+TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/subject], Test ficheros
+TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/body], Test probando aplicación de Gmail
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/send],
+finalState.contains(testActions[1].value)

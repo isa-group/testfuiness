@@ -1,0 +1,16 @@
+com.google.android.calendar
+-1
+12
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/date_picker_text_view],
+BUTTON, UiSelector[DESCRIPTION=30],
+BUTTON, UiSelector[DESCRIPTION=Show Calendar],
+BUTTON, UiSelector[TEXT=Schedule],
+BUTTON, UiSelector[DESCRIPTION=Prueba ficheros],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/edit_image],
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.calendar:id/expanded_recycler], Elements=10
+BUTTON, UiSelector[TEXT=Add notification],
+BUTTON, UiSelector[TEXT=Hours],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/done], Done
+BUTTON, UiSelector[DESCRIPTION=Collapse event sheet],
+BUTTON, UiSelector[TEXT=Save],
+finalState.contains(testActions[1].value)

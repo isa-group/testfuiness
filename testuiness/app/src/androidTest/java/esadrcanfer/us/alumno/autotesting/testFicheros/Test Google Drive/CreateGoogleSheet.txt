@@ -1,0 +1,9 @@
+com.google.android.apps.docs
+-1
+5
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/drives_pager], toElementByText=Trabajo Fin de Grado 2.0
+BUTTON, UiSelector[TEXT=Trabajo Fin de Grado 2.0], Trabajo Fin de Grado 2.0
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/branded_fab], 
+BUTTON, UiSelector[TEXT=Google Sheets], Google Sheets 
+BUTTON, UiSelector[DESCRIPTION=Navigate up], 
+finalState.contains(testActions[1].value)

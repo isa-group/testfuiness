@@ -1,0 +1,15 @@
+com.android.deskclock
+-1
+11
+BUTTON, UiSelector[DESCRIPTION=Timer],
+BUTTON, UiSelector[TEXT=3],
+BUTTON, UiSelector[TEXT=7],
+BUTTON, UiSelector[TEXT=2],
+BUTTON, UiSelector[TEXT=8],
+BUTTON, UiSelector[TEXT=6],
+BUTTON, UiSelector[TEXT=1],
+BUTTON, UiSelector[DESCRIPTION=Start],
+COUNT_DOWN, UiSelector[RESOURCE_ID=com.android.deskclock:id/fab],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/fab],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/left_button],
+finalState.contains(testActions[1].value)

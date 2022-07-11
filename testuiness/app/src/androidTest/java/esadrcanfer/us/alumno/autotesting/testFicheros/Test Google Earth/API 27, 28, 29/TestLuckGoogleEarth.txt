@@ -1,0 +1,9 @@
+com.google.earth
+-1
+5
+BUTTON, UiSelector[DESCRIPTION=I'm Feeling Lucky], Luck
+BUTTON, UiSelector[DESCRIPTION=More options], Options
+BUTTON, UiSelector[TEXT=Share link], Share
+BUTTON, UiSelector[TEXT=Keep Notes], Notes
+BUTTON, UiSelector[TEXT=Save], Save
+finalState.contains(testActions[1].value)

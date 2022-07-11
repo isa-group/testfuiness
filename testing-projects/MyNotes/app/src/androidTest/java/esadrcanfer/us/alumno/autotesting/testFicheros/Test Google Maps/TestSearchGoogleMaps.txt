@@ -1,0 +1,7 @@
+com.google.android.apps.maps
+-1
+3
+BUTTON, UiSelector[TEXT=Search here],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.maps:id/search_omnibox_edit_text], Avenida de la Reina Mercedes
+BUTTON, UiSelector[TEXT=Seville, Spain],
+finalState.contains(testActions[1].value)

@@ -1,0 +1,9 @@
+com.android.deskclock
+-1
+5
+BUTTON, UiSelector[DESCRIPTION=Stopwatch],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/fab],
+COUNT_DOWN, UiSelector[RESOURCE_ID=com.android.deskclock:id/fab],
+BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/fab],
+BUTTON, UiSelector[DESCRIPTION=Reset],
+finalState.contains(testActions[1].value)

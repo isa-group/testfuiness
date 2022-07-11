@@ -1,0 +1,12 @@
+com.google.android.apps.maps
+-1
+8
+BUTTON, UiSelector[TEXT=GO],
+BUTTON, UiSelector[TEXT=Your location],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.maps:id/search_omnibox_edit_text], Centro Comercial Lagoh Sevilla
+BUTTON, UiSelector[TEXT=Avenida de Palmas Altas, Seville, Spain],
+BUTTON, UiSelector[TEXT=Choose destination],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.maps:id/search_omnibox_edit_text], Plaza Colón
+BUTTON, UiSelector[TEXT=Plaza de Colón, Madrid, Spain],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.maps:id/start_button], Preview
+finalState.contains(testActions[1].value)

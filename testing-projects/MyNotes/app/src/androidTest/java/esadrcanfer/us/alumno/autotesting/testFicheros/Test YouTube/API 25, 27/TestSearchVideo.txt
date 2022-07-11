@@ -1,0 +1,8 @@
+com.google.android.youtube
+-1
+4
+BUTTON, UiSelector[DESCRIPTION=Search],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.youtube:id/search_edit_text], UI Automator
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.youtube:id/text],
+BUTTON, UiSelector[DESCRIPTION=Appium Tutorial 8],
+finalState.contains(testActions[1].value)

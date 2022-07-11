@@ -1,0 +1,14 @@
+com.google.android.apps.docs.editors.docs
+-1
+10
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.docs:id/more_actions_button], More actions
+BUTTON, UiSelector[TEXT=Send a copy], Send a copy
+BUTTON, UiSelector[TEXT=PDF Document (.pdf)], PDF Document
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], OK
+BUTTON, UiSelector[TEXT=Gmail],
+BUTTON, UiSelector[TEXT=JUST ONCE],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/to], zalo.agui3@gmail.com
+TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/subject], Prueba ficheros test
+TEXT, UiSelector[TEXT=Compose email], Test probando aplicación de Gmail
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/send], Send
+finalState.contains(testActions[1].value)
