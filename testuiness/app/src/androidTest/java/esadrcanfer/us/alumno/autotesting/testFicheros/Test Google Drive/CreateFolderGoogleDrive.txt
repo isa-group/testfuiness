@@ -1,6 +1,7 @@
 com.google.android.apps.docs
 -1
-4
+5
+BUTTON, UiSelector[TEXT=Files],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/extended_fab],
 BUTTON, UiSelector[TEXT=Folder], Folder
 TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text],Test Folder

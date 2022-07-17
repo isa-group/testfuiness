@@ -1,6 +1,7 @@
 com.google.android.apps.docs
 -1
-3
+4
+BUTTON, UiSelector[TEXT=Files],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/extended_fab],
 BUTTON, UiSelector[TEXT=Google Sheets], Google Sheets 
 BUTTON, UiSelector[DESCRIPTION=Close],

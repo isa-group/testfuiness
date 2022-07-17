@@ -65,8 +65,8 @@ public class TestsAuto {
 
         // GOOGLE CALENDAR
 
-        /*return Arrays.asList("Download/Test Google Calendar/TestCreateEvent.txt",
-                            "Download/Test Google Calendar/TestEditEvent.txt",
+        /*return Arrays.asList(//"Download/Test Google Calendar/TestCreateEvent.txt",
+                            //"Download/Test Google Calendar/TestEditEvent.txt",
                             "Download/Test Google Calendar/TestDeleteEvent.txt");*/
 
         // CHROME
@@ -98,11 +98,96 @@ public class TestsAuto {
                             "Download/Test Google Drive/DeleteGoogleSheet.txt",
                             "Download/Test Google Drive/DeleteGoogleSlide.txt");*/
 
+        // GOOGLE EARTH
+
+        /*return Arrays.asList("Download/Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
+                            "Download/Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
+                            "Download/Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
+
         // GOOGLE MAPS
 
-        return Arrays.asList("Download/Test Google Maps/TestJourneyGoogleMaps.txt",
+        /*return Arrays.asList("Download/Test Google Maps/TestJourneyGoogleMaps.txt",
                             "Download/Test Google Maps/TestSearchGoogleMaps.txt",
-                            "Download/Test Google Maps/TestShareLocationGoogleMaps.txt");
+                            "Download/Test Google Maps/TestShareLocationGoogleMaps.txt");*/
+
+        // GOOGLE NOTES
+
+        /*return Arrays.asList("Download/Test Google Notes/TestCreateGoogleNotes.txt",
+                            "Download/Test Google Notes/TestListGoogleNotes.txt",
+                            "Download/Test Google Notes/TestEditGoogleNotes.txt",
+                            "Download/Test Google Notes/TestReminderGoogleNotes.txt",
+                            "Download/Test Google Notes/TestDeleteGoogleNotes.txt");*/
+
+        // GOOGLE SHEETS
+
+        /*return Arrays.asList("Download/Test Google Sheets/CreateGoogleSheets.txt",
+                            "Download/Test Google Sheets/EditGoogleSheets.txt",
+                            "Download/Test Google Sheets/SendCopyGoogleSheets.txt",
+                            "Download/Test Google Sheets/DeleteGoogleSheets.txt");*/
+
+        // GOOGLE SLIDES
+
+        /*return Arrays.asList("Download/Test Google Slides/API 27, 28, 29/CreateGoogleSlides.txt",
+                            "Download/Test Google Slides/API 27, 28, 29/EditGoogleSlides.txt",
+                            "Download/Test Google Slides/API 27, 28, 29/SendCopyGoogleSlides.txt",
+                            "Download/Test Google Slides/API 27, 28, 29/DeleteGoogleSlides.txt");*/
+
+        // GOOGLE TRANSLATE
+
+        /*return Arrays.asList("Download/Test Google Traductor/API 28, 29/TestTraductor.txt",
+                            "Download/Test Google Traductor/API 28, 29/TestCambiarIdioma.txt");*/
+
+        // MESSAGES
+
+        /*return Arrays.asList("Download/Test Messages/TestSendMessage.txt",
+                            "Download/Test Messages/TestSendIcon.txt",
+                            "Download/Test Messages/TestDeleteMessage.txt");*/
+
+        // PHONE
+
+        /*return Arrays.asList("Download/Test Phone/API 28/TestCallContact.txt",
+                            "Download/Test Phone/API 28/TestCallPhone.txt",
+                            "Download/Test Phone/API 28/TestAddFavourites.txt",
+                            "Download/Test Phone/API 28/TestDeleteFavourites.txt",
+                            "Download/Test Phone/API 28/TestClearCallHistory.txt");*/
+
+        // PLAY BOOKS
+
+        /*return Arrays.asList("Download/Test Play Books/TestSearchBook.txt",
+                            "Download/Test Play Books/TestSearchGender.txt",
+                            "Download/Test Play Books/TestDeleteBook.txt");*/
+
+        // PLAY GAMES
+
+        /*return Arrays.asList("Download/Test Play Games/API 28, 29/TestPlayGame.txt",
+                            "Download/Test Play Games/API 28, 29/TestSearchGame.txt");*/
+
+        // PLAY MOVIES
+
+        /*return Arrays.asList("Download/Test Play Movies/TestPlayMovies.txt",
+                            "Download/Test Play Movies/TestSearchMovies.txt");*/
+
+        // PLAY MUSIC
+
+        /*return Arrays.asList("Download/Test Play Music/TestPlayMusic.txt",
+                            "Download/Test Play Music/TestStopMusic.txt",
+                            "Download/Test Play Music/TestNextSong.txt",
+                            "Download/Test Play Music/TestPreviousSong.txt");*/
+
+        // PLAY STORE
+
+        /*return Arrays.asList("Download/Test Play Store/TestSearchApplication.txt",
+                            "Download/Test Play Store/TestInstallApplication.txt",
+                            "Download/Test Play Store/TestUpdateApplication.txt",
+                            "Download/Test Play Store/TestRemoveApplication.txt",
+                            "Download/Test Play Store/TestUninstallApplication.txt");*/
+
+        // YOUTUBE
+
+        /*return Arrays.asList("Download/Test YouTube/API 28, 29/TestSearchVideo.txt",
+                            "Download/Test YouTube/API 28, 29/TestShareVideo.txt",
+                            "Download/Test YouTube/API 28, 29/TestChangeVelocity.txt",
+                            "Download/Test YouTube/API 28, 29/TestChangeQuality.txt");*/
     }
 
     public TestsAuto(String path) {

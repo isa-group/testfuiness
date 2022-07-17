@@ -1,7 +1,9 @@
 com.google.android.apps.docs
 -1
-3
-BUTTON, UiSelector[DESCRIPTION=More actions for Prueba slide],
+5
+BUTTON, UiSelector[TEXT=Files],
+BUTTON, UiSelector[DESCRIPTION=More actions for Slides],
 SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/menu_recycler_view], Elements=10
 BUTTON, UiSelector[TEXT=Remove], Remove
+BUTTON, UiSelector[TEXT=Move to trash],
 finalState.size() < initialState.size()
