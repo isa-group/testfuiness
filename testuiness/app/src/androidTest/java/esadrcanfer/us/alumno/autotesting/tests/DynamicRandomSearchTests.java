@@ -12,7 +12,7 @@ import esadrcanfer.us.alumno.autotesting.objectivefunctions.dynamic.DynamicAppli
 import esadrcanfer.us.alumno.autotesting.objectivefunctions.dynamic.DynamicObjectiveFunction;
 import esadrcanfer.us.alumno.autotesting.objectivefunctions.dynamic.DynamicTestExecutionTimeObjectiveFunction;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 public class DynamicRandomSearchTests {
 

@@ -15,7 +15,7 @@ import esadrcanfer.us.alumno.autotesting.algorithms.RandomReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.RecycleReparation;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 public class Tests {
@@ -173,8 +173,8 @@ public class Tests {
 
         // ReadUtil readUtil = new ReadUtil("Download/Phone/TestCallContact.txt", true);
         // ReadUtil readUtil = new ReadUtil("Download/Phone/TestCallPhone.txt", true);
-        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestAddFavourites.txt", true);
-        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestDeleteFavourites.txt", true);
+        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestAddFavorites.txt", true);
+        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestDeleteFavorites.txt", true);
         // ReadUtil readUtil = new ReadUtil("Download/Phone/TestClearCallHistory.txt", true);
 
         // TEST MESSAGES Funciona 25, 27, 28, 29

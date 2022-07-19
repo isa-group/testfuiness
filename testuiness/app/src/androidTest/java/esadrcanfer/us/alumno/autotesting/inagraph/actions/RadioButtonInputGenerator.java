@@ -17,10 +17,15 @@ public class RadioButtonInputGenerator extends InputGenerator {
 
     public String generateInput(UiObject target) throws UiObjectNotFoundException {
         String value = null;
-        Integer selectedRadioButton = new Random(seed).nextInt(target.getChildCount());
-        UiObject dataValue = target.getChild(new UiSelector().className(RadioButton.class.getName()).index(selectedRadioButton));
-        value = dataValue.getText();
-        dataValue.click();
+        if(target.getChildCount() != 0){
+            Integer selectedRadioButton = new Random(seed).nextInt(target.getChildCount());
+            UiObject dataValue = target.getChild(new UiSelector().className(RadioButton.class.getName()).index(selectedRadioButton));
+            value = dataValue.getText();
+            dataValue.click();
+        }else{
+            value = target.getText();
+            target.click();
+        }
         return value;
     }
 }

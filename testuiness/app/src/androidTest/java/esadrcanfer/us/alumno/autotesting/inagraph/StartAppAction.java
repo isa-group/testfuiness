@@ -2,7 +2,7 @@ package esadrcanfer.us.alumno.autotesting.inagraph;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 
@@ -17,7 +17,7 @@ public class StartAppAction extends Action {
 
     @Override
     public void perform() throws UiObjectNotFoundException {
-        Context context = InstrumentationRegistry.getInstrumentation().getContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(appPackage);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
