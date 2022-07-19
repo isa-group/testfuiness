@@ -173,8 +173,8 @@ public class Tests {
 
         // ReadUtil readUtil = new ReadUtil("Download/Phone/TestCallContact.txt", true);
         // ReadUtil readUtil = new ReadUtil("Download/Phone/TestCallPhone.txt", true);
-        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestAddFavorites.txt", true);
-        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestDeleteFavorites.txt", true);
+        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestAddFavourites.txt", true);
+        // ReadUtil readUtil = new ReadUtil("Download/Phone/TestDeleteFavourites.txt", true);
         // ReadUtil readUtil = new ReadUtil("Download/Phone/TestClearCallHistory.txt", true);
 
         // TEST MESSAGES Funciona 25, 27, 28, 29

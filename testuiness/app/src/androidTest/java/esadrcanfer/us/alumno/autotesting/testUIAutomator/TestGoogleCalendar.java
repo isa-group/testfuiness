@@ -13,8 +13,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleCalendar {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -52,15 +55,7 @@ public class TestGoogleCalendar {
     }
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = getInstrumentation().getTargetContext();
-
-        assertEquals("com.example.calendar", appContext.getPackageName());
-    }
-
-    @Test
-    public void testCreateEvent() throws UiObjectNotFoundException {
+    public void test1CreateEvent() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -74,31 +69,33 @@ public class TestGoogleCalendar {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calendar"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().description("Create new event and more"));
-        button.clickAndWaitForNewWindow();
+        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/floating_action_button"));
         button.clickAndWaitForNewWindow();
 
-        UiObject title = mDevice.findObject(new UiSelector().text("Add title"));
+        UiObject eventBtn = mDevice.findObject(new UiSelector().text("Event"));
+        eventBtn.clickAndWaitForNewWindow();
+
+        UiObject title = mDevice.findObject(new UiSelector().text("Enter title, times, people, places…"));
         title.setText("UI Automator");
 
-        UiObject startDate = mDevice.findObject(new UiSelector().descriptionStartsWith("Start date:"));
+        UiObject startDate = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/start_date"));
         startDate.clickAndWaitForNewWindow();
 
         UiObject done = mDevice.findObject(new UiSelector().text("OK"));
-        UiObject cancel = mDevice.findObject(new UiSelector().text("Cancel"));
+        UiObject cancel = mDevice.findObject(new UiSelector().text("CANCEL"));
 
         UiObject date1 = mDevice.findObject(new UiSelector().text("10"));
         date1.click();
         done.click();
 
-        UiObject endDate = mDevice.findObject(new UiSelector().descriptionStartsWith("End date:"));
+        UiObject endDate = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/end_date"));
         endDate.clickAndWaitForNewWindow();
 
         UiObject date2 = mDevice.findObject(new UiSelector().text("10"));
         date2.click();
         done.click();
 
-        UiObject startTime = mDevice.findObject(new UiSelector().descriptionStartsWith("Start time:"));
+        UiObject startTime = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/start_time"));
         startTime.clickAndWaitForNewWindow();
 
         UiObject time1 = mDevice.findObject(new UiSelector().description("12"));
@@ -107,7 +104,7 @@ public class TestGoogleCalendar {
         time2.click();
         done.click();
 
-        UiObject endTime = mDevice.findObject(new UiSelector().descriptionStartsWith("End time:"));
+        UiObject endTime = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/end_time"));
         endTime.clickAndWaitForNewWindow();
 
         UiObject time3 = mDevice.findObject(new UiSelector().description("12"));
@@ -125,18 +122,15 @@ public class TestGoogleCalendar {
         UiObject select = mDevice.findObject(new UiSelector().text("Blueberry"));
         select.click();
 
-        UiObject description = mDevice.findObject(new UiSelector().text("Add description"));
+        UiObject description = mDevice.findObject(new UiSelector().text("Add note"));
         description.setText("UI Automator test");
 
-        UiObject sheet = mDevice.findObject(new UiSelector().description("Collapse event sheet"));
-        sheet.click();
-
-        UiObject save = mDevice.findObject(new UiSelector().text("Save"));
+        UiObject save = mDevice.findObject(new UiSelector().text("SAVE"));
         save.click();
     }
 
     @Test
-    public void testEditEvent() throws UiObjectNotFoundException {
+    public void test2EditEvent() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -151,11 +145,11 @@ public class TestGoogleCalendar {
         testingApp.clickAndWaitForNewWindow();
 
         // UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_text_view")); // API 27
-        UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_arrow")); // API 29
-        calendar.click();
+        // UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_arrow")); // API 29
+        // calendar.click();
 
-        UiObject day = mDevice.findObject(new UiSelector().className("android.view.View").index(9));
-        day.click();
+        // UiObject day = mDevice.findObject(new UiSelector().className("android.view.View").index(9));
+        // day.click();
 
         UiObject event = mDevice.findObject(new UiSelector().descriptionContains("UI Automator"));
         event.click();
@@ -166,41 +160,45 @@ public class TestGoogleCalendar {
         UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
         scroll.scrollToEnd(10);
 
-        UiObject notification = mDevice.findObject(new UiSelector().description("Remove notification"));
-        notification.click();
+        // UiObject notification = mDevice.findObject(new UiSelector().description("Remove notification")); NOT IN API 28
+        // notification.click();
 
         UiObject location = mDevice.findObject(new UiSelector().text("Add location"));
         location.click();
         location.setText("Avenida Reina Mercedes");
 
-        UiObject select = mDevice.findObject(new UiSelector().text("Avenida Reina Mercedes, Seville"));
-        select.click();
+        try{
+            UiObject select = mDevice.findObject(new UiSelector().text("Avenida Reina Mercedes, Seville"));
+            select.click();
+        }catch(Exception e){
+            mDevice.pressEnter();
+        }
 
-        scroll.scrollToEnd(10);
+        // APP NOT UPDATED ENOUGH TO RUN THESE ACTIONS
 
-        UiObject attachment = mDevice.findObject(new UiSelector().text("Add attachment"));
-        attachment.click();
+        // UiObject attachment = mDevice.findObject(new UiSelector().text("Add attachment"));
+        // attachment.click();
 
-        UiObject drive = mDevice.findObject(new UiSelector().text("My Drive"));
-        drive.click();
+        // UiObject drive = mDevice.findObject(new UiSelector().text("My Drive"));
+        // drive.click();
 
-        scroll.scrollIntoView(new UiSelector().text("UI Automator"));
+        // scroll.scrollIntoView(new UiSelector().text("UI Automator"));
 
-        UiObject file = mDevice.findObject(new UiSelector().text("UI Automator"));
-        file.click();
+        // UiObject file = mDevice.findObject(new UiSelector().text("UI Automator"));
+        // file.click();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("Select"));
-        button.click();
+        // UiObject button = mDevice.findObject(new UiSelector().text("Select"));
+        // button.click();
 
-        UiObject sheet = mDevice.findObject(new UiSelector().description("Collapse event sheet"));
-        sheet.click();
+        // UiObject sheet = mDevice.findObject(new UiSelector().description("Collapse event sheet"));
+        // sheet.click();
 
-        UiObject save = mDevice.findObject(new UiSelector().text("Save"));
+        UiObject save = mDevice.findObject(new UiSelector().text("SAVE"));
         save.click();
     }
 
     @Test
-    public void testDeleteEvent() throws UiObjectNotFoundException {
+    public void test3DeleteEvent() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -214,14 +212,14 @@ public class TestGoogleCalendar {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calendar"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_text_view"));
-        calendar.click();
+        // UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_text_view"));
+        // calendar.click();
 
-        UiObject day = mDevice.findObject(new UiSelector().className("android.view.View").index(9));
-        day.click();
+        // UiObject day = mDevice.findObject(new UiSelector().className("android.view.View").index(9));
+        // day.click();
 
-        UiObject event = mDevice.findObject(new UiSelector().descriptionContains("UI Automator"));
-        event.click();
+        // UiObject event = mDevice.findObject(new UiSelector().descriptionContains("UI Automator"));
+        // event.click();
 
         UiObject options = mDevice.findObject(new UiSelector().description("More options"));
         options.click();
@@ -229,8 +227,15 @@ public class TestGoogleCalendar {
         UiObject delete = mDevice.findObject(new UiSelector().text("Delete"));
         delete.click();
 
-        UiObject confirm = mDevice.findObject(new UiSelector().text("Delete"));
+        UiObject confirm = mDevice.findObject(new UiSelector().text("DELETE"));
         confirm.click();
+    }
+
+    private static void useAppContext() {
+        // Context of the app under test.
+        Context appContext = getInstrumentation().getTargetContext();
+
+        assertEquals("com.example.calendar", appContext.getPackageName());
     }
 
 }

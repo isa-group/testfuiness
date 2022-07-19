@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleSlides {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestGoogleSlides {
     }
 
     @Test
-    public void testCreateGoogleSlide() throws UiObjectNotFoundException {
+    public void test1CreateGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -74,20 +77,17 @@ public class TestGoogleSlides {
         UiObject button = mDevice.findObject(new UiSelector().description("New presentation menu"));
         button.click();
 
-        UiObject document = mDevice.findObject(new UiSelector().description("New Slides file"));
+        UiObject document = mDevice.findObject(new UiSelector().text("New presentation"));
         document.clickAndWaitForNewWindow();
 
-        //UiObject text = mDevice.findObject(new UiSelector().description("Subtitle"));
-        //text.click();
-        //text.setText("UI Automator");
-
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().description("Back"));
+        close.clickAndWaitForNewWindow(1000);
         close.click();
 
     }
 
     @Test
-    public void testRenameGoogleSlide() throws UiObjectNotFoundException {
+    public void test2RenameGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -126,7 +126,7 @@ public class TestGoogleSlides {
     }
 
     @Test
-    public void testRemoveGoogleSlide() throws UiObjectNotFoundException {
+    public void test4RemoveGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -136,7 +136,7 @@ public class TestGoogleSlides {
         // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         // appViews.scrollIntoView(new UiSelector().text("Slides"));
 
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollForward();
 
         // UiScrollable scroll = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));     // API 28
@@ -150,16 +150,19 @@ public class TestGoogleSlides {
         UiObject document = mDevice.findObject(new UiSelector().description("More actions for UI Automator"));
         document.click();
 
-        UiScrollable options = new UiScrollable(new UiSelector().scrollable(false));
+        UiScrollable options = new UiScrollable(new UiSelector().scrollable(true));
         options.scrollToEnd(10);
 
         UiObject remove = mDevice.findObject(new UiSelector().text("Remove"));
         remove.clickAndWaitForNewWindow();
 
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.clickAndWaitForNewWindow();
+
     }
 
     @Test
-    public void testSendCopyGoogleSlide() throws UiObjectNotFoundException {
+    public void test3SendCopyGoogleSlide() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -199,7 +202,7 @@ public class TestGoogleSlides {
         gmail2.clickAndWaitForNewWindow();
 
         UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-        user.setText("zalo.agui3@gmail.com");
+        user.setText("yalejandro9@gmail.com");
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
         subject.setText("UI Automator");

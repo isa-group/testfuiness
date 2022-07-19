@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleSheets {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestGoogleSheets {
     }
 
     @Test
-    public void testCreateGoogleSheet() throws UiObjectNotFoundException {
+    public void test1CreateGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -71,16 +74,16 @@ public class TestGoogleSheets {
         UiObject button = mDevice.findObject(new UiSelector().description("New spreadsheet menu"));
         button.click();
 
-        UiObject document = mDevice.findObject(new UiSelector().description("New spreadsheet"));
+        UiObject document = mDevice.findObject(new UiSelector().text("New spreadsheet"));
         document.clickAndWaitForNewWindow();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().description("Back"));
         close.click();
 
     }
 
     @Test
-    public void testRenameGoogleSheet() throws UiObjectNotFoundException {
+    public void test2RenameGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -116,7 +119,7 @@ public class TestGoogleSheets {
     }
 
     @Test
-    public void testRemoveGoogleSheet() throws UiObjectNotFoundException {
+    public void test4RemoveGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -143,10 +146,13 @@ public class TestGoogleSheets {
         UiObject remove = mDevice.findObject(new UiSelector().text("Remove"));
         remove.clickAndWaitForNewWindow();
 
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.clickAndWaitForNewWindow();
+
     }
 
     @Test
-    public void testSendCopyGoogleSheet() throws UiObjectNotFoundException {
+    public void test3SendCopyGoogleSheet() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -186,7 +192,7 @@ public class TestGoogleSheets {
         gmail2.clickAndWaitForNewWindow();
 
         UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-        user.setText("zalo.agui3@gmail.com");
+        user.setText("yalejandro9@gmail.com");
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
         subject.setText("UI Automator");

@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestPlayGames {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestPlayGames {
     }
 
     @Test
-    public void testPlayGame() throws UiObjectNotFoundException {
+    public void test1PlayGame() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -64,10 +67,7 @@ public class TestPlayGames {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Games"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
-        scroll.scrollIntoView(new UiSelector().text("PAC-MAN"));
-
-        UiObject game = mDevice.findObject(new UiSelector().text("PAC-MAN"));
+        UiObject game = mDevice.findObject(new UiSelector().text("Whirlybird"));
         game.clickAndWaitForNewWindow();
 
         UiObject play = mDevice.findObject(new UiSelector().text("Play"));
@@ -76,7 +76,7 @@ public class TestPlayGames {
     }
 
     @Test
-    public void testSearchGame() throws UiObjectNotFoundException {
+    public void test2SearchGame() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -99,13 +99,10 @@ public class TestPlayGames {
         UiObject game2 = mDevice.findObject(new UiSelector().text("call of duty"));
         game2.clickAndWaitForNewWindow();
 
-        UiObject feature = mDevice.findObject(new UiSelector().text("Free install"));
+        UiObject feature = mDevice.findObject(new UiSelector().text("Install for €0"));
         feature.click();
 
-        UiObject feature2 = mDevice.findObject(new UiSelector().text("Editors' Choice"));
-        feature2.click();
-
-        UiObject select = mDevice.findObject(new UiSelector().resourceId("com.google.android.play.games:id/search_result"));
+        UiObject select = mDevice.findObject(new UiSelector().resourceId("com.google.android.play.games:id/search_result").index(2));
         select.clickAndWaitForNewWindow();
     }
 

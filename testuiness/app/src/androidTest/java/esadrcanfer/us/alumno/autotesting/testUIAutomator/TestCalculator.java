@@ -16,7 +16,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.EasyMock2Matchers.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -46,26 +50,46 @@ public class TestCalculator {
 
     @Test
     public void checkPreconditions() {
-        assertThat(mDevice, notNullValue());
-    }
 
-    // UiObject numero0 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_0"));
-    // UiObject numero1 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_1"));
-    // UiObject numero2 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2"));
-    // UiObject numero3 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3"));
-    // UiObject numero4 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4"));
-    // UiObject numero5 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5"));
-    // UiObject numero6 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_6"));
-    // UiObject numero7 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7"));
-    // UiObject numero8 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8"));
-    // UiObject numero9 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9"));
-    // UiObject punto = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point"));
-    // UiObject igual = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq"));
-    // UiObject suma  = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_add"));
-    // UiObject resta = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_sub"));
-    // UiObject multiplicacion = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_mul"));
-    // UiObject division = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_div"));
-    // UiObject delete   = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/del"));
+        assertThat(mDevice, notNullValue());
+
+        UiObject numero0 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_0"));
+        UiObject numero1 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_1"));
+        UiObject numero2 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2"));
+        UiObject numero3 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3"));
+        UiObject numero4 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4"));
+        UiObject numero5 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5"));
+        UiObject numero6 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_6"));
+        UiObject numero7 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7"));
+        UiObject numero8 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8"));
+        UiObject numero9 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9"));
+        UiObject punto = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point"));
+        UiObject igual = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq"));
+        UiObject suma  = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_add"));
+        UiObject resta = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_sub"));
+        UiObject multiplicacion = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_mul"));
+        UiObject division = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_div"));
+        UiObject delete   = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/del"));
+
+        assertNotNull(numero0);
+        assertNotNull(numero1);
+        assertNotNull(numero2);
+        assertNotNull(numero3);
+        assertNotNull(numero4);
+        assertNotNull(numero5);
+        assertNotNull(numero6);
+        assertNotNull(numero7);
+        assertNotNull(numero8);
+        assertNotNull(numero9);
+        assertNotNull(punto);
+        assertNotNull(igual);
+        assertNotNull(suma);
+        assertNotNull(resta);
+        assertNotNull(multiplicacion);
+        assertNotNull(division);
+        assertNotNull(delete);
+
+    }
 
     @Test
     public void testCalculadoraSuma() throws UiObjectNotFoundException {
@@ -122,9 +146,9 @@ public class TestCalculator {
         mDevice.findObject(new UiSelector().text("=")).click();
 
         // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
 
-        // assertThat(result.getText(), is(equalTo("14.3")));
+        assertEquals(result.getText(), "14.3");
     }
 
     @Test
@@ -182,9 +206,9 @@ public class TestCalculator {
         mDevice.findObject(new UiSelector().text("=")).click();
 
         // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
 
-        // assertThat(result.getText(), is(equalTo("5.3")));
+        assertEquals(result.getText(), "5.3");
     }
 
     @Test
@@ -242,9 +266,9 @@ public class TestCalculator {
         mDevice.findObject(new UiSelector().text("=")).click();
 
         // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
 
-        // assertThat(result.getText(), is(equalTo("60.75")));
+        assertEquals(result.getText(), "60.75");
     }
 
     @Test
@@ -302,9 +326,9 @@ public class TestCalculator {
         mDevice.findObject(new UiSelector().text("=")).click();
 
         // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
 
-        // assertThat(result.getText(), is(equalTo("2.9375")));
+        assertEquals(result.getText(), "2.9375");
     }
 
 }

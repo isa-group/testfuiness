@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleDocs {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestGoogleDocs {
     }
 
     @Test
-    public void testCreateGoogleDoc() throws UiObjectNotFoundException {
+    public void test1CreateGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -66,19 +69,19 @@ public class TestGoogleDocs {
         UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs.editors.docs:id/fab_base_button"));
         button.click();
 
-        UiObject document = mDevice.findObject(new UiSelector().description("New document"));
+        UiObject document = mDevice.findObject(new UiSelector().text("New document"));
         document.clickAndWaitForNewWindow();
 
         UiObject check = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs.editors.docs:id/action_mode_close_button"));
         check.click();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().description("Back"));
         close.click();
 
     }
 
     @Test
-    public void testRenameGoogleDoc() throws UiObjectNotFoundException {
+    public void test2RenameGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -109,7 +112,7 @@ public class TestGoogleDocs {
     }
 
     @Test
-    public void testRemoveGoogleDoc() throws UiObjectNotFoundException {
+    public void test4RemoveGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -132,10 +135,13 @@ public class TestGoogleDocs {
         UiObject remove = mDevice.findObject(new UiSelector().text("Remove"));
         remove.clickAndWaitForNewWindow();
 
+        UiObject confirm = mDevice.findObject(new UiSelector().text("Move to trash"));
+        confirm.clickAndWaitForNewWindow();
+
     }
 
     @Test
-    public void testSendCopyGoogleDoc() throws UiObjectNotFoundException {
+    public void test3SendCopyGoogleDoc() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -158,7 +164,7 @@ public class TestGoogleDocs {
         copy.clickAndWaitForNewWindow();
 
         UiObject pdf = mDevice.findObject(new UiSelector().text("PDF Document (.pdf)"));
-        pdf.clickAndWaitForNewWindow();
+        pdf.click();
 
         UiObject ok = mDevice.findObject(new UiSelector().text("OK"));
         ok.clickAndWaitForNewWindow();
@@ -170,7 +176,8 @@ public class TestGoogleDocs {
         gmail2.clickAndWaitForNewWindow();
 
         UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-        user.setText("zalo.agui3@gmail.com");
+        user.setText("yalejandro9@gmail.com");
+
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
         subject.setText("UI Automator");

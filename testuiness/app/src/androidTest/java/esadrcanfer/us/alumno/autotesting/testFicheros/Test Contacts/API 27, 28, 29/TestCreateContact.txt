@@ -3,9 +3,9 @@ com.android.contacts
 9
 BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/floating_action_button],
 BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/expansion_view],
-TEXT, UiSelector[TEXT=First name], Gonzalo
-TEXT, UiSelector[TEXT=Middle name], Aguilar
-TEXT, UiSelector[TEXT=Last name], Hermoso
+TEXT, UiSelector[TEXT=First name], Alejandro
+TEXT, UiSelector[TEXT=Middle name], Garcia
+TEXT, UiSelector[TEXT=Last name], Fernandez
 BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/expansion_view],
 TEXT, UiSelector[TEXT=Phone], 654123987
 TEXT, UiSelector[TEXT=Email], automator@gmail.com

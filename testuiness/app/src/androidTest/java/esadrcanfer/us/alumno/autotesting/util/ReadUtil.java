@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import androidx.test.espresso.action.PressBackAction;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 import esadrcanfer.us.alumno.autotesting.TestCase;
@@ -129,6 +130,13 @@ public class ReadUtil {
             object = new UiObject(new UiSelector().textContains(resourceId));
         else if (selectorType.equals("SCROLLABLE"))
             object = new UiObject(new UiSelector().scrollable(!type.equals("SCROLL_DOWN")));
+        else if (selectorType.equals("CLASS")) {
+            Integer index = Integer.parseInt(
+                                    resourceId.substring(resourceId.indexOf("(")+1, resourceId.indexOf(")"))
+                            );
+            String className = resourceId.substring(0, resourceId.indexOf("("));
+            object = new UiObject(new UiSelector().className(className).index(index));
+        }
         switch (type) {
             case "BUTTON":
                 res = new ButtonAction(object);
