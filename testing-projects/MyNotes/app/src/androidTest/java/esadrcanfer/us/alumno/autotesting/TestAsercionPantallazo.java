@@ -62,7 +62,7 @@ public class TestAsercionPantallazo extends AssertionChecker {
                                                 withClassName(is("android.widget.RelativeLayout")),
                                                 4)),
                                 1)));
-        appCompatEditText.perform(scrollTo(), replaceText("Test sin asercion"), closeSoftKeyboard());
+        appCompatEditText.perform(scrollTo(), replaceText("Hola"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.button), withText("Save"),
