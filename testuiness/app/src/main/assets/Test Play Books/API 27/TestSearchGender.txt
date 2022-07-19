@@ -1,0 +1,8 @@
+com.google.android.apps.books
+-1
+4
+BUTTON, UiSelector[TEXT=Genres],
+BUTTON, UiSelector[TEXT=Science],
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/li_thumbnail],
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/left_button],
+finalState.contains(testActions[1].value)

@@ -1,0 +1,13 @@
+com.google.android.gm
+-1
+9
+BUTTON, UiSelector[DESCRIPTION=Open navigation drawer],
+BUTTON, UiSelector[TEXT=Drafts], Drafts
+BUTTON, UiSelector[DESCRIPTION= me about], Draft
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/edit_draft],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/add_attachment],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/title], Attach file
+SCROLL_DOWN, UiSelector[RESOURCE_ID=com.android.documentsui:id/dir_list], Elements=10
+BUTTON, UiSelector[TEXT=SCRUM.png],
+BUTTON, UiSelector[DESCRIPTION=Navigate up],
+finalState.contains(testActions[1].value)
