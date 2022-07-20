@@ -1,5 +1,7 @@
 package esadrcanfer.us.alumno.autotesting.tests;
 
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -25,8 +27,6 @@ import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
-
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 public class AutomaticRepairTests {
 
