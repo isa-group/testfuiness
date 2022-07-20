@@ -1,6 +1,7 @@
 package esadrcanfer.us.alumno.autotesting.tests;
 
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 import android.util.Log;
 import android.widget.TextView;
