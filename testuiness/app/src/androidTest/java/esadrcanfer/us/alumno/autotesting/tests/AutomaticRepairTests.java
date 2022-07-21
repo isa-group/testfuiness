@@ -1,13 +1,9 @@
 package esadrcanfer.us.alumno.autotesting.tests;
 
+
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+
 import android.util.Log;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CheckedTextView;
-import android.widget.RadioButton;
-import android.widget.ScrollView;
-import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import org.junit.Test;
@@ -23,6 +19,7 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.BrokenTestCaseException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
+import esadrcanfer.us.alumno.autotesting.algorithms.BaseReparationAlgorithm;
 import esadrcanfer.us.alumno.autotesting.algorithms.GRASPReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.RandomReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.RecycleReparation;
@@ -32,15 +29,13 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-
 public class AutomaticRepairTests {
 
 
     @Test
     public void testRandomReparation() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/Prueba/TestCase-20190227_183604.txt", false);
+        ReadUtil readUtil = new ReadUtil("Download/tests/firstTest.txt", false);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("ISA", "Loadded test case from file!");
         Log.d("ISA", "Executing it...");
@@ -380,13 +375,7 @@ public class AutomaticRepairTests {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         List<String> finalState = new ArrayList<>();
         List<UiObject2> elements = device.findObjects(By.clazz(TextView.class));
-        elements.addAll(device.findObjects(By.clazz(CheckBox.class)));
-        elements.addAll(device.findObjects(By.clazz(Button.class)));
-        elements.addAll(device.findObjects(By.clazz(RadioButton.class)));
-        elements.addAll(device.findObjects(By.clazz(ScrollView.class)));
-        elements.addAll(device.findObjects(By.clazz(Spinner.class)));
-        elements.addAll(device.findObjects(By.clazz(CheckedTextView.class)));
-        elements.addAll(device.findObjects(By.clazz(Switch.class)));        for (UiObject2 label : elements) {
+        for (UiObject2 label : elements) {
             String text = label.getText();
             //Solución básica, hay que mejorarla
             if (text!=null && (!(text.contains(":") || text.contains("%")))) {
