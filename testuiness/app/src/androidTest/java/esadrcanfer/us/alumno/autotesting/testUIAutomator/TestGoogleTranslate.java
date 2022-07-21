@@ -13,8 +13,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleTranslate {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -60,7 +63,7 @@ public class TestGoogleTranslate {
     }
 
     @Test
-    public void testTranslate() throws UiObjectNotFoundException {
+    public void test1Translate() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -80,18 +83,18 @@ public class TestGoogleTranslate {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Translate"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject text = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/lyt_home"));
+        UiObject text = mDevice.findObject(new UiSelector().text("Enter text"));
         text.clickAndWaitForNewWindow();
+        text.setText("Can i go to the toilet please?");
 
-        UiObject translate = mDevice.findObject(new UiSelector().textContains("English"));
-        translate.setText("Can i go to the toilet please?");
+        mDevice.pressEnter();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/result_selector"));
-        button.clickAndWaitForNewWindow();
+        UiObject back = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
+        back.click();
     }
 
     @Test
-    public void testChangeLanguage() throws UiObjectNotFoundException {
+    public void test2ChangeLanguage() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -111,23 +114,20 @@ public class TestGoogleTranslate {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Translate"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject click = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/picker1"));
+        UiObject click = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/language_button_a"));
         click.click();
 
-        UiObject language = mDevice.findObject(new UiSelector().text("Bosnian"));
+        UiObject language = mDevice.findObject(new UiSelector().text("Armenian"));
         language.click();
 
-        UiObject change = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/btn_lang_picker_swap"));
+        UiObject change = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/swap_languages_button"));
         change.click();
 
-        UiObject option = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/touch_to_type_text"));
-        option.click();
+        UiObject text = mDevice.findObject(new UiSelector().text("Enter text"));
+        text.clickAndWaitForNewWindow();
+        text.setText("En verano hace calor, en invierno hace frío");
 
-        UiObject translate = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/edit_input"));
-        translate.setText("En verano hace calor, en invierno hace frío");
-
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/result_selector"));
-        button.clickAndWaitForNewWindow();
+        mDevice.pressEnter();
     }
 
 }

@@ -14,7 +14,7 @@ import esadrcanfer.us.alumno.autotesting.diversityActionSelection.ActionSelectio
 import esadrcanfer.us.alumno.autotesting.diversityActionSelection.IntelligentActionSelection;
 import esadrcanfer.us.alumno.autotesting.diversityActionSelection.RandomActionSelection;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 public class DiversitySearchTests {
 

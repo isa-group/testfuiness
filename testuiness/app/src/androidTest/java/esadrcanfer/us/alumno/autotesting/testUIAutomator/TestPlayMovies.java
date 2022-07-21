@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestPlayMovies {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,24 +53,20 @@ public class TestPlayMovies {
     }
 
     @Test
-    public void testPlayVideo() throws UiObjectNotFoundException {
+    public void test1PlayVideo() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollForward();
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Movies & TV"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject release = mDevice.findObject(new UiSelector().text("New release movies"));
-        release.click();
-
-        UiObject movie = mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/thumbnail_frame"));
+        UiObject movie = mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/card").index(1));
         movie.click();
 
         UiObject play = mDevice.findObject(new UiSelector().text("Trailer"));
@@ -76,7 +75,7 @@ public class TestPlayMovies {
     }
 
     @Test
-    public void testSearchVideo() throws UiObjectNotFoundException {
+    public void test2SearchVideo() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -90,10 +89,10 @@ public class TestPlayMovies {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Movies & TV"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject search = mDevice.findObject(new UiSelector().textContains("Search"));
+        UiObject search = mDevice.findObject(new UiSelector().description("Search"));
         search.click();
 
-        UiObject movie = mDevice.findObject(new UiSelector().text("Search for movies & TV shows"));
+        UiObject movie = mDevice.findObject(new UiSelector().text("Search Google Play"));
         movie.setText("Megalodon");
 
         UiObject movie2 = mDevice.findObject(new UiSelector().text("megalodon"));

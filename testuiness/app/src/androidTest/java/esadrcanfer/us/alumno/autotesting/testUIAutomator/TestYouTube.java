@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestYouTube {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestYouTube {
     }
 
     @Test
-    public void testSearchVideo() throws UiObjectNotFoundException {
+    public void test1SearchVideo() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -58,11 +61,8 @@ public class TestYouTube {
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        // appViews.scrollIntoView(new UiSelector().text("YouTube"));
         appViews.scrollForward();
 
-        // UiScrollable scroll = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));     // API 28
-        // UiScrollable scroll = new UiScrollable(new UiSelector().className("androidx.recyclerview.widget.RecyclerView"));  // API 29
         UiScrollable scroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/apps_list_view"));
         scroll.scrollForward();
 
@@ -83,9 +83,8 @@ public class TestYouTube {
 
     }
 
-    /*
     @Test
-    public void testPlayVideo() throws UiObjectNotFoundException {
+    public void test2PlayVideo() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -110,10 +109,10 @@ public class TestYouTube {
         UiObject option = mDevice.findObject(new UiSelector().className("android.view.ViewGroup").index(0));
         option.click();
 
-    }*/
+    }
 
     @Test
-    public void testStopVideo() throws UiObjectNotFoundException {
+    public void test3StopVideo() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -121,38 +120,21 @@ public class TestYouTube {
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        // appViews.scrollIntoView(new UiSelector().text("YouTube"));
         appViews.scrollForward();
 
-        // UiScrollable scroll = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));     // API 28
-        // UiScrollable scroll = new UiScrollable(new UiSelector().className("androidx.recyclerview.widget.RecyclerView"));  // API 29
         UiScrollable scroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/apps_list_view"));
         scroll.scrollForward();
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("YouTube"));
         testingApp.clickAndWaitForNewWindow();
 
-        // UiObject button = mDevice.findObject(new UiSelector().className("android.widget.Button").index(1));
-        UiObject button = mDevice.findObject(new UiSelector().description("Explore"));
-        button.click();
+        UiObject video = mDevice.findObject(new UiSelector().className("android.view.ViewGroup").index(0));
+        video.click();
 
-        // UiObject option = mDevice.findObject(new UiSelector().className("android.view.ViewGroup").index(0));
-        UiObject option = mDevice.findObject(new UiSelector().description("Trending"));
-        option.click();
+        video.waitUntilGone(20000);
 
-        UiObject option2 = mDevice.findObject(new UiSelector().description("Gaming"));
-        option2.click();
-
-        UiObject start = mDevice.findObject(new UiSelector().text("PRESS START"));
-        start.click();
-
-        UiObject watch = mDevice.findObject(new UiSelector().textContains("WATCH"));
-        watch.click();
-
-        UiObject play = mDevice.findObject(new UiSelector().resourceId("com.google.android.youtube:id/watch_player"));
-        play.click();
-
-        play.waitUntilGone(20000);
+        UiObject player = mDevice.findObject(new UiSelector().resourceId("com.google.android.youtube:id/watch_player"));
+        player.click();
 
         UiObject stop = mDevice.findObject(new UiSelector().resourceId("com.google.android.youtube:id/player_control_play_pause_replay_button"));
         stop.click();
@@ -160,7 +142,7 @@ public class TestYouTube {
     }
 
     @Test
-    public void testChangeQuality() throws UiObjectNotFoundException {
+    public void test4ChangeQuality() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -216,7 +198,7 @@ public class TestYouTube {
     }
 
     @Test
-    public void testChangeVelocity() throws UiObjectNotFoundException {
+    public void test5ChangeVelocity() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -272,7 +254,7 @@ public class TestYouTube {
     }
 
     @Test
-    public void testShareVideo() throws UiObjectNotFoundException {
+    public void test6ShareVideo() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 

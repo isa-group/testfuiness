@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleNotes {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -49,14 +52,8 @@ public class TestGoogleNotes {
         assertThat(mDevice, notNullValue());
     }
 
-    // UiObject photo    = mDevice.findObject(new UiSelector().text("Take photo"));
-    // UiObject image    = mDevice.findObject(new UiSelector().text("Choose image"));
-    // UiObject drawn    = mDevice.findObject(new UiSelector().text("Drawing"));
-    // UiObject record   = mDevice.findObject(new UiSelector().text("Recording"));
-    // UiObject checkbox = mDevice.findObject(new UiSelector().text("Checkboxes"));
-
     @Test
-    public void testCreateNote() throws UiObjectNotFoundException {
+    public void test1CreateNote() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -78,13 +75,13 @@ public class TestGoogleNotes {
         UiObject description = mDevice.findObject(new UiSelector().text("Note"));
         description.setText("Prueba UI Automator");
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
         close.click();
 
     }
 
     @Test
-    public void testEditNoteAddImage() throws UiObjectNotFoundException {
+    public void test2EditNoteAddImage() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -100,16 +97,16 @@ public class TestGoogleNotes {
         UiObject note = mDevice.findObject(new UiSelector().text("UI Automator"));
         note.clickAndWaitForNewWindow();
 
-        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/menu_icon"));
+        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/new_list_button"));
         options.click();
 
-        UiObject image = mDevice.findObject(new UiSelector().textContains("image"));
+        UiObject image = mDevice.findObject(new UiSelector().text("Add image"));
         image.click();
 
         UiObject menu = mDevice.findObject(new UiSelector().description("Show roots"));
         menu.click();
 
-        UiObject option = mDevice.findObject(new UiSelector().text("zalo.agui1@gmail.com"));
+        UiObject option = mDevice.findObject(new UiSelector().className("android.widget.LinearLayout").index(1).childSelector(new UiSelector().text("Drive")));
         option.click();
 
         UiObject drive = mDevice.findObject(new UiSelector().text("My Drive"));
@@ -121,12 +118,12 @@ public class TestGoogleNotes {
         UiObject file = mDevice.findObject(new UiSelector().text("SCRUM.png"));
         file.click();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
         close.click();
     }
 
     @Test
-    public void testEditNoteAddList() throws UiObjectNotFoundException {
+    public void test3EditNoteAddList() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -142,37 +139,21 @@ public class TestGoogleNotes {
         UiObject note = mDevice.findObject(new UiSelector().text("UI Automator"));
         note.clickAndWaitForNewWindow();
 
-        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/menu_icon"));
+        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/new_list_button"));
         options.click();
 
         UiObject checkbox = mDevice.findObject(new UiSelector().text("Checkboxes"));
         checkbox.click();
 
-        // UiObject check = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/checkbox"));
-        // check.click();
-
-        // UiObject item1 = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/description"));
-        // item1.setText("Prueba 2.0");
-
         UiObject list = mDevice.findObject(new UiSelector().text("List item"));
         list.click();
-        // check.click();
 
-        // UiObject item2 = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/description"));
-        // item2.setText("Prueba 3.0");
-
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
         close.click();
     }
 
-    // UiObject pin      = mDevice.findObject(new UiSelector().description("Pin button"));
-    // UiObject reminder = mDevice.findObject(new UiSelector().description("Add reminder"));
-    // UiObject color    = mDevice.findObject(new UiSelector().description("Change color"));
-    // UiObject label    = mDevice.findObject(new UiSelector().description("Add label"));
-    // UiObject options  = mDevice.findObject(new UiSelector().description("More options"));
-
     @Test
-    public void testEditNoteAddReminder() throws UiObjectNotFoundException {
+    public void test4EditNoteAddReminder() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -191,7 +172,10 @@ public class TestGoogleNotes {
         UiObject reminder = mDevice.findObject(new UiSelector().description("Reminder"));
         reminder.clickAndWaitForNewWindow();
 
-        UiObject day = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/text"));
+        UiObject showOptions = mDevice.findObject(new UiSelector().text("Pick a date & time"));
+        showOptions.clickAndWaitForNewWindow();
+
+        UiObject day = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/spinner_inside_error_state").index(0));
         day.click();
 
         UiObject tomorrow = mDevice.findObject(new UiSelector().text("Tomorrow"));
@@ -218,18 +202,12 @@ public class TestGoogleNotes {
         UiObject save = mDevice.findObject(new UiSelector().text("Save"));
         save.click();
 
-        UiObject close = mDevice.findObject(new UiSelector().description("Navigate up"));
+        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
         close.click();
     }
 
-    // UiObject archive = mDevice.findObject(new UiSelector().text("Archive"));
-    // UiObject delete  = mDevice.findObject(new UiSelector().text("Delete"));
-    // UiObject copy = mDevice.findObject(new UiSelector().text("Make a copy"));
-    // UiObject send = mDevice.findObject(new UiSelector().text("Send"));
-    // UiObject copy = mDevice.findObject(new UiSelector().text("Copy to Google Docs"));
-
     @Test
-    public void testRemoveNote() throws UiObjectNotFoundException {
+    public void test5RemoveNote() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 

@@ -77,10 +77,10 @@ public class TestGmail {
         email.clickAndWaitForNewWindow();
 
         UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-        user.setText("zalo.agui3@gmail.com");
+        user.setText("lpardopruebasdecosas@gmail.com");
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
-        subject.setText("UI Automator");
+        subject.setText("Test Gmail");
 
         UiObject body = mDevice.findObject(new UiSelector().text("Compose email"));
         body.setText("Test probando aplicación de Gmail");

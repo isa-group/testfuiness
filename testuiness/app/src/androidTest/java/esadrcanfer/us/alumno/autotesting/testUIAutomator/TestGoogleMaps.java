@@ -12,8 +12,10 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestGoogleMaps {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -50,7 +53,7 @@ public class TestGoogleMaps {
     }
 
     @Test
-    public void testSearchGoogleMaps() throws UiObjectNotFoundException {
+    public void test1SearchGoogleMaps() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -72,7 +75,7 @@ public class TestGoogleMaps {
     }
 
     @Test
-    public void testShareLocation() throws UiObjectNotFoundException {
+    public void test2ShareLocation() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -85,33 +88,19 @@ public class TestGoogleMaps {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject search = mDevice.findObject(new UiSelector().text("Search here"));
-        search.clickAndWaitForNewWindow();
-        search.setText("Reina Mercedes");
+        UiObject moreInfo = mDevice.findObject(new UiSelector().text("MORE INFO"));
+        moreInfo.click();
 
-        UiObject location = mDevice.findObject(new UiSelector().text("Avenida de la Reina Mercedes"));
-        location.clickAndWaitForNewWindow();
-
-        UiObject share = mDevice.findObject(new UiSelector().text("Share"));
+        UiObject share = mDevice.findObject(new UiSelector().text("SHARE PLACE"));
         share.clickAndWaitForNewWindow();
 
-        UiObject message = mDevice.findObject(new UiSelector().text("Messages"));
+        UiObject message = mDevice.findObject(new UiSelector().text("Copy to clipboard"));
         message.clickAndWaitForNewWindow();
-
-        UiObject share2 = mDevice.findObject(new UiSelector().text("Continue"));
-        share2.clickAndWaitForNewWindow();
-
-        // UiObject contact = mDevice.findObject(new UiSelector().text("Gonzalo Aguilar Hermoso"));
-        UiObject contact = mDevice.findObject(new UiSelector().text("654123987"));
-        contact.clickAndWaitForNewWindow();
-
-        UiObject send = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/send_message_button_icon"));
-        send.clickAndWaitForNewWindow();
 
     }
 
     @Test
-    public void testJourney() throws UiObjectNotFoundException {
+    public void test3Journey() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -123,6 +112,9 @@ public class TestGoogleMaps {
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
         testingApp.clickAndWaitForNewWindow();
+
+        UiObject clear = mDevice.findObject(new UiSelector().description("Clear"));
+        clear.click();
 
         UiObject button = mDevice.findObject(new UiSelector().text("GO"));
         button.clickAndWaitForNewWindow();
@@ -144,8 +136,11 @@ public class TestGoogleMaps {
         end.clickAndWaitForNewWindow();
     }
 
-    @Test
-    public void testHotels() throws UiObjectNotFoundException {
+    // HOTELS OPTION NOT LONGER AVAILABLE
+    // This test will be deleted after confirmation.
+
+    /*@Test
+    public void test4Hotels() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -217,48 +212,30 @@ public class TestGoogleMaps {
         UiObject button = mDevice.findObject(new UiSelector().text("Apply"));
         button.clickAndWaitForNewWindow();
 
-    }
+    }*/
 
     @Test
-    public void testRestaurants() throws UiObjectNotFoundException {
+    public void test4Restaurants() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollIntoView(new UiSelector().text("Maps"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
         testingApp.clickAndWaitForNewWindow();
 
+        UiObject back = mDevice.findObject(new UiSelector().description("Navigate up"));
+        back.click();
+
         UiObject restaurants = mDevice.findObject(new UiSelector().text("Restaurants"));
         restaurants.clickAndWaitForNewWindow();
 
-        UiObject configuration = mDevice.findObject(new UiSelector().description("More filters"));
-        configuration.clickAndWaitForNewWindow();
-
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
-        scroll.scrollToBeginning(1);
-
-        UiObject money = mDevice.findObject(new UiSelector().text("$$$$"));
-        money.click();
-
-        UiObject rating = mDevice.findObject(new UiSelector().text("4.5"));
-        rating.click();
-
-        UiObject hours = mDevice.findObject(new UiSelector().text("Custom"));
-        hours.click();
-
-        // UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(false));
-        scroll.scrollToEnd(1);
-
-        UiObject cuisine = mDevice.findObject(new UiSelector().text("Hamburger"));
-        cuisine.click();
-
-        UiObject button = mDevice.findObject(new UiSelector().text("Apply"));
-        button.clickAndWaitForNewWindow();
+        UiObject topRated = mDevice.findObject(new UiSelector().text("Top rated"));
+        topRated.click();
 
     }
 

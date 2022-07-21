@@ -49,7 +49,7 @@ public abstract class  Action {
     }
 
     public enum ActionType{
-        BUTTON, TEXT, CHECKBOX, RADIO_BUTTON, START, STOP, GO_BACK, SCROLL_TO, COUNT_DOWN, SPINNER, CHECKED_TEXT, SWITCH
+        BUTTON, TEXT, CHECKBOX, RADIO_BUTTON, START, STOP, GO_BACK, SCROLL_TO, COUNT_DOWN, SPINNER, CHECKED_TEXT, SWITCH, SCREENSHOT
     }
 
     public String getValue(){

@@ -7,7 +7,7 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 public class GoBackAction extends Action {
     UiDevice device;
 
-    GoBackAction(UiDevice device){
+    public GoBackAction(UiDevice device){
         super(null, ActionType.GO_BACK);
         this.device=device;
     }

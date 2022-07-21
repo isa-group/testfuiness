@@ -1,13 +1,15 @@
 package esadrcanfer.us.alumno.autotesting;
 
-import android.util.Log;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 
 
@@ -103,8 +105,43 @@ public class TestCase {
     }
 
     public boolean evaluate(){
+        if(predicate!=null){
         return predicate.evaluate(this);
+        }
+        return true;
     }
+
+    public void customEvaluate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
+        String predicateString = predicate.toString();
+        String target = predicateString.substring(predicateString.indexOf("=")+1,predicateString.indexOf("]"));
+        Class<?> targetClass = null;
+        try {
+            targetClass = Class.forName("esadrcanfer.us.alumno.autotesting."+target);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Object test = null;
+        Constructor constructor = null;
+
+        try {
+            constructor = targetClass.getConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            test = constructor.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if(predicate!=null) {
+            String methodName = "assertionCheck";
+            targetClass.getMethod(methodName).invoke(test, null);
+        }
+    }
+
 
     @Override
     public String toString(){
@@ -147,6 +184,7 @@ public class TestCase {
     }
 
     public void setPredicate(String predicate){
+        if(predicate!=null) //Si no hay predicate, no lo hace.
         this.predicate = new TestPredicate(predicate);
     }
 

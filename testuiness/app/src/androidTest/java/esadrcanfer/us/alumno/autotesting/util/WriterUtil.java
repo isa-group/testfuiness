@@ -30,7 +30,15 @@ public class WriterUtil {
 		String filename = basefilename + timeLog+".txt";
 		this.logFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), filename);
 	}
-	
+
+
+	public WriterUtil(String fileName, String path) {
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		String filename = fileName + timeLog+ ".png";
+		File dir = new File(path);
+		this.logFile = new File(dir, filename);
+	}
+
 	public File getLogFile() {
 		return logFile;
 	}
