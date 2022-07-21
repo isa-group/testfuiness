@@ -15,7 +15,10 @@ public class ActionFactory {
 
     public static Map<UiObject, Action> createInputActions(UiDevice device, Long seed) {
         String value = null;
-        TextInputGenerator generator = new TextInputGenerator(seed, value);
+        String type = " ";
+        String cond1 = " ";
+        String cond2 = " ";
+        TextInputGenerator generator = new TextInputGenerator(seed, value, type, cond1, cond2);
         List<UiObject> inputTexts = ElementIdentifier.findElements(device, "android.widget.EditText");
         Map<UiObject, Action> result = new HashMap<>();
         for (UiObject input : inputTexts) {

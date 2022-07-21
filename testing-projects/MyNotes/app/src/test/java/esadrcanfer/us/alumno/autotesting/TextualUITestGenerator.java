@@ -1,4 +1,5 @@
 package esadrcanfer.us.alumno.autotesting;
+import androidx.test.uiautomator.v18.BuildConfig;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -13,7 +14,6 @@ import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.google.common.collect.Lists;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -27,9 +27,9 @@ import java.util.Optional;
 public class TextualUITestGenerator {
 
     // Name to change
-    private static final String FILE = "MainActivityTest2";
+    private static String FILE = "TestConverter";
 
-    private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\"+FILE+".java";
+    private static String FILE_PATH = "src/test/java/esadrcanfer/us/alumno/autotesting/";
 
     WriterUtil writerUtil = new WriterUtil();
 
@@ -45,24 +45,27 @@ public class TextualUITestGenerator {
     private Boolean isObjectType = false;
 
     @Test
-    public void textualUITestGenerator() throws FileNotFoundException {
+    public void textualUITestGenerator(String className, String path, String applicationId) throws FileNotFoundException {
         // Parser configuration:
+        FILE=className;
+        FILE_PATH=path+FILE+".java";
         TypeSolver typeSolver = new CombinedTypeSolver();
         JavaSymbolSolver symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
         // Parsing:
-        CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
+        File file=new File(FILE_PATH);
+        CompilationUnit cu = StaticJavaParser.parse(file);
         Optional<ClassOrInterfaceDeclaration> fileParsed = cu.getClassByName(FILE);
-        // We print the class to check that the class is correcly parsed
+        // We print the class to check that the class is correctly parsed
         //System.out.println(fileParsed);
-        // We  visit each methos and print its name:
+        // We  visit each methoD and print its name:
         VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
         methodNameVisitor.visit(cu, null);
         cu.findAll(MethodDeclaration.class).forEach((md) -> {
             exploreMethods(md);
         });
 
-        writerUtil.write(BuildConfig.APPLICATION_ID);
+        writerUtil.write("esadrcanfer.us.alumno.autotesting");
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
         for(int i = 0; i < objectTypes.size(); i++){
@@ -70,8 +73,6 @@ public class TextualUITestGenerator {
         }
         if (predicate != null) {
             writerUtil.write(predicate);
-        } else {
-            Assert.fail("You must provide an assertion");
         }
     }
 
@@ -85,7 +86,7 @@ public class TextualUITestGenerator {
     private void processMethod(MethodDeclaration md) {
         // Procesamos las declaraciones de interacciones:
         md.findAll(VariableDeclarationExpr.class).forEach(vde -> {
-            processVariableDesclaration(vde);
+            processVariableDeclaration(vde);
         });
 
         List<String> childs = new ArrayList<>();
@@ -95,7 +96,7 @@ public class TextualUITestGenerator {
         });
     }
 
-    private void processVariableDesclaration(VariableDeclarationExpr vde) {
+    private void processVariableDeclaration(VariableDeclarationExpr vde) {
         for(int i = 0; i < vde.getVariables().size(); i++){
             if((vde.getVariable(i).getName().toString().startsWith("appCompatEditText") || vde.getVariable(i).getName().toString().startsWith("editText")) && vde.getVariable(i).toString().contains("withText")){
                 replacingCount++;
@@ -161,9 +162,22 @@ public class TextualUITestGenerator {
         if(mc.getName().toString().equals("click") && (mc.getParentNode().toString().startsWith("Optional[appCompatEditText") || mc.getParentNode().toString().startsWith("Optional[editText"))){
             objectTypes.add("TEXT");
         }
+        if(mc.getName().toString().startsWith("assertTrue")){
+            if(!objectTypes.contains("CUSTOM ASSERTION")){
+            objectTypes.add("CUSTOM ASSERTION");
+            selectors.add("onClass="+FILE);
+            texts.add("Check custom assertion");
+            }
+        }
 
         if(mc.toString().startsWith("childAtPosition")){
             childs.add(mc.toString());
+        }
+
+        if(mc.toString().equals("pressBack()")){
+            objectTypes.add("GO_BACK");
+            selectors.add("backButton");
+            texts.add("Go back");
         }
 
         for(int i = 0; i < mc.getArguments().size(); i++){
@@ -176,7 +190,7 @@ public class TextualUITestGenerator {
 
             if(isChild == false){
                 if (mc.getName().toString().equals("withId")) {
-                    objectId = "RESOURCE_ID=" + BuildConfig.APPLICATION_ID + ":id/" + mc.getArguments().get(i).toString().substring(5);
+                    objectId = "RESOURCE_ID=" + "esadrcanfer.us.alumno.autotesting" + ":id/" + mc.getArguments().get(i).toString().substring(5);
                     this.tempId = "toElementById=" + mc.getArgument(i).toString().substring(5);
                 }
 

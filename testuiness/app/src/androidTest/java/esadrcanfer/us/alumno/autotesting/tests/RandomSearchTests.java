@@ -14,7 +14,7 @@ import esadrcanfer.us.alumno.autotesting.objectivefunctions.graph.ApplicationCra
 import esadrcanfer.us.alumno.autotesting.objectivefunctions.ObjectiveFunction;
 import esadrcanfer.us.alumno.autotesting.objectivefunctions.graph.TestExecutionTimeObjectiveFunction;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 public class RandomSearchTests {
 

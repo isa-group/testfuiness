@@ -1,6 +1,5 @@
 package esadrcanfer.us.alumno.autotesting.objectivefunctions;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.BrokenTestCaseException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 public class PredicateMeetingObjectiveFunction implements ObjectiveFunction {
 

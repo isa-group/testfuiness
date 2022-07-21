@@ -1,6 +1,5 @@
 package esadrcanfer.us.alumno.autotesting.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class InteligentActionSelection {
 	public static Action selectAction(Map<Action, Integer> elements) {
 		Random random = new Random();
 		Map<Action, Integer> inverseElements = InteligentActionSelection.invertedValues(elements);
-		Integer elementsCount = elementsSum(inverseElements,  true);
+		Integer elementsCount = elementsSum(inverseElements, true);
 		Action element = null;
 		Integer randomValue = random.nextInt(elementsCount);
 		for (Map.Entry<Action, Integer> entry: inverseElements.entrySet()) {

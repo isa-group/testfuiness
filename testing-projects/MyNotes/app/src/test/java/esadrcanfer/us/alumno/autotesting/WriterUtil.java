@@ -19,7 +19,11 @@ public class WriterUtil {
 	public WriterUtil() {
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		String filename = "TestCase-" + timeLog+".txt";
-		this.logFile = new File(filename);
+		File dir = new File("src/main/assets");
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		this.logFile = new File(dir, filename);
 	}
 
 	public File getLogFile() {

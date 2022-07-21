@@ -1,0 +1,9 @@
+esadrcanfer.us.alumno.autotesting
+-1
+6
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Create note
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=editText1
+TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/editText1], Test sin asercion
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=button
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Save
+CUSTOM ASSERTION, UiSelector[onClass=TestAsercion2], Check custom assertion
