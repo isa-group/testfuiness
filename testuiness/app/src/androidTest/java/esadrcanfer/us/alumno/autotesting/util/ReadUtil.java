@@ -306,7 +306,11 @@ public class ReadUtil {
 
             String [] splitted = fileName.split("\\*\\*");
 
-            String rootPath = splitted[0];
+            String rootPath = "";
+
+            if(!splitted[0].equals(""))
+                rootPath = splitted[0].substring(0, splitted[0].length()-1);
+
 
             fileName = splitted[1].substring(splitted[1].indexOf("/")+1);
 
@@ -334,12 +338,16 @@ public class ReadUtil {
                 String splitted[] = rootPath.split("/");
 
                 if(splitted[splitted.length-1].equals(fileName)){
-                    return rootPath + fileName;
+                    return rootPath;
                 }
             } else {
                 for (int i = 0; i < assets.length; ++i) {
 
-                    result = recursiveSearch(rootPath + "/" + assets[i], fileName);
+                    if(rootPath.equals("")){
+                        result = recursiveSearch(assets[i], fileName);
+                    }else{
+                        result = recursiveSearch(rootPath + "/" + assets[i], fileName);
+                    }
 
                     if(!result.equals("")){
                         break;

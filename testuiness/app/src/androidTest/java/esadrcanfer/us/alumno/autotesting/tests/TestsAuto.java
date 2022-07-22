@@ -37,7 +37,7 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
+        return Arrays.asList("**/TestDivisión.txt",
                             "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
                             "Test Calculator/API 25, 27, 28/TestResta.txt",
                             "Test Calculator/API 25, 27, 28/TestSuma.txt");
@@ -197,11 +197,6 @@ public class TestsAuto {
 
     @Test
     public void runTxtTests(){
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        long iterations = 5;
-
-        String aPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-
         ReadUtil readUtil = new ReadUtil(path, true);
         TestCase testCase = readUtil.generateTestCase();
 
