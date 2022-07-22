@@ -51,7 +51,7 @@ public class ReadUtil {
         return this.path;
     }
 
-       public String readText(){
+    public String readText(){
         StringBuilder text = new StringBuilder();
         try {
             String filename=Environment.getExternalStorageDirectory().getAbsolutePath().toString()
