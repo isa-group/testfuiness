@@ -70,15 +70,18 @@ public class TestYTMusic {
         UiObject search = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/action_search_button"));
         search.click();
 
-        UiObject search2 = mDevice.findObject(new UiSelector().text("Search songs, albums, artists"));
+        UiObject search2 = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/search_edit_text"));
         search2.setText("Radioactive");
 
-        UiObject song = mDevice.findObject(new UiSelector().text("radioactive imagine dragons"));
+        UiObject song = mDevice.findObject(new UiSelector().className("android.widget.LinearLayout").index(1));
         song.click();
 
-        UiObject play = mDevice.findObject(new UiSelector().text("PLAY"));
+        UiObject play = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/first_entity_button"));
         play.click();
 
+        UiObject pause = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/player_control_play_pause_replay_button"));
+        pause.waitUntilGone(30000);
+        pause.click();
     }
 
     @Test
@@ -89,12 +92,17 @@ public class TestYTMusic {
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
         appViews.scrollForward();
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("YT Music"));
         testingApp.clickAndWaitForNewWindow();
+
+        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/contextual_menu"));
+        options.click();
+
+        UiObject addToLibrary = mDevice.findObject(new UiSelector().text("Add to library"));
+        addToLibrary.click();
 
     }
 
@@ -106,12 +114,108 @@ public class TestYTMusic {
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollForward();
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("YT Music"));
         testingApp.clickAndWaitForNewWindow();
+
+        UiObject back = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/player_collapse_button"));
+        back.click();
+
+        UiObject library = mDevice.findObject(new UiSelector().text("Library"));
+        library.click();
+
+        UiObject songs = mDevice.findObject((new UiSelector().text("Songs")));
+        songs.click();
+
+        UiObject menu = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/contextual_menu_anchor"));
+        menu.click();
+
+        UiObject delete = mDevice.findObject(new UiSelector().text("Remove from library"));
+        delete.click();
+
+    }
+
+    @Test
+    public void test4Explore() throws UiObjectNotFoundException {
+
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
+
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollForward();
+
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("YT Music"));
+        testingApp.clickAndWaitForNewWindow();
+
+        UiObject explore = mDevice.findObject(new UiSelector().text("Explore"));
+        explore.click();
+
+        UiObject topMusic = mDevice.findObject(new UiSelector().className("android.view.ViewGroup").index(1));
+        topMusic.click();
+
+        UiObject song = mDevice.findObject((new UiSelector().resourceId("com.google.android.apps.youtube.music:id/two_row_item").index(0)));
+        song.click();
+
+        UiObject pause = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/player_control_play_pause_replay_button"));
+        pause.waitUntilGone(30000);
+        pause.click();
+
+    }
+
+    @Test
+    public void test5Subscribe() throws UiObjectNotFoundException {
+
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
+
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollForward();
+
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("YT Music"));
+        testingApp.clickAndWaitForNewWindow();
+
+        UiObject back = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/player_collapse_button"));
+        back.click();
+
+        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.youtube.music:id/contextual_menu_anchor"));
+        options.click();
+
+        UiObject subscribe = mDevice.findObject((new UiSelector().text("Subscribe")));
+        subscribe.click();
+
+    }
+
+    @Test
+    public void test6Unsubscribe() throws UiObjectNotFoundException {
+
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
+
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollForward();
+
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("YT Music"));
+        testingApp.clickAndWaitForNewWindow();
+
+        UiObject library = mDevice.findObject(new UiSelector().text("Library"));
+        library.click();
+
+        UiObject subscriptions = mDevice.findObject(new UiSelector().text("Subscriptions"));
+        subscriptions.click();
+
+        UiObject options = mDevice.findObject((new UiSelector().resourceId("com.google.android.apps.youtube.music:id/contextual_menu_anchor")));
+        options.click();
+
+        UiObject unsubscribe = mDevice.findObject(new UiSelector().text("Unsubscribe"));
+        unsubscribe.click();
 
     }
 
