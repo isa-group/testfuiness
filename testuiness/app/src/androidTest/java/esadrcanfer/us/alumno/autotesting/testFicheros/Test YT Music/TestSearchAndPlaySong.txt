@@ -1,0 +1,8 @@
+com.google.android.apps.youtube.music
+-1
+4
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/action_search_button],
+TEXT, UiSelector[TEXT=Search songs, albums, artists], Radioactive
+BUTTON, UiSelector[TEXT=radioactive imagine dragons],
+BUTTON, UiSelector[TEXT=PLAY],
+finalState.contains(testActions[1].value)
