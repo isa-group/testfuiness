@@ -23,14 +23,28 @@ public class WriterUtil {
 
 	public WriterUtil(){
 
+		File assets = new File("src/main/assets");
+
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		String fileName = "TestCase-" + timeLog+".txt";
-		File testFile = new File("src/main/assets/tests/", fileName);
-		testFile.getParentFile().mkdirs();
+		File testFile = null;
+
+		if(assets.exists()){
+			testFile = new File("src/main/assets/tests/", fileName);
+		}else{
+			testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/repairedTests", fileName);
+		}
+
+		if(testFile.getParentFile().mkdirs()==true){
+			Log.d("ISA", "New directory successfully created!!");
+		}else{
+			Log.d("ISA", "Either the directory already exits or it is bad formed");
+		}
+
 		try {
 			testFile.createNewFile();
 		}catch (Exception e){
-			Log.e("ISA", "An error while creating the .txt file has occurred.");
+			Log.e("ISA", "A file with the given name already exists in the specified directory.");
 			e.printStackTrace();
 		}
 		this.logFile = testFile;
@@ -39,14 +53,28 @@ public class WriterUtil {
 
 	public WriterUtil(String baseFileName) {
 
+		File assets = new File("src/main/assets");
+
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		String fileName = baseFileName + timeLog+".txt";
-		File testFile = new File("src/main/assets/tests/", fileName);
-		testFile.getParentFile().mkdirs();
+		File testFile = null;
+
+		if(assets.exists()){
+			testFile = new File("src/main/assets/tests/", fileName);
+		}else{
+			testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/repairedTests", fileName);
+		}
+
+		if(testFile.getParentFile().mkdirs()==true){
+			Log.d("ISA", "New directory successfully created!!");
+		}else{
+			Log.d("ISA", "Either the directory already exits or it is bad formed");
+		}
+
 		try {
 			testFile.createNewFile();
 		}catch (Exception e){
-			Log.e("ISA", "An error while creating the .txt file has occurred.");
+			Log.e("ISA", "A file with the given name already exists in the specified directory.");
 			e.printStackTrace();
 		}
 		this.logFile = testFile;
@@ -54,8 +82,18 @@ public class WriterUtil {
 	}
 
 	public WriterUtil(String path, String fileName) {
+
+		File assets = new File("src/main/assets");
+
 		String name = fileName+".txt";
-		File testFile = new File("src/main/assets/"+path, name);
+
+		File testFile = null;
+
+		if(assets.exists()){
+			testFile = new File("src/main/assets/"+path, name);
+		}else{
+			testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+path, fileName);
+		}
 
 		if(testFile.getParentFile().mkdirs()==true){
 			Log.d("ISA", "New directory successfully created!!");
@@ -71,10 +109,18 @@ public class WriterUtil {
 		}
 		this.logFile = testFile;
 	}
-	
+
 	public File getLogFile() {
 		return logFile;
 	}
+
+	public static void saveInDevice(TestCase testCase, Long seed, String fileName){
+
+		WriterUtil writer = new WriterUtil("/Download/repairedTests", fileName);
+		writer.write(testCase, (long) seed);
+
+	}
+
 
 	public void write(TestCase testCase, Long seed){
 		write(testCase.getAppPackage());
