@@ -1,16 +1,25 @@
 package esadrcanfer.us.alumno.autotesting.util;
 
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Environment;
+import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
+import com.github.javaparser.metamodel.ClassOrInterfaceDeclarationMetaModel;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,23 +60,39 @@ public class ReadUtil {
         return this.path;
     }
 
-       public String readText(){
+    public String readText(){
+
+        Context appContext = getInstrumentation().getTargetContext();
+        AssetManager assetManager = appContext.getAssets();
+
         StringBuilder text = new StringBuilder();
+        BufferedReader reader = null;
+
         try {
-            String filename=Environment.getExternalStorageDirectory().getAbsolutePath().toString()
-                    + "/" + getPath();
-            BufferedReader br = new BufferedReader(new FileReader(filename
-            ));
+
+            String filename = searchFile(getPath());
+
+            if(filename.equals(""))
+                throw new FileNotFoundException();
+
+            reader = new BufferedReader(
+                    new InputStreamReader(assetManager.open(filename)));
+
             String line;
-            while ((line = br.readLine())!= null){
+            while ((line = reader.readLine()) != null) {
                 text.append(line);
                 text.append("\n");
             }
-            br.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return text.toString();
     }
@@ -92,7 +117,7 @@ public class ReadUtil {
         String cond1 = "";
         String cond2 = "";
         Integer textInputCounter = 0;
-        ReadUtil ru = new ReadUtil("Download/config.txt");
+        ReadUtil ru = new ReadUtil("config.txt");
         String configFile = ru.readText();
         String[] configLines = configFile.split("\n");
         String predicate = null; //Inicializo predicate a null porque no siempre tiene por qué haberlo
@@ -152,7 +177,7 @@ public class ReadUtil {
     }
 
     public Action  generateActionFromString(String action, Long seed, String generatorType, String cond1, String cond2){
-        String[] splitAction = action.split(", "); // Dividir la cadena por comas
+        String[] splitAction = action.split(","); // Dividir la cadena por comas
         String type = splitAction[0];// Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
         String resourceId = "";
         String value = "";
@@ -171,7 +196,7 @@ public class ReadUtil {
         }
         Action res = null;
         UiObject object = null;
-        UiDevice device = UiDevice.getInstance();
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());;
         if(selectorType.equals("RESOURCE_ID"))
             object = new UiObject(new UiSelector().resourceId(resourceId));
         else if(selectorType.equals("DESCRIPTION"))
@@ -272,5 +297,68 @@ public class ReadUtil {
                 res = new SwitchAction(object);
         }
         return res;
+    }
+
+    // ------------------- Auxiliar methods ------------------------
+
+    private String searchFile(String fileName){
+
+        if(fileName.contains("**")){
+
+            String [] splitted = fileName.split("\\*\\*");
+
+            String rootPath = "";
+
+            if(!splitted[0].equals(""))
+                rootPath = splitted[0].substring(0, splitted[0].length()-1);
+
+
+            fileName = splitted[1].substring(splitted[1].indexOf("/")+1);
+
+            return recursiveSearch(rootPath, fileName);
+
+        }else{
+            return fileName;
+        }
+
+    }
+
+    private String recursiveSearch(String rootPath, String fileName){
+
+        Context appContext = getInstrumentation().getTargetContext();
+
+        AssetManager assetManager = appContext.getAssets();
+
+        String result = "";
+
+        String assets[] = null;
+
+        try {
+            assets = assetManager.list(rootPath);
+            if (assets.length == 0) {
+                String splitted[] = rootPath.split("/");
+
+                if(splitted[splitted.length-1].equals(fileName)){
+                    return rootPath;
+                }
+            } else {
+                for (int i = 0; i < assets.length; ++i) {
+
+                    if(rootPath.equals("")){
+                        result = recursiveSearch(assets[i], fileName);
+                    }else{
+                        result = recursiveSearch(rootPath + "/" + assets[i], fileName);
+                    }
+
+                    if(!result.equals("")){
+                        break;
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            Log.e("tag", "I/O Exception", ex);
+        }
+
+        return result;
     }
 }

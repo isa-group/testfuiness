@@ -3,9 +3,10 @@ package esadrcanfer.us.alumno.autotesting.tests;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
+import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
