@@ -37,10 +37,10 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        return Arrays.asList("**/TestDivisión.txt",
+        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
                             "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
                             "Test Calculator/API 25, 27, 28/TestResta.txt",
-                            "Test Calculator/API 25, 27, 28/TestSuma.txt");
+                            "Test Calculator/API 25, 27, 28/TestSuma.txt");*/
 
         // CLOCK
 
@@ -71,9 +71,9 @@ public class TestsAuto {
 
         // CHROME
 
-        /*return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt",
+        return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt",
                             "Test Google Chrome/TestShareImageGoogleChrome.txt",
-                            "Test Google Chrome/TestClearHistoryGoogleChrome.txt");*/
+                            "Test Google Chrome/TestClearHistoryGoogleChrome.txt");
 
         // GOOGLE DOCS
 

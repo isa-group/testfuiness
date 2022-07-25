@@ -5,6 +5,7 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Environment;
+import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 
 import androidx.test.uiautomator.UiDevice;
@@ -176,7 +177,7 @@ public class ReadUtil {
     }
 
     public Action  generateActionFromString(String action, Long seed, String generatorType, String cond1, String cond2){
-        String[] splitAction = action.split(", "); // Dividir la cadena por comas
+        String[] splitAction = action.split(","); // Dividir la cadena por comas
         String type = splitAction[0];// Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
         String resourceId = "";
         String value = "";
@@ -195,7 +196,7 @@ public class ReadUtil {
         }
         Action res = null;
         UiObject object = null;
-        UiDevice device = UiDevice.getInstance();
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());;
         if(selectorType.equals("RESOURCE_ID"))
             object = new UiObject(new UiSelector().resourceId(resourceId));
         else if(selectorType.equals("DESCRIPTION"))
