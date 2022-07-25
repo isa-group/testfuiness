@@ -22,23 +22,56 @@ public class WriterUtil {
 	private File logFile;
 
 	public WriterUtil(){
-		this("TestCase-");
-	}
 
-	public WriterUtil(String basefilename) {
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		String filename = basefilename + timeLog+".txt";
-		this.logFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), filename);
+		String fileName = "TestCase-" + timeLog+".txt";
+		File testFile = new File("src/main/assets/tests/", fileName);
+		testFile.getParentFile().mkdirs();
+		try {
+			testFile.createNewFile();
+		}catch (Exception e){
+			Log.e("ISA", "An error while creating the .txt file has occurred.");
+			e.printStackTrace();
+		}
+		this.logFile = testFile;
+
 	}
 
+	public WriterUtil(String baseFileName) {
 
-	public WriterUtil(String fileName, String path) {
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		String filename = fileName + timeLog+ ".png";
-		File dir = new File(path);
-		this.logFile = new File(dir, filename);
+		String fileName = baseFileName + timeLog+".txt";
+		File testFile = new File("src/main/assets/tests/", fileName);
+		testFile.getParentFile().mkdirs();
+		try {
+			testFile.createNewFile();
+		}catch (Exception e){
+			Log.e("ISA", "An error while creating the .txt file has occurred.");
+			e.printStackTrace();
+		}
+		this.logFile = testFile;
+
 	}
 
+	public WriterUtil(String path, String fileName) {
+		String name = fileName+".txt";
+		File testFile = new File("src/main/assets/"+path, name);
+
+		if(testFile.getParentFile().mkdirs()==true){
+			Log.d("ISA", "New directory successfully created!!");
+		}else{
+			Log.d("ISA", "Either the directory already exits or it is bad formed");
+		}
+
+		try {
+			testFile.createNewFile();
+		}catch (Exception e){
+
+			Log.d("ISA", "A file with the given name already exists in the specified directory.");
+		}
+		this.logFile = testFile;
+	}
+	
 	public File getLogFile() {
 		return logFile;
 	}

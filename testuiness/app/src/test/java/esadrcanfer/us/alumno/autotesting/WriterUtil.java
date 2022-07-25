@@ -1,6 +1,5 @@
 package esadrcanfer.us.alumno.autotesting;
 
-
 import android.os.Environment;
 import android.util.Log;
 
@@ -19,11 +18,14 @@ public class WriterUtil {
 	public WriterUtil() {
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		String filename = "TestCase-" + timeLog+".txt";
-		File dir = new File("src/main/assets");
-		if (!dir.exists()) {
-			dir.mkdirs();
+		File testFile = new File("src/main/assets/tests/", filename+timeLog+".txt");
+		testFile.getParentFile().mkdirs();
+		try {
+			System.out.println(testFile.createNewFile());
+		}catch (Exception e){
+			e.printStackTrace();
 		}
-		this.logFile = new File(dir, filename);
+		this.logFile = testFile;
 	}
 
 	public File getLogFile() {
