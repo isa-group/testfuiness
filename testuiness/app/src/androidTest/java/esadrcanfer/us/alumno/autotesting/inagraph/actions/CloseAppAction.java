@@ -1,4 +1,4 @@
-package esadrcanfer.us.alumno.autotesting.inagraph;
+package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
 import java.io.IOException;
 

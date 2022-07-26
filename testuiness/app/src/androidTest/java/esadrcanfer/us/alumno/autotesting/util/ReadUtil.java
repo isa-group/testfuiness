@@ -4,7 +4,6 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 
@@ -12,12 +11,8 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
-import com.github.javaparser.metamodel.ClassOrInterfaceDeclarationMetaModel;
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -27,8 +22,9 @@ import java.util.List;
 import java.util.Random;
 
 import esadrcanfer.us.alumno.autotesting.TestCase;
-import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
-import esadrcanfer.us.alumno.autotesting.inagraph.GoBackAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.EnterAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.GoBackAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScreenshotAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
@@ -182,11 +178,11 @@ public class ReadUtil {
         String resourceId = "";
         String value = "";
         if(splitAction.length>1) {
-            resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
-            value = splitAction.length == 2 ? "" : splitAction[2];      // Valor a usar para realizar la acción
+            resourceId = splitAction[1].trim(); // Selector del objeto sobre el que actuar
+            value = splitAction.length == 2 ? "" : splitAction[2].trim();      // Valor a usar para realizar la acción
         }
         String selectorType = "";
-        if(!resourceId.equals("UiSelector[backButton]")) {
+        if(!(resourceId.equals("UiSelector[backButton]") || resourceId.equals("UiSelector[enterButton]"))) {
             if(!resourceId.startsWith("UiSelector[onClass=]")) {
                 if (!resourceId.equals("")) {
                     selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
@@ -250,6 +246,11 @@ public class ReadUtil {
             case "SCREENSHOT":
                 res = new ScreenshotAction(device);
                 break;
+
+            case "ENTER":
+                res = new EnterAction(device);
+                break;
+
         }
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);

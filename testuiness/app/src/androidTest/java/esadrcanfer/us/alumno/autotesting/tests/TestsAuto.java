@@ -71,9 +71,9 @@ public class TestsAuto {
 
         // CHROME
 
-        return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt",
-                            "Test Google Chrome/TestShareImageGoogleChrome.txt",
-                            "Test Google Chrome/TestClearHistoryGoogleChrome.txt");
+        return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt");
+                            //"Test Google Chrome/TestShareImageGoogleChrome.txt",
+                            //"Test Google Chrome/TestClearHistoryGoogleChrome.txt");
 
         // GOOGLE DOCS
 

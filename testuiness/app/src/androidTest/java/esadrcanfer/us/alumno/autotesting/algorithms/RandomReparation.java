@@ -5,22 +5,15 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
-import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
-import esadrcanfer.us.alumno.autotesting.inagraph.actions.ActionFactory;
-import esadrcanfer.us.alumno.autotesting.objectivefunctions.dynamic.DynamicObjectiveFunction;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
-
-import static android.os.SystemClock.sleep;
-import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 public class RandomReparation extends BaseReparationAlgorithm{
 

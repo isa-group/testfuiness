@@ -1,7 +1,6 @@
 package esadrcanfer.us.alumno.autotesting.inagraph;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -11,6 +10,8 @@ import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ActionFactory;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.GoBackAction;
 
 public class INAGraphBuilder {
 

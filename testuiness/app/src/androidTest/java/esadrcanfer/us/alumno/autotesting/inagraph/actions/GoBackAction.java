@@ -1,8 +1,7 @@
-package esadrcanfer.us.alumno.autotesting.inagraph;
+package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
-import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 
 public class GoBackAction extends Action {
     UiDevice device;
