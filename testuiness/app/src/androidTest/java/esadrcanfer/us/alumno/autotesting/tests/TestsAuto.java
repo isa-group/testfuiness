@@ -71,9 +71,9 @@ public class TestsAuto {
 
         // CHROME
 
-        return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt");
-                            //"Test Google Chrome/TestShareImageGoogleChrome.txt",
-                            //"Test Google Chrome/TestClearHistoryGoogleChrome.txt");
+        /*return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt"),
+                            "Test Google Chrome/TestShareImageGoogleChrome.txt",
+                            "Test Google Chrome/TestClearHistoryGoogleChrome.txt");*/
 
         // GOOGLE DOCS
 
@@ -100,9 +100,9 @@ public class TestsAuto {
 
         // GOOGLE EARTH
 
-        /*return Arrays.asList("Download/Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
-                            "Download/Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
-                            "Download/Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
+        return Arrays.asList(//"Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
+                            //"Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
+                            "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");
 
         // GOOGLE MAPS
 
