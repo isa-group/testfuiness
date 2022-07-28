@@ -1,14 +1,9 @@
 package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-
-import android.widget.ScrollView;
-
-import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.Direction;
-import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiScrollable;
+import androidx.test.uiautomator.UiSelector;
 
 public class ScrollToAction extends Action{
 
@@ -17,17 +12,20 @@ public class ScrollToAction extends Action{
     }
 
     @Override
-    public void perform() {
+    public void perform() throws UiObjectNotFoundException {
 
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiScrollable scrollable =  new UiScrollable(target.getSelector());
 
-        UiObject2 scrollable = device.findObject(By.clazz(ScrollView.class));
-
-        String valueReplaced = value.replace("toElementById=","");
-        String id = device.getCurrentPackageName()+":id/"+valueReplaced;
-
-        while(!device.hasObject(By.res(id))){
-            scrollable.scroll(Direction.DOWN, (float) 0.5);
-        }
+        if (value.startsWith("Elements=")) {
+            scrollable.scrollToEnd(Integer.valueOf(value.replace("Elements=","")));
+        } else if (value.startsWith("toElementById=")) {
+            scrollable.scrollIntoView(new UiSelector().resourceId(value.replace("toElementById=","")));
+        } else if (value.startsWith("toElementByText=")) {
+            scrollable.scrollIntoView(new UiSelector().text(value.replace("toElementByText=","")));
+        } else if (value.startsWith("toElementByDescription=")) {
+            scrollable.scrollIntoView(new UiSelector().description(value.replace("toElementByDescription=","")));
+        } else
+            scrollable.scrollToEnd(Integer.MAX_VALUE);
     }
 }
+
