@@ -37,10 +37,10 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
+        return Arrays.asList("**/TestDivisión.txt",
                             "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
                             "Test Calculator/API 25, 27, 28/TestResta.txt",
-                            "Test Calculator/API 25, 27, 28/TestSuma.txt");*/
+                            "Test Calculator/API 25, 27, 28/TestSuma.txt");
 
         // CLOCK
 
@@ -100,9 +100,9 @@ public class TestsAuto {
 
         // GOOGLE EARTH
 
-        return Arrays.asList(//"Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
+        /*return Arrays.asList(//"Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
                             //"Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
-                            "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");
+                            "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
 
         // GOOGLE MAPS
 
