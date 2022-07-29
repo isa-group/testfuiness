@@ -1,0 +1,8 @@
+com.google.android.apps.youtube.music
+-1
+4
+BUTTON, UiSelector[TEXT=Explore],
+BUTTON, UiSelector[CLASS=android.view.ViewGroup(1)],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/two_row_item],
+COUNT_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/player_control_play_pause_replay_button], 30
+finalState.contains(testActions[1].value)

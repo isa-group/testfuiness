@@ -4,31 +4,27 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Environment;
-import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
-import com.github.javaparser.metamodel.ClassOrInterfaceDeclarationMetaModel;
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import esadrcanfer.us.alumno.autotesting.TestCase;
-import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
-import esadrcanfer.us.alumno.autotesting.inagraph.GoBackAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.EnterAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.GoBackAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScreenshotAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
@@ -60,6 +56,13 @@ public class ReadUtil {
         return this.path;
     }
 
+    /**
+     * This method finds the file located by {@link ReadUtil#path} inside the
+     * assets folder. It's possible to use ** to search in any folder/subfolder
+     * the file.
+     *
+     * @return String with the content of the file.
+     */
     public String readText(){
 
         Context appContext = getInstrumentation().getTargetContext();
@@ -83,6 +86,9 @@ public class ReadUtil {
                 text.append(line);
                 text.append("\n");
             }
+
+            text.deleteCharAt(text.length()-1);
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -97,181 +103,127 @@ public class ReadUtil {
         return text.toString();
     }
 
+    /**
+     * This method generates a TestCase object from a test written in text plain with the
+     * particular syntax inside the location referenced by {@link ReadUtil#path}.
+     *
+     * @return TestCase generated from the text plain file located by {@link ReadUtil#path}.
+     */
     public TestCase generateTestCase(){
-        List<Action> beforeActions = new ArrayList<>();
-        List<Action> afterActions = new ArrayList<>();
+
         List<Action> testActions = new ArrayList<>();
         String text = readText();
+        String action;
+        String predicate = null;
+
         String[] lines = text.split("\n");
         String appPackage = lines[0];
-        Long seed;
+        Long seed = sameSeed ? new Long(lines[1]) : Math.abs(new Random().nextLong());
+        int actionsSize = new Integer(lines[2]);
 
-        if(sameSeed) {
-            seed = new Long(lines[1]);
-        }else{
-            seed = Math.abs(new Random().nextLong());
-        }
-        Integer actionsSize = new Integer(lines[2]);
-        String action = "";
         String generatorType = "";
-        String cond1 = "";
-        String cond2 = "";
-        Integer textInputCounter = 0;
-        ReadUtil ru = new ReadUtil("config.txt");
-        String configFile = ru.readText();
-        String[] configLines = configFile.split("\n");
-        String predicate = null; //Inicializo predicate a null porque no siempre tiene por qué haberlo
-        for(int i = 3; i<= actionsSize + 2; i++){
+        String generatorParameters = "";
+        int textInputCounter = 0;
+        String[] configLines = readConfigFile();
+
+        for(int i = 3; i <= actionsSize + 2; i++){
+
             action = lines[i];
+
             if(action.startsWith("TEXT")) {
+
+                if(textInputCounter >= configLines.length) textInputCounter = 0;
+
                 String configLine = configLines[textInputCounter];
                 textInputCounter++;
-                String[] splitConfigLine = configLine.split("-");
-                generatorType = splitConfigLine[0];
+                String[] splitConfigLine = configLine.split(":");
 
-                String conditions = splitConfigLine[1];
-                String[] splitConditions = conditions.split("/");
-                cond1 = splitConditions[0];
-                if(!conditions.endsWith("/")) {
-                    cond2 = splitConditions[1];
-                }
+                generatorType = splitConfigLine[0].trim();
+                generatorParameters = splitConfigLine[1].trim();
             }
 
             if(action.startsWith("CUSTOM ASSERTION")){
                 predicate = action;
+            }else{
+                testActions.add(generateActionFromString(action, seed, generatorType, generatorParameters));
             }
 
-            if (seed <  0) {
-                if(!action.startsWith("CUSTOM ASSERTION"))
-                testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2));
-            }else {
-                if(!action.startsWith("CUSTOM ASSERTION"))
-                testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
-            }
-                if(i == actionsSize+2){
-                break;
-            }
-        }
-        long numberOfLines = Arrays.stream(lines).count(); //Cuento el número de líneas del archivo
-        actionsSize = new Integer(lines[2]); //Vuelvo a setear actionsSize porque el método de arriba las cambia para acabar el for y las "arruina"
-        if (numberOfLines != actionsSize+3) { //Esto cuenta las líneas y si no hay aserción, no habrá mas de actionsSize + 3
-            predicate = lines[actionsSize + 3]; //Si hay aserción, se va a la línea donde debería estar. Cambié el +1 por un +3 porque tres líneas más arriba he cambiado el valor de actionsSize después del for
         }
 
-        List<String> initialLabels = new ArrayList<>();
-        /*
-        String initialState = lines[actionsSize+2].replaceAll("\\[", "").replaceAll("\\]", "");
-        String finalState = lines[actionsSize+3].replaceAll("\\[", "").replaceAll("\\]", "");
-        for (String label: initialState.split(", ")) {
-            initialLabels.add(label);
-        }*/
-        List<String> finalLabels = new ArrayList<>();
-        /*for (String label: finalState.split(", ")) {
-            finalLabels.add(label);
-        }*/
-        beforeActions.add(new StartAppAction(appPackage));
-        afterActions.add(new CloseAppAction(appPackage));
-        TestCase testCase = new TestCase(appPackage, Collections.EMPTY_SET,beforeActions,testActions,afterActions, initialLabels, finalLabels);
-        testCase.setPredicate(predicate);
-        return testCase;
+        if (lines.length != actionsSize + 3) predicate = lines[actionsSize + 3];
+
+        return createTestCase(appPackage, testActions, predicate);
     }
 
-    public Action  generateActionFromString(String action, Long seed, String generatorType, String cond1, String cond2){
-        String[] splitAction = action.split(","); // Dividir la cadena por comas
-        String type = splitAction[0];// Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
-        String resourceId = "";
-        String value = "";
-        if(splitAction.length>1) {
-            resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
-            value = splitAction.length == 2 ? "" : splitAction[2];      // Valor a usar para realizar la acción
-        }
+    /**
+     * This method parse a given action written with the text plain action's syntax
+     * to an object of type {@link Action}.
+     * @param action A string written with the text plain action's syntax.
+     * @param seed Long value that indicates the seed to be applied to create the test.
+     * @param generatorType Input generator type to be used in TEXT type actions.
+     * @param generatorParameters String that represents the parameters of the generator used.
+     * @return An {@link Action} that represents the one given in String format.
+     */
+    public Action generateActionFromString(String action, Long seed, String generatorType, String generatorParameters){
+
+        Log.d("ISA", action);
+
+        String[] splitAction = action.split(",");
+        String type = splitAction[0];
+        String selector = "";
         String selectorType = "";
-        if(!resourceId.equals("UiSelector[backButton]")) {
-            if(!resourceId.startsWith("UiSelector[onClass=]")) {
-                if (!resourceId.equals("")) {
-                    selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
-                    resourceId = resourceId.substring(resourceId.indexOf("=") + 1, resourceId.length() - 1);
-                }
-            }
+        String selectorValue = "";
+        String value = "";
+
+        if(splitAction.length>1) {
+            selector = splitAction[1].trim();
+            value = splitAction.length == 2 ? "" : splitAction[2].trim();
         }
-        Action res = null;
-        UiObject object = null;
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());;
-        if(selectorType.equals("RESOURCE_ID"))
-            object = new UiObject(new UiSelector().resourceId(resourceId));
-        else if(selectorType.equals("DESCRIPTION"))
-            object = new UiObject(new UiSelector().descriptionContains(resourceId));
-        else if(selectorType.equals("TEXT"))
-            object = new UiObject(new UiSelector().textContains(resourceId));
-        else if (selectorType.equals("SCROLLABLE"))
-            object = new UiObject(new UiSelector().scrollable(!type.equals("SCROLL_DOWN")));
-        else if (selectorType.equals("POSITION"))
-            object = new UiObject(new UiSelector().className("android.widget.CheckedTextView").index(Integer.parseInt(resourceId)));
-        else if (selectorType.equals("CLASS")) {
-            Integer index = Integer.parseInt(
-                                    resourceId.substring(resourceId.indexOf("(")+1, resourceId.indexOf(")"))
-                            );
-            String className = resourceId.substring(0, resourceId.indexOf("("));
-            object = new UiObject(new UiSelector().className(className).index(index));
+
+        if(!(selector.equals("UiSelector[backButton]") || selector.equals("UiSelector[enterButton]")
+                 || selector.startsWith("UiSelector[onClass=]") || selector.equals(""))) {
+
+                selectorType = selector.substring(selector.indexOf("[") + 1, selector.indexOf("=")).trim();
+                selectorValue = selector.substring(selector.indexOf("=") + 1, selector.length() - 1);
+
         }
-        switch (type) {
-            case "BUTTON":
-                res = new ButtonAction(object);
-                break;
-            case "TEXT":
-                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, generatorType, cond1, cond2);
-                res = new TextInputAction(object, textInputGenerator);
-                break;
-            case "CHECKBOX":
-                res = new CheckBoxAction(object);
-                break;
-            case "RADIO_BUTTON":
-                RadioButtonInputGenerator radioButtonInputGenerator = new RadioButtonInputGenerator(seed);
-                res = new RadioButtonAction(object, radioButtonInputGenerator);
-                break;
-            case "SCROLL_TO":
-                res = new ScrollToAction(object);
-                break;
-            case "COUNT_DOWN":
-                res = new CountDownAction(object);
-                break;
-            case "SPINNER":
-                res = new SpinnerAction(object);
-                break;
-            case "CHECKED_TEXT":
-                res = new CheckedTextAction(object);
-                break;
-            case "SWITCH":
-                res = new SwitchAction(object);
-                break;
-            case "GO_BACK":
-                res = new GoBackAction(device);
-                break;
-            case "SCREENSHOT":
-                res = new ScreenshotAction(device);
-                break;
-        }
+
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject object = objectSelector(device, type, selectorType, selectorValue);
+        Action generatedAction = parseAction(type, device, object, seed, value, generatorType, generatorParameters);
+
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);
-        res.setValue(value.trim());
-        return res;
+
+        try{
+            generatedAction.setValue(value.trim());
+        }catch(NullPointerException e){
+            Log.e("ISA", "Variable 'value' is null!");
+        }
+
+        return generatedAction;
     }
 
     public static Action generateActionFromSimpleString(String action, Long seed){
+
         Log.d("ISA", action);
-        String value = null;
-        String[] splitAction = action.split(", ");
+
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        String value = "";
+        Action res = null;
+        String[] splitAction = action.split(",");
         String type = splitAction[0];
         String resourceId = splitAction[1];
         resourceId = splitAction[1].substring(resourceId.indexOf("=") + 1 ,resourceId.length()-1);
-        Action res = null;
-        UiObject object = new UiObject(new UiSelector().resourceId(resourceId));
+
+        UiObject object = device.findObject(new UiSelector().resourceId(resourceId));
+
         switch (type){
             case "BUTTON":
                 res = new ButtonAction(object);
                 break;
             case "TEXT":
-                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, null, null, null);
+                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, "", "");
                 res = new TextInputAction(object, textInputGenerator);
                 break;
             case "CHECKBOX":
@@ -299,9 +251,33 @@ public class ReadUtil {
         return res;
     }
 
-    // ------------------- Auxiliar methods ------------------------
+    /**
+     * This methods reads the configuration file located in the assets root folder.
+     * @return A String array that contains the configuration for the input generators.
+     */
+    public static String[] readConfigFile(){
 
-    private String searchFile(String fileName){
+        ReadUtil ru = new ReadUtil("config.txt");
+        String configFile = ru.readText();
+        String[] configLines = null;
+
+        if(configFile.startsWith("{") && configFile.endsWith("}")){
+            configFile = configFile.replace("{", "")
+                    .replace("}","")
+                    .replace("\n", "");
+            configLines = configFile.split(";");
+        }else{
+            Log.e("ISA", "Invalid configuration file!");
+        }
+
+        return configLines;
+    }
+
+    /**
+     *  ------------------- Auxiliar methods ------------------------
+     **/
+
+    private String searchFile(@NonNull String fileName){
 
         if(fileName.contains("**")){
 
@@ -331,12 +307,12 @@ public class ReadUtil {
 
         String result = "";
 
-        String assets[] = null;
+        String[] assets;
 
         try {
             assets = assetManager.list(rootPath);
             if (assets.length == 0) {
-                String splitted[] = rootPath.split("/");
+                String[] splitted = rootPath.split("/");
 
                 if(splitted[splitted.length-1].equals(fileName)){
                     return rootPath;
@@ -360,5 +336,109 @@ public class ReadUtil {
         }
 
         return result;
+    }
+
+    private TestCase createTestCase(String appPackage, List<Action> testActions, String predicate){
+        List<String> initialLabels = new ArrayList<>();
+        List<String> finalLabels = new ArrayList<>();
+        List<Action> beforeActions = new ArrayList<>();
+        List<Action> afterActions = new ArrayList<>();
+
+        beforeActions.add(new StartAppAction(appPackage));
+        afterActions.add(new CloseAppAction(appPackage));
+
+        TestCase testCase = new TestCase(appPackage, Collections.EMPTY_SET, beforeActions, testActions, afterActions, initialLabels, finalLabels);
+        testCase.setPredicate(predicate);
+        return testCase;
+    }
+
+    private UiObject objectSelector(UiDevice device, String actionType, String selectorType, String selectorValue){
+
+        UiObject object = null;
+
+        switch(selectorType){
+
+            case "RESOURCE_ID":
+                object = device.findObject(new UiSelector().resourceId(selectorValue));
+                break;
+
+            case "DESCRIPTION":
+                object = device.findObject(new UiSelector().description(selectorValue));
+                break;
+
+            case "TEXT":
+                object = device.findObject(new UiSelector().text(selectorValue));
+                break;
+
+            case "SCROLLABLE":
+                object = device.findObject(new UiSelector().scrollable(!actionType.equals("SCROLL_TO")));
+                break;
+
+            case "POSITION":
+                object = device.findObject(new UiSelector().className("android.widget.CheckedTextView").index(Integer.parseInt(selectorValue)));
+                break;
+
+            case "CLASS":
+                int index = Integer.parseInt(
+                        selectorValue.substring(selectorValue.indexOf("(")+1, selectorValue.indexOf(")"))
+                );
+                String className = selectorValue.substring(0, selectorValue.indexOf("("));
+
+                object = device.findObject(new UiSelector().className(className).index(index));
+
+                break;
+        }
+
+        return object;
+
+    }
+
+    private Action parseAction(String type, UiDevice device, UiObject object, Long seed, String value, String generatorType, String generatorParameters){
+
+        Action generatedAction = null;
+
+        switch (type) {
+            case "BUTTON":
+                generatedAction = new ButtonAction(object);
+                break;
+            case "TEXT":
+                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, generatorType, generatorParameters);
+                generatedAction = new TextInputAction(object, textInputGenerator);
+                break;
+            case "CHECKBOX":
+                generatedAction = new CheckBoxAction(object);
+                break;
+            case "RADIO_BUTTON":
+                RadioButtonInputGenerator radioButtonInputGenerator = new RadioButtonInputGenerator(seed);
+                generatedAction = new RadioButtonAction(object, radioButtonInputGenerator);
+                break;
+            case "SCROLL_TO":
+                generatedAction = new ScrollToAction(object);
+                break;
+            case "COUNT_DOWN":
+                generatedAction = new CountDownAction(object);
+                break;
+            case "SPINNER":
+                generatedAction = new SpinnerAction(object);
+                break;
+            case "CHECKED_TEXT":
+                generatedAction = new CheckedTextAction(object);
+                break;
+            case "SWITCH":
+                generatedAction = new SwitchAction(object);
+                break;
+            case "GO_BACK":
+                generatedAction = new GoBackAction(device);
+                break;
+            case "SCREENSHOT":
+                generatedAction = new ScreenshotAction(device);
+                break;
+            case "ENTER":
+                generatedAction = new EnterAction(device);
+                break;
+
+        }
+
+        return generatedAction;
     }
 }

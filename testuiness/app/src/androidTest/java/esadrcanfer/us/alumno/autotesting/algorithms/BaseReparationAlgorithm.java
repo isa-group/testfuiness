@@ -1,5 +1,7 @@
 package esadrcanfer.us.alumno.autotesting.algorithms;
 
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -13,12 +15,10 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
-import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ActionFactory;
-
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 public abstract class BaseReparationAlgorithm implements ReparationAlgorithm {
 
