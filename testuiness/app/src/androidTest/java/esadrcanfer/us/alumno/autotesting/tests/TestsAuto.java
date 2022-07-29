@@ -51,10 +51,10 @@ public class TestsAuto {
 
         // CONTACTS
 
-        /*return Arrays.asList("Download/Test Contacts/API 27, 28, 29/TestCreateContact.txt",
-                            "Download/Test Contacts/API 27, 28, 29/TestEditContact.txt",
-                            "Download/Test Contacts/API 27, 28, 29/TestFavoriteContact.txt",
-                            "Download/Test Contacts/API 27, 28, 29/TestDeleteContact.txt");*/
+        return Arrays.asList(//"Test Contacts/API 27, 28, 29/TestCreateContact.txt",
+                            "Test Contacts/API 27, 28, 29/TestEditContact.txt");
+                            //"Test Contacts/API 27, 28, 29/TestFavoriteContact.txt",
+                            //"Test Contacts/API 27, 28, 29/TestDeleteContact.txt");
 
         // GMAIL
 
@@ -100,9 +100,9 @@ public class TestsAuto {
 
         // GOOGLE EARTH
 
-        return Arrays.asList(//"Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
-                            //"Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
-                            "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");
+        /*return Arrays.asList("Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
+                            "Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
+                            "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
 
         // GOOGLE MAPS
 

@@ -1,2 +1,7 @@
-given-Hola/
-
+{
+    word: 1;
+    number: (2,7);
+    given: Hola mundo;
+    numberFromList: [645645645,423423234,234234234,567567567];
+    regex: email
+}

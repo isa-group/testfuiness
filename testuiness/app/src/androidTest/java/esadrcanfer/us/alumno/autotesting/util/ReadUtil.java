@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -85,6 +86,9 @@ public class ReadUtil {
                 text.append(line);
                 text.append("\n");
             }
+
+            text.deleteCharAt(text.length()-1);
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -106,6 +110,7 @@ public class ReadUtil {
      * @return TestCase generated from the text plain file located by {@link ReadUtil#path}.
      */
     public TestCase generateTestCase(){
+
         List<Action> testActions = new ArrayList<>();
         String text = readText();
         String action;
@@ -117,35 +122,30 @@ public class ReadUtil {
         int actionsSize = new Integer(lines[2]);
 
         String generatorType = "";
-        String firstGeneratorParameter = "";
-        String secondGeneratorParameter = "";
+        String generatorParameters = "";
         int textInputCounter = 0;
-        ReadUtil ru = new ReadUtil("config.txt");
-        String configFile = ru.readText();
-        String[] configLines = configFile.split("\n");
+        String[] configLines = readConfigFile();
 
-        for(int i = 3; i < actionsSize + 2; i++){
+        for(int i = 3; i <= actionsSize + 2; i++){
 
             action = lines[i];
 
             if(action.startsWith("TEXT")) {
 
+                if(textInputCounter >= configLines.length) textInputCounter = 0;
+
                 String configLine = configLines[textInputCounter];
                 textInputCounter++;
-                String[] splitConfigLine = configLine.split("-");
-                generatorType = splitConfigLine[0];
+                String[] splitConfigLine = configLine.split(":");
 
-                String conditions = splitConfigLine[1];
-                String[] splitConditions = conditions.split("/");
-                firstGeneratorParameter = splitConditions[0];
-                if(!conditions.endsWith("/")) secondGeneratorParameter = splitConditions[1];
-
+                generatorType = splitConfigLine[0].trim();
+                generatorParameters = splitConfigLine[1].trim();
             }
 
             if(action.startsWith("CUSTOM ASSERTION")){
                 predicate = action;
             }else{
-                testActions.add(generateActionFromString(action, seed, generatorType, firstGeneratorParameter, secondGeneratorParameter));
+                testActions.add(generateActionFromString(action, seed, generatorType, generatorParameters));
             }
 
         }
@@ -161,11 +161,10 @@ public class ReadUtil {
      * @param action A string written with the text plain action's syntax.
      * @param seed Long value that indicates the seed to be applied to create the test.
      * @param generatorType Input generator type to be used in TEXT type actions.
-     * @param firstGeneratorParameter First parameter for the given input generator.
-     * @param secondGeneratorParameter Second parameter for the given input generator (if needed).
+     * @param generatorParameters String that represents the parameters of the generator used.
      * @return An {@link Action} that represents the one given in String format.
      */
-    public Action generateActionFromString(String action, Long seed, String generatorType, String firstGeneratorParameter, String secondGeneratorParameter){
+    public Action generateActionFromString(String action, Long seed, String generatorType, String generatorParameters){
 
         Log.d("ISA", action);
 
@@ -191,7 +190,7 @@ public class ReadUtil {
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         UiObject object = objectSelector(device, type, selectorType, selectorValue);
-        Action generatedAction = parseAction(type, device, object, seed, value, generatorType, firstGeneratorParameter, secondGeneratorParameter);
+        Action generatedAction = parseAction(type, device, object, seed, value, generatorType, generatorParameters);
 
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);
@@ -210,7 +209,7 @@ public class ReadUtil {
         Log.d("ISA", action);
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        String value = null;
+        String value = "";
         Action res = null;
         String[] splitAction = action.split(",");
         String type = splitAction[0];
@@ -224,7 +223,7 @@ public class ReadUtil {
                 res = new ButtonAction(object);
                 break;
             case "TEXT":
-                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, null, null, null);
+                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, "", "");
                 res = new TextInputAction(object, textInputGenerator);
                 break;
             case "CHECKBOX":
@@ -250,6 +249,28 @@ public class ReadUtil {
                 res = new SwitchAction(object);
         }
         return res;
+    }
+
+    /**
+     * This methods reads the configuration file located in the assets root folder.
+     * @return A String array that contains the configuration for the input generators.
+     */
+    public static String[] readConfigFile(){
+
+        ReadUtil ru = new ReadUtil("config.txt");
+        String configFile = ru.readText();
+        String[] configLines = null;
+
+        if(configFile.startsWith("{") && configFile.endsWith("}")){
+            configFile = configFile.replace("{", "")
+                    .replace("}","")
+                    .replace("\n", "");
+            configLines = configFile.split(";");
+        }else{
+            Log.e("ISA", "Invalid configuration file!");
+        }
+
+        return configLines;
     }
 
     /**
@@ -372,7 +393,7 @@ public class ReadUtil {
 
     }
 
-    private Action parseAction(String type, UiDevice device, UiObject object, Long seed, String value, String generatorType, String firstGeneratorParameter, String secondGeneratorParameter){
+    private Action parseAction(String type, UiDevice device, UiObject object, Long seed, String value, String generatorType, String generatorParameters){
 
         Action generatedAction = null;
 
@@ -381,7 +402,7 @@ public class ReadUtil {
                 generatedAction = new ButtonAction(object);
                 break;
             case "TEXT":
-                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, generatorType, firstGeneratorParameter, secondGeneratorParameter);
+                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, generatorType, generatorParameters);
                 generatedAction = new TextInputAction(object, textInputGenerator);
                 break;
             case "CHECKBOX":

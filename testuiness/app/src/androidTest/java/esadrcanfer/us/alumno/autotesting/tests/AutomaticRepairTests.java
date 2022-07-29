@@ -34,7 +34,7 @@ public class AutomaticRepairTests {
     @Test
     public void testRandomReparation() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/tests/firstTest.txt", false);
+        ReadUtil readUtil = new ReadUtil("tests/firstTest.txt", true);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("ISA", "Loadded test case from file!");
         Log.d("ISA", "Executing it...");
