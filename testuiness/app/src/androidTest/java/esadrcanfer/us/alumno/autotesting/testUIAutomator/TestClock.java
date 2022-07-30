@@ -1,8 +1,12 @@
 package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 
-import android.support.test.InstrumentationRegistry;
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -17,14 +21,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestClock {
+public class TestClock{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Clock";
@@ -34,7 +34,7 @@ public class TestClock {
     public void startMainActivityFromHomeScreen() {
 
         // Initialize UiDevice instance
-        mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        mDevice = UiDevice.getInstance(getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
@@ -53,29 +53,14 @@ public class TestClock {
         assertThat(mDevice, notNullValue());
     }
 
-    // UiObject sunday = mDevice.findObject(new UiSelector().description("Sunday"));
-
-    // UiObject monday = mDevice.findObject(new UiSelector().description("Monday"));
-
-    // UiObject tuesday = mDevice.findObject(new UiSelector().description("Tuesday"));
-
-    // UiObject wednesday = mDevice.findObject(new UiSelector().description("Wednesday"));
-
-    // UiObject thursday = mDevice.findObject(new UiSelector().description("Thursday"));
-
-    // UiObject friday = mDevice.findObject(new UiSelector().description("Friday"));
-
-    // UiObject saturday = mDevice.findObject(new UiSelector().description("Saturday"));
-
     @Test
     public void testAlarm() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
-         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-         allAppsButton.click();
-         // allAppsButton.swipeUp(2);
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollIntoView(new UiSelector().text("Clock"));
@@ -83,57 +68,56 @@ public class TestClock {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Clock"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("ALARM"));
-        button.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Alarm")).click();
 
-        //UiObject expansion = mDevice.findObject(new UiSelector().resourceId("com.android.deskclock:id/arrow"));
-        UiObject expansion = mDevice.findObject(new UiSelector().description("Expand alarm"));
-        expansion.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).click();
 
-        //UiObject ringtone = mDevice.findObject(new UiSelector().resourceId("com.android.deskclock:id/choose_ringtone"));
-        // UiObject ringtone = mDevice.findObject(new UiSelector().description("Ringtone Default (Cesium)"));
-        UiObject ringtone = mDevice.findObject(new UiSelector().descriptionContains("Ringtone "));
-        ringtone.click();
+        mDevice.findObject(new UiSelector().text("8")).click();
 
-        UiScrollable ringtoneViews = new UiScrollable(new UiSelector().scrollable(true));
-        ringtoneViews.scrollIntoView(new UiSelector().text("Krypton"));
+        mDevice.findObject(new UiSelector().text("30")).click();
 
-        UiObject tone = mDevice.findObject(new UiSelector().text("Krypton"));
-        tone.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("AM")).click();
 
-        UiObject out = mDevice.findObject(new UiSelector().description("Navigate up"));
-        out.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/material_timepicker_ok_button")).click();
 
-        // API 28: no tiene botón de confirmación
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/choose_ringtone")).click();
 
-        //UiObject select = mDevice.findObject(new UiSelector().resourceId("android:id/button1"));
-        //select.clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().resourceId("com.google.android.deskclock:id/ringtone_content")).scrollIntoView(new UiSelector().text("Krypton"));
 
-        //UiObject label = mDevice.findObject(new UiSelector().resourceId("com.android.deskclock:id/edit_label"));
-        UiObject label = mDevice.findObject(new UiSelector().description("No label specified"));
-        label.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Krypton")).click();
 
-        UiObject text = mDevice.findObject(new UiSelector().className("android.widget.EditText"));
-        text.setText("UI Automator");
+        mDevice.findObject(new UiSelector().description("Navigate up")).click();
 
-        UiObject select = mDevice.findObject(new UiSelector().text("OK"));
-        select.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/edit_label")).click();
 
-        //UiObject checkBox = mDevice.findObject(new UiSelector().resourceId("com.android.deskclock:id/repeat_onoff"));
-        UiObject checkBox = mDevice.findObject(new UiSelector().text("Repeat"));
-        if (!checkBox.isSelected()) checkBox.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/label_input_field")).setText("Test alarma");
+
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_1")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_2")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_3")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_4")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_5")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/arrow")).click();
+
+        // WRITE ASSERTIONS HERE
 
     }
 
     @Test
-    public void testAlarm2() throws UiObjectNotFoundException {
+    public void testOtherAlarm() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
-        // allAppsButton.swipeUp(2);
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollIntoView(new UiSelector().text("Clock"));
@@ -141,52 +125,64 @@ public class TestClock {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Clock"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("ALARM"));
-        button.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Alarm")).click();
 
-        //UiObject expansion = mDevice.findObject(new UiSelector().resourceId("com.android.deskclock:id/arrow"));
-        UiObject expansion = mDevice.findObject(new UiSelector().description("Expand alarm"));
-        expansion.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/arrow")).click();
 
-        UiObject checkBox = mDevice.findObject(new UiSelector().text("Repeat"));
-        if (!checkBox.isSelected()) checkBox.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_1")).click();
 
-        UiObject sunday = mDevice.findObject(new UiSelector().description("Sunday"));
-        sunday.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_2")).click();
 
-        UiObject monday = mDevice.findObject(new UiSelector().description("Monday"));
-        monday.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_3")).click();
 
-        UiObject tuesday = mDevice.findObject(new UiSelector().description("Tuesday"));
-        tuesday.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_4")).click();
 
-        UiObject wednesday = mDevice.findObject(new UiSelector().description("Wednesday"));
-        wednesday.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_6")).click();
 
-        UiObject thursday = mDevice.findObject(new UiSelector().description("Thursday"));
-        thursday.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/day_button_0")).click();
 
-        UiObject friday = mDevice.findObject(new UiSelector().description("Friday"));
-        friday.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/digital_clock")).click();
 
-        UiObject saturday = mDevice.findObject(new UiSelector().description("Saturday"));
-        saturday.click();
+        mDevice.findObject(new UiSelector().text("10")).click();
 
-        UiObject time = mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/digital_clock"));
-        time.click();
+        mDevice.findObject(new UiSelector().text("30")).click();
 
-        UiObject hour = mDevice.findObject(new UiSelector().description("10"));
-        hour.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/material_timepicker_ok_button")).click();
 
-        UiObject minute = mDevice.findObject(new UiSelector().description("30"));
-        minute.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/arrow")).click();
 
-        UiObject confirm = mDevice.findObject(new UiSelector().resourceId("android:id/button1"));
-        confirm.click();
+        // WRITE ASSERTIONS HERE
 
-        expansion.click();
     }
 
+    @Test
+    public void testStopWatch() throws UiObjectNotFoundException {
+
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
+
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Clock"));
+
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("Clock"));
+        testingApp.clickAndWaitForNewWindow();
+
+        mDevice.findObject(new UiSelector().text("Stopwatch")).click();
+
+        mDevice.findObject(new UiSelector().description("Start")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).waitUntilGone(10);
+
+        mDevice.findObject(new UiSelector().description("Pause")).click();
+
+        mDevice.findObject(new UiSelector().description("Reset")).click();
+
+        // WRITE ASSERTIONS HERE
+
+    }
 
     @Test
     public void testTimer() throws UiObjectNotFoundException {
@@ -203,77 +199,30 @@ public class TestClock {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Clock"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("TIMER"));
-        //UiObject button = mDevice.findObject(new UiSelector().text("TIMER"));
-        button.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Timer")).click();
 
-        UiObject number0 = mDevice.findObject(new UiSelector().text("0"));
-        UiObject number1 = mDevice.findObject(new UiSelector().text("1"));
-        UiObject number2 = mDevice.findObject(new UiSelector().text("2"));
-        UiObject number3 = mDevice.findObject(new UiSelector().text("3"));
-        UiObject number4 = mDevice.findObject(new UiSelector().text("4"));
-        UiObject number5 = mDevice.findObject(new UiSelector().text("5"));
-        UiObject number6 = mDevice.findObject(new UiSelector().text("6"));
-        UiObject number7 = mDevice.findObject(new UiSelector().text("7"));
-        UiObject number8 = mDevice.findObject(new UiSelector().text("8"));
-        UiObject number9 = mDevice.findObject(new UiSelector().text("9"));
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/timer_setup_digit_3")).click();
 
-        number3.click();
-        number7.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/timer_setup_digit_7")).click();
 
-        number2.click();
-        number8.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/timer_setup_digit_2")).click();
 
-        number6.click();
-        number1.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/timer_setup_digit_8")).click();
 
-        // UiObject play = mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab"));
-        UiObject play = mDevice.findObject(new UiSelector().description("Start"));
-        play.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/timer_setup_digit_6")).click();
 
-        UiObject stop = mDevice.findObject(new UiSelector().description("Stop"));
-        stop.waitUntilGone(20000);
-        stop.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/timer_setup_digit_1")).click();
 
-        // UiObject delete = mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/left_button"));
-        UiObject delete = mDevice.findObject(new UiSelector().description("Delete"));
-        delete.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).waitUntilGone(10);
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).click();
+
+        mDevice.findObject(new UiSelector().description("Delete")).click();
+
+        // WRITE ASSERTIONS HERE
 
     }
 
-    @Test
-    public void testStopwatch() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-        mDevice.pressHome();
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-        // allAppsButton.swipeUp(2);
-
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Clock"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Clock"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiObject button = mDevice.findObject(new UiSelector().text("STOPWATCH"));
-        button.clickAndWaitForNewWindow();
-
-        // UiObject play = mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab"));
-        UiObject play = mDevice.findObject(new UiSelector().description("Start"));
-        play.click();
-
-        // play.waitUntilGone(20000);
-
-        // play.click();
-
-        // UiObject stop = mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/left_button"));
-        UiObject stop = mDevice.findObject(new UiSelector().description("Pause"));
-        stop.waitUntilGone(20000);
-        stop.click();
-
-        UiObject reset = mDevice.findObject(new UiSelector().description("Reset"));
-        reset.click();
-    }
 }

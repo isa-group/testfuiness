@@ -9,4 +9,4 @@ BUTTON, UiSelector[RESOURCE_ID=com.android.calculator2:id/digit_7],
 BUTTON, UiSelector[RESOURCE_ID=com.android.calculator2:id/dec_point],
 BUTTON, UiSelector[RESOURCE_ID=com.android.calculator2:id/digit_5],
 BUTTON, UiSelector[RESOURCE_ID=com.android.calculator2:id/eq],
-finalState.contains(testActions[1].value)
+finalState.contains("60.75")

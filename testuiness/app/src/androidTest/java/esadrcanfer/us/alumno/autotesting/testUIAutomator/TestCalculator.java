@@ -105,48 +105,23 @@ public class TestCalculator {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_4")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("4")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_7")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("7")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/op_add")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_add")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("+")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_9")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("9")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_6")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_6")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("6")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/eq")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("=")).click();
 
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
 
         assertEquals(result.getText(), "14.3");
     }
@@ -165,48 +140,23 @@ public class TestCalculator {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_8")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("8")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_5")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("5")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/op_sub")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_sub")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("−")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_3")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("3")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_2")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("2")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/eq")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("=")).click();
 
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
 
         assertEquals(result.getText(), "5.3");
     }
@@ -225,48 +175,23 @@ public class TestCalculator {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_8")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("8")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_1")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_1")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("1")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/op_mul")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_mul")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("×")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_7")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("7")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_5")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("5")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/eq")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("=")).click();
 
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
 
         assertEquals(result.getText(), "60.75");
     }
@@ -285,48 +210,23 @@ public class TestCalculator {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_9")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("9")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_4")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("4")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/op_div")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_div")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("÷")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_3")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("3")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/dec_point")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text(".")).click();
-
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/digit_2")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2")).click(); // API 25, 27, 28
 
         mDevice.findObject(new UiSelector().text("2")).click();
 
-        // mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/eq")).click(); // API 29
-        // mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click(); // API 25, 27, 28
-
         mDevice.findObject(new UiSelector().text("=")).click();
 
-        // UiObject result = mDevice.findObject(new UiSelector().resourceId("com.google.android.calculator:id/result_final")); // API 29
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result")); // API 25, 27, 28
+        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
 
         assertEquals(result.getText(), "2.9375");
     }

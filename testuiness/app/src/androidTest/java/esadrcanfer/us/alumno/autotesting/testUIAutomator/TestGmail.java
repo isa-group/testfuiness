@@ -77,20 +77,11 @@ public class TestGmail {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Gmail"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject email = mDevice.findObject(new UiSelector().description("Compose"));
+        UiObject email = mDevice.findObject(new UiSelector().text("Compose"));
         email.clickAndWaitForNewWindow();
 
-        try {
-            UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-            user.setText("yalejandro9@gmail.com");
-        }catch(Exception e){
-
-            UiObject okButton = mDevice.findObject(new UiSelector().text("OK"));
-            okButton.click();
-
-            UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-            user.setText("yalejandro9@gmail.com");
-        }
+        UiObject user = mDevice.findObject(new UiSelector().className("android.widget.EditText").index(0));
+        user.setText("yalejandro9@gmail.com");
 
         UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
         subject.setText("UI Automator");

@@ -121,28 +121,8 @@ public class TestContacts {
         UiObject moreData = mDevice.findObject(new UiSelector().text("More fields"));
         moreData.click();
 
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_save")); // API 25
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button")); // API 28
-
-        // UiObject save1 = mDevice.findObject(new UiSelector().description("Save"));
-        // UiObject save2 = mDevice.findObject(new UiSelector().text("SAVE"));
-
-        // UiObject save = mDevice.findObject(new UiSelector().className("android.widget.Button"));
         UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button"));
         save.click();
-
-        // if(save1 != null){
-        //    save1.click();
-        // } else {
-        //    save2.click();
-        // }
-
-        // mDevice.pressHome();
-        // allAppsButton.click();
-        // testingApp.clickAndWaitForNewWindow();
-
-        // UiObject contact = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/cliv_name_textview"));
-        // contact.exists();
     }
 
     @Test

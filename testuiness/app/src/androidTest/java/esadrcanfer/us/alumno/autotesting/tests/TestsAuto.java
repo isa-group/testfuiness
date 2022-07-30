@@ -44,24 +44,24 @@ public class TestsAuto {
 
         // CLOCK
 
-        /*return Arrays.asList("Download/Test Clock/API 27, 28, 29/TestAlarm.txt",
-                            "Download/Test Clock/API 27, 28, 29/TestOtherAlarm.txt",
-                            "Download/Test Clock/API 27, 28, 29/TestStopWatch.txt",
-                            "Download/Test Clock/API 27, 28, 29/TestTimer.txt");*/
+        /*return Arrays.asList("Test Clock/API 27, 28, 29/TestAlarm.txt",
+                            "Test Clock/API 27, 28, 29/TestOtherAlarm.txt",
+                            "Test Clock/API 27, 28, 29/TestStopWatch.txt",
+                            "Test Clock/API 27, 28, 29/TestTimer.txt");*/
 
         // CONTACTS
 
-        return Arrays.asList(//"Test Contacts/API 27, 28, 29/TestCreateContact.txt",
-                            "Test Contacts/API 27, 28, 29/TestEditContact.txt");
-                            //"Test Contacts/API 27, 28, 29/TestFavoriteContact.txt",
-                            //"Test Contacts/API 27, 28, 29/TestDeleteContact.txt");
+        /*return Arrays.asList("Test Contacts/API 27, 28, 29/TestCreateContact.txt",
+                            "Test Contacts/API 27, 28, 29/TestEditContact.txt",
+                            "Test Contacts/API 27, 28, 29/TestFavoriteContact.txt",
+                            "Test Contacts/API 27, 28, 29/TestDeleteContact.txt");*/
 
         // GMAIL
 
-        /*return Arrays.asList("Download/Test Gmail/API 27, 28, 29/TestSendEmail.txt",
-                            "Download/Test Gmail/API 27, 28, 29/TestEditDraft.txt",
-                            "Download/Test Gmail/API 27, 28, 29/TestDeleteEmail.txt",
-                            "Download/Test Gmail/API 27, 28, 29/TestEmptyTrash.txt");*/
+        return Arrays.asList("Test Gmail/API 27, 28, 29/TestSendEmail.txt",
+                            "Test Gmail/API 27, 28, 29/TestEditDraft.txt",
+                            "Test Gmail/API 27, 28, 29/TestDeleteEmail.txt",
+                            "Test Gmail/API 27, 28, 29/TestEmptyTrash.txt");
 
         // GOOGLE CALENDAR
 
