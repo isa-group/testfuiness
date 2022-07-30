@@ -19,11 +19,10 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.BrokenTestCaseException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
-import esadrcanfer.us.alumno.autotesting.algorithms.BaseReparationAlgorithm;
 import esadrcanfer.us.alumno.autotesting.algorithms.GRASPReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.RandomReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.RecycleReparation;
-import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
@@ -35,7 +34,7 @@ public class AutomaticRepairTests {
     @Test
     public void testRandomReparation() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/firstTest.txt", false);
+        ReadUtil readUtil = new ReadUtil("tests/firstTest.txt", true);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("ISA", "Loadded test case from file!");
         Log.d("ISA", "Executing it...");

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,16 +35,20 @@ public class TextInputGenerator extends InputGenerator {
     private Long seed;
     private String defaultValue;
     private String type;
-    private String cond1;
-    private String cond2;
+    private String firstGeneratorParameter;
+    private String secondGeneratorParameter;
 
 
-    public TextInputGenerator(Long seed, String defaultValue, String type, String cond1, String cond2){
+    public TextInputGenerator(Long seed, String defaultValue, String type, String generatorParameters){
         this.seed = seed;
+        if(defaultValue == null) defaultValue = "";
         this.setDefaultValue(defaultValue);
         this.type=type;
-        this.cond1=cond1;
-        this.cond2=cond2;
+
+        String[] parameters = parseParameters(generatorParameters);
+
+        this.firstGeneratorParameter=parameters[0];
+        this.secondGeneratorParameter=parameters[1];
     }
 
     public String generateInput(UiObject object) throws UiObjectNotFoundException{
@@ -51,13 +56,15 @@ public class TextInputGenerator extends InputGenerator {
         List<Integer> integerList = new ArrayList<>();
 
         if(type.equals("numberFromList") || type.equals("numberFromProbabilityList")){
-            String[] numbers = cond1.split(",");
+            String[] numbers = firstGeneratorParameter.split(",");
             for(String number: numbers){
                 integerList.add(Integer.parseInt(number));
             }
         }
         try {
-            if (getSeed() > 0 || defaultValue == null) {
+
+            if (getSeed() > 0 || defaultValue.isEmpty()) {
+
                 switch (type) {
                     case "numberFromList":
                         IntegerListGenerator integerRes = new IntegerListGenerator(integerList);
@@ -68,32 +75,32 @@ public class TextInputGenerator extends InputGenerator {
                         res = integerProbabilityRes.generate().toString();
                         break;
                     case "number":
-                        int min=Integer.parseInt(cond1);
-                        int max=Integer.parseInt(cond2);
+                        int min=Integer.parseInt(firstGeneratorParameter);
+                        int max=Integer.parseInt(secondGeneratorParameter);
                         RandomIntegerGenerator numberRes = new RandomIntegerGenerator(min, max);
                         res = numberRes.generate().toString();
                         break;
                     case "regex":
-                        RandomRegexGenerator regexRes = new RandomRegexGenerator(cond1);
+                        RandomRegexGenerator regexRes = new RandomRegexGenerator(firstGeneratorParameter);
                         res = regexRes.generate();
                         break;
                     case "word":
-                        int numberOfWords = Integer.parseInt(cond1);
+                        int numberOfWords = Integer.parseInt(firstGeneratorParameter);
                         DictionaryBasedValueGenerator dictionaryRes = new DictionaryBasedValueGenerator(numberOfWords, Math.abs(new Random().nextLong()));
                         res = dictionaryRes.generate();
                         break;
                     case "given":
-                        String givenWord = cond1;
+                        String givenWord = firstGeneratorParameter;
                         GivenValueGenerator givenRes = new GivenValueGenerator(givenWord);
                         res = givenRes.generate();
                         break;
                     case "increment":
-                        int givenNumber = Integer.parseInt(cond1);
+                        int givenNumber = Integer.parseInt(firstGeneratorParameter);
                         IncrementDoubleGenerator incrementRes = new IncrementDoubleGenerator(givenNumber);
                         res = incrementRes.generate().toString();
                         break;
-                   case "reflection":
-                        ReflectionGenerator reflectionRes = new ReflectionGenerator(cond1);
+                    case "reflection":
+                        ReflectionGenerator reflectionRes = new ReflectionGenerator(firstGeneratorParameter);
                         res = reflectionRes.generate();
                         break;
                 }
@@ -115,5 +122,27 @@ public class TextInputGenerator extends InputGenerator {
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    private String[] parseParameters(String generatorParameters){
+
+        String[] parameters = new String[2];
+
+        if(generatorParameters.startsWith("(") && generatorParameters.endsWith(")")){
+
+            parameters = generatorParameters.replace("(", "")
+                    .replace(")", "")
+                    .split(",");
+
+        }else if(generatorParameters.contains("[") && generatorParameters.contains("]")){
+
+            parameters[0] = generatorParameters.replace("[", "").replace("]", "");
+            parameters[1] = "";
+        }else{
+            parameters[0] = generatorParameters;
+            parameters[1] = "";
+        }
+
+        return parameters;
     }
 }

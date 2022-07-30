@@ -11,14 +11,18 @@ import androidx.test.uiautomator.StaleObjectException;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 
+import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
+
 public class ActionFactory {
 
     public static Map<UiObject, Action> createInputActions(UiDevice device, Long seed) {
         String value = null;
-        String type = " ";
-        String cond1 = " ";
-        String cond2 = " ";
-        TextInputGenerator generator = new TextInputGenerator(seed, value, type, cond1, cond2);
+
+        String[] inputGenerator = ReadUtil.readConfigFile()[0].split(":");
+        String generatorType = inputGenerator[0].trim();
+        String generatorParameters = inputGenerator[1].trim();
+
+        TextInputGenerator generator = new TextInputGenerator(seed, value, generatorType, generatorParameters);
         List<UiObject> inputTexts = ElementIdentifier.findElements(device, "android.widget.EditText");
         Map<UiObject, Action> result = new HashMap<>();
         for (UiObject input : inputTexts) {

@@ -37,10 +37,10 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        /*return Arrays.asList("Download/Test Calculator/API 25, 27, 28/TestDivisión.txt",
-                            "Download/Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
-                            "Download/Test Calculator/API 25, 27, 28/TestResta.txt",
-                            "Download/Test Calculator/API 25, 27, 28/TestSuma.txt");*/
+        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
+                            "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
+                            "Test Calculator/API 25, 27, 28/TestResta.txt",
+                            "Test Calculator/API 25, 27, 28/TestSuma.txt");*/
 
         // CLOCK
 
@@ -51,10 +51,10 @@ public class TestsAuto {
 
         // CONTACTS
 
-        /*return Arrays.asList("Download/Test Contacts/API 27, 28, 29/TestCreateContact.txt",
-                            "Download/Test Contacts/API 27, 28, 29/TestEditContact.txt",
-                            "Download/Test Contacts/API 27, 28, 29/TestFavoriteContact.txt",
-                            "Download/Test Contacts/API 27, 28, 29/TestDeleteContact.txt");*/
+        return Arrays.asList(//"Test Contacts/API 27, 28, 29/TestCreateContact.txt",
+                            "Test Contacts/API 27, 28, 29/TestEditContact.txt");
+                            //"Test Contacts/API 27, 28, 29/TestFavoriteContact.txt",
+                            //"Test Contacts/API 27, 28, 29/TestDeleteContact.txt");
 
         // GMAIL
 
@@ -71,9 +71,9 @@ public class TestsAuto {
 
         // CHROME
 
-        return Arrays.asList("Download/Test Google Chrome/TestSearchGoogleChrome.txt",
-                            "Download/Test Google Chrome/TestShareImageGoogleChrome.txt",
-                            "Download/Test Google Chrome/TestClearHistoryGoogleChrome.txt");
+        /*return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt"),
+                            "Test Google Chrome/TestShareImageGoogleChrome.txt",
+                            "Test Google Chrome/TestClearHistoryGoogleChrome.txt");*/
 
         // GOOGLE DOCS
 
@@ -100,9 +100,9 @@ public class TestsAuto {
 
         // GOOGLE EARTH
 
-        /*return Arrays.asList("Download/Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
-                            "Download/Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
-                            "Download/Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
+        /*return Arrays.asList("Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
+                            "Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
+                            "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
 
         // GOOGLE MAPS
 
@@ -197,11 +197,6 @@ public class TestsAuto {
 
     @Test
     public void runTxtTests(){
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        long iterations = 5;
-
-        String aPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-
         ReadUtil readUtil = new ReadUtil(path, true);
         TestCase testCase = readUtil.generateTestCase();
 
