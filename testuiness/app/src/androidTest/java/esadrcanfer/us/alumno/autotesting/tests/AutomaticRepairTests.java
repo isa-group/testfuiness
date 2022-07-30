@@ -51,6 +51,8 @@ public class AutomaticRepairTests {
         } catch (BrokenTestCaseException ex) {
             RandomReparation randomReparation = new RandomReparation(5, testCase, testCase.getAppPackage());
             testCase = randomReparation.run(device, testCase.getAppPackage());
+
+            WriterUtil.saveInDevice(testCase, (long) -1, "randomRepairedTest");
         }
         Log.d("ISA", "TestCase found: " + testCase);
     }
