@@ -1,9 +1,10 @@
 com.google.android.gm
 -1
-5
+6
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/compose_button],
 TEXT, UiSelector[CLASS=android.widget.EditText(0)], alegarfer4@alum.us.es
 ENTER, UiSelector[enterButton],
 TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/subject],Test ficheros
-TEXT, UiSelector[RESOURCE_ID=com.google.android.gm:id/body_wrapper],Test probando aplicacion de Gmail
-finalState.contains(testActions[1].value)
+TEXT, UiSelector[TEXT=Compose email],Test probando aplicacion de Gmail
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/send],
+finalState.contains("Sent")

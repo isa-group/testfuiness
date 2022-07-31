@@ -58,16 +58,16 @@ public class TestsAuto {
 
         // GMAIL
 
-        return Arrays.asList("Test Gmail/API 27, 28, 29/TestSendEmail.txt",
+        /*return Arrays.asList("Test Gmail/API 27, 28, 29/TestSendEmail.txt",
                             "Test Gmail/API 27, 28, 29/TestEditDraft.txt",
                             "Test Gmail/API 27, 28, 29/TestDeleteEmail.txt",
-                            "Test Gmail/API 27, 28, 29/TestEmptyTrash.txt");
+                            "Test Gmail/API 27, 28, 29/TestEmptyTrash.txt");*/
 
         // GOOGLE CALENDAR
 
-        /*return Arrays.asList(//"Download/Test Google Calendar/TestCreateEvent.txt",
-                            //"Download/Test Google Calendar/TestEditEvent.txt",
-                            "Download/Test Google Calendar/TestDeleteEvent.txt");*/
+        return Arrays.asList(//"Test Google Calendar/TestCreateEvent.txt",
+                            "Test Google Calendar/TestEditEvent.txt",
+                            "Test Google Calendar/TestDeleteEvent.txt");
 
         // CHROME
 
@@ -212,9 +212,13 @@ public class TestsAuto {
             Boolean eval = testCase.evaluate();
             Log.d("ISA", "Initial evaluation: " + eval.toString());
             testCase.executeAfter();
+
+            Assert.assertTrue(eval);
+
         } catch (Exception ex) {
             Assert.assertFalse(true);
         }
+
         Log.d("ISA", "TestCase found: " + testCase);
     }
 }
