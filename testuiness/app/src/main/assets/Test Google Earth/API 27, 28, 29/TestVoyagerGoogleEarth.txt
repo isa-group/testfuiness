@@ -3,6 +3,6 @@ com.google.earth
 4
 BUTTON, UiSelector[DESCRIPTION=Voyager],
 BUTTON, UiSelector[DESCRIPTION=Nature],
-SCROLL_TO, UiSelector[SCROLLABLE=true], toElementByText=Sources of Energy
-BUTTON, UiSelector[TEXT=Sources of Energy],
-finalState.contains(testActions[1].value)
+SCROLL_TO, UiSelector[SCROLLABLE=true], toElementByText=Changing Forests
+BUTTON, UiSelector[TEXT=Changing Forests],
+finalState.contains("Changing Forests")

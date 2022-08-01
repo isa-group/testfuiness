@@ -1,9 +1,10 @@
 com.google.android.apps.docs
 -1
-5
+6
 BUTTON, UiSelector[TEXT=Files],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/extended_fab],
 BUTTON, UiSelector[TEXT=Folder], Folder
 TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text],Test Folder
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/positive_button], Create
-finalState.contains(testActions[1].value)
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/doclist_container], toElementByText=Test Folder
+finalState.contains("Test Folder")

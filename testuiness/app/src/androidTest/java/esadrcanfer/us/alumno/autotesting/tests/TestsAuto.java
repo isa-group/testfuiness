@@ -65,50 +65,50 @@ public class TestsAuto {
 
         // GOOGLE CALENDAR
 
-        return Arrays.asList(//"Test Google Calendar/TestCreateEvent.txt",
+        /*return Arrays.asList("Test Google Calendar/TestCreateEvent.txt",
                             "Test Google Calendar/TestEditEvent.txt",
-                            "Test Google Calendar/TestDeleteEvent.txt");
+                            "Test Google Calendar/TestDeleteEvent.txt");*/
 
         // CHROME
 
-        /*return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt"),
+        /*return Arrays.asList("Test Google Chrome/TestSearchGoogleChrome.txt",
                             "Test Google Chrome/TestShareImageGoogleChrome.txt",
                             "Test Google Chrome/TestClearHistoryGoogleChrome.txt");*/
 
         // GOOGLE DOCS
 
-        /*return Arrays.asList("Download/Test Google Docs/CreateGoogleDocs.txt",
-                            "Download/Test Google Docs/EditGoogleDocs.txt",
-                            "Download/Test Google Docs/EditGoogleDocs2.txt",
-                            "Download/Test Google Docs/EditGoogleDocs3.txt",
-                            "Download/Test Google Docs/SendCopyGoogleDocs.txt",
-                            "Download/Test Google Docs/DeleteGoogleDocs.txt");*/
+        /*return Arrays.asList("Test Google Docs/CreateGoogleDocs.txt",
+                            "Test Google Docs/EditGoogleDocs.txt",
+                            "Test Google Docs/EditGoogleDocs2.txt",
+                            "Test Google Docs/EditGoogleDocs3.txt",
+                            "Test Google Docs/SendCopyGoogleDocs.txt",
+                            "Test Google Docs/DeleteGoogleDocs.txt");*/
 
         // GOOGLE DRIVE
 
-        /*return Arrays.asList("Download/Test Google Drive/CreateFolderGoogleDrive.txt",
-                            "Download/Test Google Drive/CreateGoogleDoc.txt",
-                            "Download/Test Google Drive/CreateGoogleSheet.txt",
-                            "Download/Test Google Drive/CreateGoogleSlide.txt",
-                            "Download/Test Google Drive/EditGoogleDoc.txt",
-                            "Download/Test Google Drive/EditGoogleSheet.txt",
-                            "Download/Test Google Drive/EditGoogleSlide.txt",
-                            "Download/Test Google Drive/DeleteFolderGoogleDrive.txt",
-                            "Download/Test Google Drive/DeleteGoogleDoc.txt",
-                            "Download/Test Google Drive/DeleteGoogleSheet.txt",
-                            "Download/Test Google Drive/DeleteGoogleSlide.txt");*/
+        /*return Arrays.asList("Test Google Drive/CreateFolderGoogleDrive.txt",
+                            "Test Google Drive/CreateGoogleDoc.txt",
+                            "Test Google Drive/CreateGoogleSheet.txt",
+                            "Test Google Drive/CreateGoogleSlide.txt",
+                            "Test Google Drive/EditGoogleDoc.txt",
+                            "Test Google Drive/EditGoogleSheet.txt",
+                            "Test Google Drive/EditGoogleSlide.txt",
+                            "Test Google Drive/DeleteFolderGoogleDrive.txt",
+                            "Test Google Drive/DeleteGoogleDoc.txt",
+                            "Test Google Drive/DeleteGoogleSheet.txt",
+                            "Test Google Drive/DeleteGoogleSlide.txt");*/
 
         // GOOGLE EARTH
 
-        /*return Arrays.asList("Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
-                            "Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
+        /*return Arrays.asList("Test Google Earth/API 27, 28, 29/TestSearchGoogleEarth.txt",
+                            "Test Google Earth/API 27, 28, 29/TestLuckGoogleEarth.txt",
                             "Test Google Earth/API 27, 28, 29/TestVoyagerGoogleEarth.txt");*/
 
         // GOOGLE MAPS
 
-        /*return Arrays.asList("Download/Test Google Maps/TestJourneyGoogleMaps.txt",
-                            "Download/Test Google Maps/TestSearchGoogleMaps.txt",
-                            "Download/Test Google Maps/TestShareLocationGoogleMaps.txt");*/
+        return Arrays.asList("Test Google Maps/TestSearchGoogleMaps.txt",
+                            "Test Google Maps/TestShareLocationGoogleMaps.txt",
+                            "Test Google Maps/TestJourneyGoogleMaps.txt");
 
         // GOOGLE NOTES
 

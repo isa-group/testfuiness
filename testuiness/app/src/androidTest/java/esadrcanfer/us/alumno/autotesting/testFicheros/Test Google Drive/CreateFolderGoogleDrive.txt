@@ -6,4 +6,4 @@ BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/extended_fab],
 BUTTON, UiSelector[TEXT=Folder], Folder
 TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text],Test Folder
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/positive_button], Create
-finalState.contains(testActions[1].value)
+finalState.contains("Test Folder")
