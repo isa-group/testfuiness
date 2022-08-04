@@ -4,5 +4,5 @@ com.google.android.keep
 BUTTON, UiSelector[TEXT=title], 
 TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/editable_title], modified title 
 TEXT, UiSelector[TEXT=List item 1], Modified List item 1
-BUTTON, UiSelector[DESCRIPTION=Navigate up], 
-finalState.contains(testActions[1].value)
+BUTTON, UiSelector[DESCRIPTION=Navigate up],
+finalState.contains("modified title")

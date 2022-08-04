@@ -7,4 +7,3 @@ BUTTON, UiSelector[TEXT=Installed],
 BUTTON, UiSelector[TEXT=Clock],
 BUTTON, UiSelector[TEXT=Uninstall],
 BUTTON, UiSelector[TEXT=Uninstall],
-finalState.contains(testActions[1].value)

@@ -8,7 +8,7 @@ TEXT, UiSelector[TEXT=Middle name], Garcia
 GO_BACK, UiSelector[backButton],
 TEXT, UiSelector[TEXT=Last name], Fernandez
 BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/expansion_view],
-TEXT, UiSelector[TEXT=Phone], 620832528
+TEXT, UiSelector[TEXT=Phone], 640936528
 TEXT, UiSelector[TEXT=Email], yalejandro9@gmail.com
 BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/editor_menu_save_button], SAVE
 finalState.contains("Alejandro Garcia Fernandez")

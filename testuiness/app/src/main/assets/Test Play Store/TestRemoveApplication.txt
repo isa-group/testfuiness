@@ -6,4 +6,3 @@ BUTTON, UiSelector[TEXT=My apps & games],
 BUTTON, UiSelector[TEXT=Library],
 BUTTON, UiSelector[DESCRIPTION=Remove],
 BUTTON, UiSelector[TEXT=Remove],
-finalState.contains(testActions[1].value)

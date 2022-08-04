@@ -6,4 +6,4 @@ TEXT, UiSelector[RESOURCE_ID=com.google.android.play.games:id/open_search_view_e
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.play.games:id/replay__listitem__body],
 BUTTON, UiSelector[TEXT=Install for €0],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.play.games:id/search_result],
-finalState.contains(testActions[1].value)
+finalState.contains("Call of WW2 Frontline Duty OPS")

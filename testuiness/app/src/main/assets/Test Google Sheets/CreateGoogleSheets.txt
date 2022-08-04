@@ -4,4 +4,4 @@ com.google.android.apps.docs.editors.sheets
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.sheets:id/fab_base_button], New spreadsheet menu
 BUTTON, UiSelector[TEXT=New spreadsheet], 
 BUTTON, UiSelector[DESCRIPTION=Back],
-finalState.contains(testActions[1].value)
+finalState.size() > initialState.size()

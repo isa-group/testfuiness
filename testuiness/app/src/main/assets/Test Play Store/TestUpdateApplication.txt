@@ -5,4 +5,3 @@ BUTTON, UiSelector[DESCRIPTION=Show navigation drawer],
 BUTTON, UiSelector[TEXT=My apps & games],
 BUTTON, UiSelector[TEXT=Google],
 BUTTON, UiSelector[TEXT=Update],
-finalState.contains(testActions[1].value)

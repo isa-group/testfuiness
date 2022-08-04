@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.StaleObjectException;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
@@ -376,13 +377,20 @@ public class AutomaticRepairTests {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         List<String> finalState = new ArrayList<>();
         List<UiObject2> elements = device.findObjects(By.clazz(TextView.class));
-        for (UiObject2 label : elements) {
-            String text = label.getText();
-            //Solución básica, hay que mejorarla
-            if (text!=null && (!(text.contains(":") || text.contains("%")))) {
-                finalState.add(text);
+
+        try{
+            for (UiObject2 label : elements) {
+                String text = label.getText();
+                //Solución básica, hay que mejorarla
+                if (text != null && (!(text.contains(":") || text.contains("%")))) {
+                    finalState.add(text);
+                }
             }
+
+            return finalState;
+
+        }catch(StaleObjectException e){
+            return labelsDetection();
         }
-        return finalState;
     }
 }

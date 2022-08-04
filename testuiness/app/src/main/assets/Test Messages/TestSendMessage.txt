@@ -5,4 +5,4 @@ BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/start_new_co
 BUTTON, UiSelector[TEXT=Alejandro Garcia Fernandez],
 TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/compose_message_text], Prueba ficheros test
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/send_message_button_icon],
-finalState.contains(testActions[1].value)
+finalState.contains("Prueba ficheros test")

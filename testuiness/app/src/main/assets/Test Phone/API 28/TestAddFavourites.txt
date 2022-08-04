@@ -4,4 +4,3 @@ com.google.android.dialer
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.dialer:id/contacts_tab],
 BUTTON, UiSelector[TEXT=Alejandro Garcia Fernandez],
 BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/menu_star],
-finalState.contains(testActions[1].value)
