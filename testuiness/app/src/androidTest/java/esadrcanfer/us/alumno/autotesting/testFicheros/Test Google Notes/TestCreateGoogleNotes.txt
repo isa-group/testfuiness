@@ -5,7 +5,7 @@ BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/new_note_button], New 
 TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/editable_title], title
 TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/edit_note_text], description
 BUTTON, UiSelector[DESCRIPTION=Open navigation drawer], Open navigation drawer
-finalState.contains(testActions[1].value)
+finalState.contains("title")
 
 
 

@@ -6,4 +6,4 @@ BUTTON, UiSelector[TEXT=Alejandro Garcia Fernandez],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/attach_media_button],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/emoji_text],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/send_message_button_icon],
-finalState.contains(testActions[1].value)
+finalState.contains("Now • SMS")

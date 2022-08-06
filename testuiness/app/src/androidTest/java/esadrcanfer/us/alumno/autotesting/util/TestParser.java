@@ -111,7 +111,8 @@ public class TestParser {
             }
         }
 
-        writer.write("\t\t// WRITE ASSERTIONS HERE\n");
+        writer.write("\t\tList<String> finalState = labelsDetection();\n");
+        writer.write("\t\tassertTrue("+lines[lines.length-1]+");\n");
         writer.write("\t}\n");
     }
 
@@ -166,7 +167,9 @@ public class TestParser {
                             "\t\tappViews.scrollIntoView(new UiSelector().text(\""+ packageName +"\"));\n" +
                             "\n" +
                             "\t\tUiObject testingApp = mDevice.findObject(new UiSelector().text(\""+ packageName +"\"));\n" +
-                            "\t\ttestingApp.clickAndWaitForNewWindow();\n");
+                            "\t\ttestingApp.clickAndWaitForNewWindow();\n"+
+                            "\n" +
+                            "\t\tList<String> initialState = labelsDetection();\n");
     }
 
     private static String createTestNameFromFileName(String fileName){
@@ -265,11 +268,11 @@ public class TestParser {
 
                 case "COUNT_DOWN":
 
-                    parsedAction = ".waitUntilGone("+value+");\n";
+                    parsedAction = ".waitUntilGone("+Integer.parseInt(value)*1000+");\n";
                     break;
 
                 case "GO_BACK":
-                    parsedAction = "mDevice.pressBack()\n";
+                    parsedAction = "mDevice.pressBack();\n";
                     break;
                 case "SCREENSHOT":
                     parsedAction = "mDevice.takeScreenshot(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+\"/screenshots\"));\n";
@@ -308,6 +311,14 @@ public class TestParser {
                             "\n" +
                             "\t\t// Start from the home screen\n" +
                             "\t\tmDevice.pressHome();\n" +
+                            "\t\ttry{\n" +
+                            "\t\t\tmDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);\n" +
+                            "\t\t\tUiScrollable appScroll = new UiScrollable(new UiSelector().resourceId(\"com.google.android.apps.nexuslauncher:id/workspace\"));\n" +
+                            "\t\t\tappScroll.swipeRight(5);\n" +
+                            "\t\t\tmDevice.findObject(new UiSelector().text(\"CLEAR ALL\")).click();\n" +
+                            "\t\t}catch(UiObjectNotFoundException e){\n" +
+                            "\t\t\tLog.d(\"ISA\", \"There are no open apps\");\n" +
+                            "\t\t}\n" +
                             "\n" +
                             "\t\t// Wait for launcher\n" +
                             "\t\tfinal String launcherPackage = mDevice.getLauncherPackageName();\n" +

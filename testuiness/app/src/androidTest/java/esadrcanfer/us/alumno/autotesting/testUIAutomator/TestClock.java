@@ -4,6 +4,9 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -21,6 +24,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
+import java.util.List;
+
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -34,7 +39,7 @@ public class TestClock{
     public void startMainActivityFromHomeScreen() {
 
         // Initialize UiDevice instance
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
@@ -59,6 +64,7 @@ public class TestClock{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
@@ -106,7 +112,9 @@ public class TestClock{
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/arrow")).click();
 
-        // WRITE ASSERTIONS HERE
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("8:30");
 
     }
 
@@ -116,6 +124,7 @@ public class TestClock{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
@@ -151,7 +160,9 @@ public class TestClock{
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/arrow")).click();
 
-        // WRITE ASSERTIONS HERE
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("10:30");
 
     }
 
@@ -161,6 +172,7 @@ public class TestClock{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
@@ -174,13 +186,15 @@ public class TestClock{
 
         mDevice.findObject(new UiSelector().description("Start")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).waitUntilGone(10);
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).waitUntilGone(10000);
 
         mDevice.findObject(new UiSelector().description("Pause")).click();
 
         mDevice.findObject(new UiSelector().description("Reset")).click();
 
-        // WRITE ASSERTIONS HERE
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("00");
 
     }
 
@@ -190,6 +204,7 @@ public class TestClock{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
@@ -215,13 +230,15 @@ public class TestClock{
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).waitUntilGone(10);
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).waitUntilGone(10000);
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.deskclock:id/fab")).click();
 
         mDevice.findObject(new UiSelector().description("Delete")).click();
 
-        // WRITE ASSERTIONS HERE
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("00h 00m 00s");
 
     }
 

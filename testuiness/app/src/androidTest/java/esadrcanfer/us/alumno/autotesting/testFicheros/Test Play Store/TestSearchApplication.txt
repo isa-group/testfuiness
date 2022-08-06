@@ -5,4 +5,4 @@ BUTTON, UiSelector[TEXT=Search for apps & games],
 TEXT, UiSelector[TEXT=Search for apps & games],Google Classroom
 BUTTON, UiSelector[CLASS=android.widget.LinearLayout(0)],
 BUTTON, UiSelector[TEXT=Install],
-finalState.contains(testActions[1].value)
+finalState.contains("Cancel")

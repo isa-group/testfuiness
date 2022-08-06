@@ -6,4 +6,4 @@ BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/new_list_button], Men√
 BUTTON, UiSelector[TEXT=Checkboxes], Checkboxes
 TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/description], List item 1
 BUTTON, UiSelector[DESCRIPTION=Navigate up], Navigate up
-finalState.contains(testActions[1].value)
+!finalState.contains("description")

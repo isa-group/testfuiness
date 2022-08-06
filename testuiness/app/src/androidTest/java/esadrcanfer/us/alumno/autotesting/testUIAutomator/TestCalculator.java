@@ -12,20 +12,24 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.EasyMock2Matchers.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
-public class TestCalculator {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class TestCalculator{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Calculator";
@@ -33,6 +37,7 @@ public class TestCalculator {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
@@ -50,185 +55,159 @@ public class TestCalculator {
 
     @Test
     public void checkPreconditions() {
-
         assertThat(mDevice, notNullValue());
-
-        UiObject numero0 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_0"));
-        UiObject numero1 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_1"));
-        UiObject numero2 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2"));
-        UiObject numero3 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3"));
-        UiObject numero4 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4"));
-        UiObject numero5 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5"));
-        UiObject numero6 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_6"));
-        UiObject numero7 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7"));
-        UiObject numero8 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8"));
-        UiObject numero9 = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9"));
-        UiObject punto = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point"));
-        UiObject igual = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq"));
-        UiObject suma  = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_add"));
-        UiObject resta = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_sub"));
-        UiObject multiplicacion = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_mul"));
-        UiObject division = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_div"));
-        UiObject delete   = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/del"));
-
-        assertNotNull(numero0);
-        assertNotNull(numero1);
-        assertNotNull(numero2);
-        assertNotNull(numero3);
-        assertNotNull(numero4);
-        assertNotNull(numero5);
-        assertNotNull(numero6);
-        assertNotNull(numero7);
-        assertNotNull(numero8);
-        assertNotNull(numero9);
-        assertNotNull(punto);
-        assertNotNull(igual);
-        assertNotNull(suma);
-        assertNotNull(resta);
-        assertNotNull(multiplicacion);
-        assertNotNull(division);
-        assertNotNull(delete);
-
     }
 
     @Test
-    public void testCalculadoraSuma() throws UiObjectNotFoundException {
+    public void testDivisión() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Clock"));
+        appViews.scrollIntoView(new UiSelector().text("Calculator"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().text("4")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("7")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4")).click();
 
-        mDevice.findObject(new UiSelector().text("+")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_div")).click();
 
-        mDevice.findObject(new UiSelector().text("9")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("6")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2")).click();
 
-        mDevice.findObject(new UiSelector().text("=")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click();
 
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
+        List<String> finalState = labelsDetection();
 
-        assertEquals(result.getText(), "14.3");
+        finalState.contains("2.9375");
+
     }
 
     @Test
-    public void testCalculadoraResta() throws UiObjectNotFoundException {
+    public void testMultiplicación() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Clock"));
+        appViews.scrollIntoView(new UiSelector().text("Calculator"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().text("8")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("5")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_1")).click();
 
-        mDevice.findObject(new UiSelector().text("−")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_mul")).click();
 
-        mDevice.findObject(new UiSelector().text("3")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("2")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5")).click();
 
-        mDevice.findObject(new UiSelector().text("=")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click();
 
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
+        List<String> finalState = labelsDetection();
 
-        assertEquals(result.getText(), "5.3");
+        finalState.contains("60.75");
+
     }
 
     @Test
-    public void testCalculadoraMultiplicacion() throws UiObjectNotFoundException {
+    public void testResta() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Clock"));
+        appViews.scrollIntoView(new UiSelector().text("Calculator"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().text("8")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_8")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("1")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_5")).click();
 
-        mDevice.findObject(new UiSelector().text("×")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_sub")).click();
 
-        mDevice.findObject(new UiSelector().text("7")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_3")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("5")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_2")).click();
 
-        mDevice.findObject(new UiSelector().text("=")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click();
 
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
+        List<String> finalState = labelsDetection();
 
-        assertEquals(result.getText(), "60.75");
+        finalState.contains("5.3");
+
     }
 
     @Test
-    public void testCalculadoraDivision() throws UiObjectNotFoundException {
+    public void testSuma() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Clock"));
+        appViews.scrollIntoView(new UiSelector().text("Calculator"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calculator"));
         testingApp.clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().text("9")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_4")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("4")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_7")).click();
 
-        mDevice.findObject(new UiSelector().text("÷")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/op_add")).click();
 
-        mDevice.findObject(new UiSelector().text("3")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_9")).click();
 
-        mDevice.findObject(new UiSelector().text(".")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/dec_point")).click();
 
-        mDevice.findObject(new UiSelector().text("2")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/digit_6")).click();
 
-        mDevice.findObject(new UiSelector().text("=")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/eq")).click();
 
-        UiObject result = mDevice.findObject(new UiSelector().resourceId("com.android.calculator2:id/result"));
+        List<String> finalState = labelsDetection();
 
-        assertEquals(result.getText(), "2.9375");
+        finalState.contains("14.3");
+
     }
 
 }

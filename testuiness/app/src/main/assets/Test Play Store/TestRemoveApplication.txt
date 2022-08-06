@@ -1,8 +1,0 @@
-com.android.vending
--1
-5
-BUTTON, UiSelector[DESCRIPTION=Show navigation drawer],
-BUTTON, UiSelector[TEXT=My apps & games],
-BUTTON, UiSelector[TEXT=Library],
-BUTTON, UiSelector[DESCRIPTION=Remove],
-BUTTON, UiSelector[TEXT=Remove],

@@ -1,6 +1,15 @@
 com.google.android.gm
 -1
-2
+12
 BUTTON, UiSelector[DESCRIPTION=Open navigation drawer],
 BUTTON, UiSelector[TEXT=Drafts], Drafts
-finalState.contains(testActions[1].value)
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/viewified_conversation_item_view], Draft
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/edit_draft],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/add_attachment],
+BUTTON, UiSelector[TEXT=Insert from Drive],
+BUTTON, UiSelector[TEXT=My Drive],
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/doclist_recycler_view], toElementByText= SCRUM 2.0
+BUTTON, UiSelector[TEXT= SCRUM 2.0],
+BUTTON, UiSelector[TEXT=Select],
+BUTTON, UiSelector[DESCRIPTION=Navigate up],
+!finalState.contains("Compose")

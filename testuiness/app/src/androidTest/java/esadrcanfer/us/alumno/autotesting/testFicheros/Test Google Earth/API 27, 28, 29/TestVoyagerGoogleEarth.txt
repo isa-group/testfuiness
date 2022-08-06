@@ -1,7 +1,8 @@
 com.google.earth
 -1
-3
+4
 BUTTON, UiSelector[DESCRIPTION=Voyager],
 BUTTON, UiSelector[DESCRIPTION=Nature],
-BUTTON, UiSelector[TEXT=Timelapse in Google Earth],
-finalState.contains(testActions[1].value)
+SCROLL_TO, UiSelector[SCROLLABLE=true], toElementByText=Changing Forests
+BUTTON, UiSelector[TEXT=Changing Forests],
+finalState.contains("Changing Forests")

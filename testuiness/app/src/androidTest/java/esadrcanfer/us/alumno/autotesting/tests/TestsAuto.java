@@ -37,10 +37,10 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
+        return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
                             "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
                             "Test Calculator/API 25, 27, 28/TestResta.txt",
-                            "Test Calculator/API 25, 27, 28/TestSuma.txt");*/
+                            "Test Calculator/API 25, 27, 28/TestSuma.txt");
 
         // CLOCK
 
@@ -169,11 +169,10 @@ public class TestsAuto {
 
         // PLAY STORE
 
-        return Arrays.asList("Test Play Store/TestSearchApplication.txt",
+        /*return Arrays.asList("Test Play Store/TestSearchApplication.txt",
                             "Test Play Store/TestInstallApplication.txt",
                             "Test Play Store/TestUpdateApplication.txt",
-                            "Test Play Store/TestRemoveApplication.txt",
-                            "Test Play Store/TestUninstallApplication.txt");
+                            "Test Play Store/TestUninstallApplication.txt");*/
 
         // YOUTUBE
 
@@ -181,6 +180,15 @@ public class TestsAuto {
                             "Test YouTube/API 28, 29/TestShareVideo.txt",
                             "Test YouTube/API 28, 29/TestChangeVelocity.txt",
                             "Test YouTube/API 28, 29/TestChangeQuality.txt");*/
+
+        // YT MUSIC
+
+        /*return Arrays.asList("Test YT Music/TestSearchAndPlaySong.txt",
+                            "Test YT Music/TestAddSongToLibrary.txt",
+                            "Test YT Music/TestDeleteFromLibrary.txt",
+                            "Test YT Music/TestExplore.txt",
+                            "Test YT Music/TestSubscribe.txt",
+                            "Test YT Music/TestUnsubscribe.txt");*/
     }
 
     public TestsAuto(String path) {

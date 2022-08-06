@@ -5,4 +5,5 @@ BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/fa
 BUTTON, UiSelector[TEXT=New presentation], 
 BUTTON, UiSelector[DESCRIPTION=Back],
 BUTTON, UiSelector[DESCRIPTION=Back],
-finalState.contains(testActions[1].value)
+finalState.size() > initialState.size()
+

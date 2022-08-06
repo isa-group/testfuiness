@@ -2,10 +2,10 @@ com.google.android.calendar
 -1
 7
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/date_picker_button],
-BUTTON, UiSelector[DESCRIPTION=30],
+BUTTON, UiSelector[CLASS=android.view.View(29)],
 BUTTON, UiSelector[DESCRIPTION=11:15 AM – 12:30 PM: Prueba ficheros test],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/info_action_edit_hit],
-SCROLL_DOWN, UiSelector[TEXT=Add note], Elements=10
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.calendar:id/editor_scroll_view], toElementByText=Add note
 TEXT, UiSelector[TEXT=Add note], Evento importante
 BUTTON, UiSelector[TEXT=SAVE],
-finalState.contains(testActions[1].value)
+finalState.contains("Evento importante")

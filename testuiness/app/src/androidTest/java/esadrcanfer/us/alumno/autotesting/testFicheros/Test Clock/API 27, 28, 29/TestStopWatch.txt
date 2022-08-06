@@ -3,7 +3,7 @@ com.google.android.deskclock
 5
 BUTTON, UiSelector[TEXT=Stopwatch],
 BUTTON, UiSelector[DESCRIPTION=Start],
-COUNT_DOWN, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/fab],
+COUNT_DOWN, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/fab], 10
 BUTTON, UiSelector[DESCRIPTION=Pause],
 BUTTON, UiSelector[DESCRIPTION=Reset],
-finalState.contains(testActions[1].value)
+finalState.contains("00")

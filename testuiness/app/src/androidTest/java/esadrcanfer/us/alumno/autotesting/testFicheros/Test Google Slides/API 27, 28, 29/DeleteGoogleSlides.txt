@@ -2,7 +2,7 @@ com.google.android.apps.docs.editors.slides
 -1
 4
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/more_actions_button], More actions
-SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/menu_recycler_view], Elements=10
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/menu_recycler_view], Elements=10
 BUTTON, UiSelector[TEXT=Remove], Remove
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/positive_button],
-finalState.size() < initialState.size()
+finalState.contains("File moved to trash. ")

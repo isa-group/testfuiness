@@ -12,4 +12,4 @@ BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/spinner],
 BUTTON, UiSelector[TEXT=All time],
 BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/clear_button], Clear data
 BUTTON, UiSelector[TEXT=CLEAR],
-finalState.contains(testActions[1].value)
+finalState.contains("No history here")

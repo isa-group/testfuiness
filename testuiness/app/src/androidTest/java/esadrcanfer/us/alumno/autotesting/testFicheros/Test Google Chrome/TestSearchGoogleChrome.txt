@@ -1,8 +1,9 @@
 com.android.chrome
 -1
-4
+5
 BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/search_box_text], Search or type web address
 TEXT, UiSelector[RESOURCE_ID=com.android.chrome:id/url_bar], Android Studio
-BUTTON, UiSelector[TEXT=Android Studio],
+ENTER, UiSelector[enterButton],
+SCROLL_TO, UiSelector[RESOURCE_ID=center_col], toElementByText=Introducción a Android Studio
 BUTTON, UiSelector[TEXT=Introducción a Android Studio],
-finalState.contains(testActions[1].value)
+finalState.contains("SPANISH")

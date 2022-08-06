@@ -1,8 +1,0 @@
-com.google.android.apps.books
--1
-4
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/bottom_library],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/overflow_button],
-BUTTON, UiSelector[TEXT=Remove download],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/primary_button], Remove
-finalState.contains(testActions[1].value)

@@ -1,8 +1,11 @@
 com.google.android.apps.docs
 -1
-4
+7
 BUTTON, UiSelector[TEXT=Files],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/extended_fab],
-BUTTON, UiSelector[TEXT=Google Sheets], Google Sheets 
+BUTTON, UiSelector[TEXT=Google Sheets], Google Sheets
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.sheets:id/spreadsheet_view],
+BUTTON, UiSelector[DESCRIPTION=Done],
 BUTTON, UiSelector[DESCRIPTION=Close],
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/doclist_container], toElementByText=Untitled spreadsheet
 finalState.contains("Untitled spreadsheet")
