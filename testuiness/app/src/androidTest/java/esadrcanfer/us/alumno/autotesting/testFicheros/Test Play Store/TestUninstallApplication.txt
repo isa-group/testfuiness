@@ -1,7 +1,7 @@
 com.android.vending
 -1
 11
-BUTTON, UiSelector[CLASS=android.widget.ImageView(0)],
+BUTTON, UiSelector[CLASS=android.widget.ImageView(1)],
 BUTTON, UiSelector[TEXT=Manage apps & device],
 BUTTON, UiSelector[TEXT=Manage],
 BUTTON, UiSelector[TEXT=Google Classroom],

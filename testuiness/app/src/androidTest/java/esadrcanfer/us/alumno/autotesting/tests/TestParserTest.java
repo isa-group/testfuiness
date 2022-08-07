@@ -80,7 +80,7 @@ public class TestParserTest {
                 "Phone",
                 "Play Books",
                 "Play Games",
-                "Play Movies",
+                "Play Movies & TV",
                 "Play Store",
                 //"YouTube",
                 "YT Music");

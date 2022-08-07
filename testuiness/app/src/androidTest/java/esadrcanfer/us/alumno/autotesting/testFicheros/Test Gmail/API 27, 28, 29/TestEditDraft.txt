@@ -1,6 +1,6 @@
 com.google.android.gm
 -1
-12
+11
 BUTTON, UiSelector[DESCRIPTION=Open navigation drawer],
 BUTTON, UiSelector[TEXT=Drafts], Drafts
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/viewified_conversation_item_view], Draft

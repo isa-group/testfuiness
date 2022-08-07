@@ -123,9 +123,11 @@ public class TestGoogleMaps{
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/place_page_view")).click();
 
-        mDevice.findObject(new UiSelector().text("SHARE PLACE")).click();
+        mDevice.findObject(new UiSelector().text("Share")).click();
 
         mDevice.findObject(new UiSelector().text("Messages")).click();
+
+        mDevice.findObject(new UiSelector().text("NEW MESSAGE")).click();
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 

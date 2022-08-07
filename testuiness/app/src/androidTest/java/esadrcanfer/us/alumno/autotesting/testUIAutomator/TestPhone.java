@@ -84,15 +84,11 @@ public class TestPhone{
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        List<String> initialState = labelsDetection();
-
         mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contacts_tab")).click();
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
         mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star")).click();
-
-        List<String> finalState = labelsDetection();
 
     }
 

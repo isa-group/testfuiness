@@ -3,6 +3,6 @@ com.android.vending
 4
 BUTTON, UiSelector[TEXT=Search for apps & games],
 TEXT, UiSelector[TEXT=Search for apps & games],Google Classroom
-BUTTON, UiSelector[CLASS=android.widget.LinearLayout(0)],
+ENTER, UiSelector[enterButton],
 BUTTON, UiSelector[TEXT=Install],
 finalState.contains("Cancel")

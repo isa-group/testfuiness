@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -22,11 +25,16 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestGoogleTranslate {
+public class TestGoogleTranslate{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Translate";
@@ -34,11 +42,20 @@ public class TestGoogleTranslate {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -55,79 +72,66 @@ public class TestGoogleTranslate {
     }
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = getInstrumentation().getTargetContext();
-
-        assertEquals("com.example.translate", appContext.getPackageName());
-    }
-
-    @Test
     public void test1Translate() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
-        // appViews.scrollIntoView(new UiSelector().text("Translate"));
-        // appViews.scrollToEnd(10);
-        appViews.scrollForward();
-
-        // UiScrollable scroll = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));   // API 28
-        UiScrollable scroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/apps_list_view"));
-        scroll.scrollForward();
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Translate"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Translate"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject text = mDevice.findObject(new UiSelector().text("Enter text"));
-        text.clickAndWaitForNewWindow();
-        text.setText("Can i go to the toilet please?");
+        List<String> initialState = labelsDetection();
 
-        mDevice.pressEnter();
+        mDevice.findObject(new UiSelector().text("Enter text")).click();
 
-        UiObject back = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
-        back.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/text_input_field")).setText("Can i go to the toilet please?");
+
+        mDevice.pressBack();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("¿Puedo ir al baño por favor?"));
+
     }
 
     @Test
     public void test2ChangeLanguage() throws UiObjectNotFoundException {
-
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
-        // appViews.scrollIntoView(new UiSelector().text("Translate"));
-        // appViews.scrollToEnd(10);
-        appViews.scrollForward();
-
-        // UiScrollable scroll = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));   // API 28
-        UiScrollable scroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/apps_list_view"));
-        scroll.scrollForward();
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Translate"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Translate"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject click = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/language_button_a"));
-        click.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject language = mDevice.findObject(new UiSelector().text("Armenian"));
-        language.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/language_button_a")).click();
 
-        UiObject change = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/swap_languages_button"));
-        change.click();
+        mDevice.findObject(new UiSelector().text("Armenian")).click();
 
-        UiObject text = mDevice.findObject(new UiSelector().text("Enter text"));
-        text.clickAndWaitForNewWindow();
-        text.setText("En verano hace calor, en invierno hace frío");
+        mDevice.findObject(new UiSelector().description("Swap languages")).click();
 
-        mDevice.pressEnter();
+        mDevice.findObject(new UiSelector().text("Enter text")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.translate:id/text_input_field")).setText("En verano hace calor");
+
+        mDevice.pressBack();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.size() > initialState.size());
+
     }
 
 }

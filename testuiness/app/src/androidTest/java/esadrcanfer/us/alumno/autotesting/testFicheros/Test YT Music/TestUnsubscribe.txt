@@ -5,4 +5,3 @@ BUTTON, UiSelector[TEXT=Library],
 BUTTON, UiSelector[TEXT=Subscriptions],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/contextual_menu_anchor],
 BUTTON, UiSelector[TEXT=Unsubscribe],
-finalState.contains("UNDO")

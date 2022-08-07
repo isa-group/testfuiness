@@ -127,7 +127,7 @@ public class TestPlayBooks{
 
         mDevice.findObject(new UiSelector().text("Science")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.books:id/card_image_body_button_list_item_root")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.books:id/card_image_body_button_list_item_root")).clickAndWaitForNewWindow();
 
         List<String> finalState = labelsDetection();
 

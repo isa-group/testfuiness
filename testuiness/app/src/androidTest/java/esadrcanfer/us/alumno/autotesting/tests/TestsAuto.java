@@ -134,8 +134,8 @@ public class TestsAuto {
 
         // GOOGLE TRANSLATE
 
-        /*return Arrays.asList("Test Google Traductor/API 28, 29/TestTraductor.txt",
-                            "Test Google Traductor/API 28, 29/TestCambiarIdioma.txt");*/
+        /*return Arrays.asList("Test Google Traductor/API 28, 29/TestTranslate.txt",
+                            "Test Google Traductor/API 28, 29/TestChangeLanguage.txt");*/
 
         // MESSAGES
 
