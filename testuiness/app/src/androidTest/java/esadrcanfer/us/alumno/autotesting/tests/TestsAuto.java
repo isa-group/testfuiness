@@ -37,10 +37,10 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
+        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
                             "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
                             "Test Calculator/API 25, 27, 28/TestResta.txt",
-                            "Test Calculator/API 25, 27, 28/TestSuma.txt");
+                            "Test Calculator/API 25, 27, 28/TestSuma.txt");*/
 
         // CLOCK
 
@@ -162,10 +162,10 @@ public class TestsAuto {
         /*return Arrays.asList("Test Play Games/API 28, 29/TestPlayGame.txt",
                             "Test Play Games/API 28, 29/TestSearchGame.txt");*/
 
-        // PLAY MOVIES
+        // GOOGLE TV
 
-        /*return Arrays.asList("Test Play Movies/TestPlayMovies.txt",
-                            "Test Play Movies/TestSearchMovies.txt");*/
+        return Arrays.asList("Test Google TV/TestAddToWatchlist.txt",
+                            "Test Google TV/TestSearchMovie.txt");
 
         // PLAY STORE
 

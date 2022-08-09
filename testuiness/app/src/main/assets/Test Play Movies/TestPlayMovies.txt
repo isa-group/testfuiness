@@ -1,6 +1,0 @@
-com.google.android.videos
--1
-2
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/card],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/header_play_trailer_button],
-finalState.size() < initialState.size()

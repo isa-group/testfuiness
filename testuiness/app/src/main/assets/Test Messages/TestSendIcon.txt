@@ -3,7 +3,7 @@ com.google.android.apps.messaging
 5
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/start_new_conversation_button], Start chat
 BUTTON, UiSelector[TEXT=Alejandro Garcia Fernandez],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/attach_media_button],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/emoji_text],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/emoji_gallery_button],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/emoji],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/send_message_button_icon],
 finalState.contains("Now • SMS")

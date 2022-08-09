@@ -6,4 +6,4 @@ TEXT, UiSelector[RESOURCE_ID=com.android.chrome:id/url_bar], Android Studio
 ENTER, UiSelector[enterButton],
 SCROLL_TO, UiSelector[RESOURCE_ID=center_col], toElementByText=Introducción a Android Studio
 BUTTON, UiSelector[TEXT=Introducción a Android Studio],
-finalState.contains("SPANISH")
+finalState.contains("Android Developers")

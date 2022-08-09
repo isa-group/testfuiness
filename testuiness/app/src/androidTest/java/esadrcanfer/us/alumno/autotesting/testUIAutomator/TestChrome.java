@@ -1,9 +1,11 @@
 package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -13,19 +15,24 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
-public class TestChrome {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class TestChrome{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Chrome";
@@ -33,11 +40,20 @@ public class TestChrome {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -54,123 +70,124 @@ public class TestChrome {
     }
 
     @Test
-    public void testSearchGoogleChrome() throws UiObjectNotFoundException {
-
-        //useAppContext();
+    public void test1SearchGoogleChrome() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Chrome"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiObject search = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/search_box_text"));
-        search.click();
-
-        UiObject text = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/url_bar"));
-        text.setText("UI Automator");
-
-        // UiObject option = mDevice.findObject(new UiSelector().text("UI Automator"));
-        // UiObject option = mDevice.findObject(new UiSelector().className("android.widget.TextView").index(0));
-        mDevice.pressEnter();
-
-        UiObject select = mDevice.findObject(new UiSelector().index(10));
-        select.click();
-    }
-
-    @Test
-    public void testShareImageGoogleChrome() throws UiObjectNotFoundException {
-
-        //useAppContext();
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Chrome"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Chrome"));
         testingApp.clickAndWaitForNewWindow();
 
-        // NOTE: IF YOU WANT TO LAUNCH THIS TEST INDIVIDUALLY, PLEASE, REMOVE THE COMMENTS BELLOW
+        List<String> initialState = labelsDetection();
 
-        // UiObject search = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/search_box_text"));
-        // search.click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/search_box_text")).click();
 
-        UiObject text = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/url_bar"));
-        text.click();
-        text.setText("SCRUM");
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/url_bar")).setText("Android Studio");
 
         mDevice.pressEnter();
 
-        UiObject images = mDevice.findObject(new UiSelector().text("Imágenes"));
-        images.clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().resourceId("center_col")).scrollIntoView(new UiSelector().text("Introducción a Android Studio"));
 
-        // UiObject image = mDevice.findObject(new UiSelector().text("Image result for SCRUM"));
-        UiObject image = mDevice.findObject(new UiSelector().text("What is Scrum?"));
-        image.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Introducción a Android Studio")).clickAndWaitForNewWindow();
 
-        UiObject moreOptionsBtn = mDevice.findObject(new UiSelector().text("More actions for this image"));
-        moreOptionsBtn.click();
+        List<String> finalState = labelsDetection();
 
-        UiObject share = mDevice.findObject(new UiSelector().text("Share"));
-        share.clickAndWaitForNewWindow();
+        assertTrue(finalState.contains("Android Developers"));
 
-        UiObject drive = mDevice.findObject(new UiSelector().text("Save to Drive"));
-        drive.clickAndWaitForNewWindow();
-
-        UiObject title = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/upload_edittext_document_title"));
-        title.setText("Imagen SCRUM");
-
-        UiObject save = mDevice.findObject(new UiSelector().text("SAVE"));
-        save.clickAndWaitForNewWindow();
     }
 
     @Test
-    public void testClearHistoryGoogleChrome() throws UiObjectNotFoundException {
-
-        //useAppContext();
+    public void test2ShareImageGoogleChrome() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Chrome"));
+
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Chrome"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject tabSwitcherButton = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/tab_switcher_button"));
-        tabSwitcherButton.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject newTabButton = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/new_tab_button"));
-        newTabButton.click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/search_box_text")).click();
 
-        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/menu_button"));
-        options.click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/url_bar")).setText("SCRUM");
 
-        UiObject history = mDevice.findObject(new UiSelector().text("History"));
-        history.click();
+        mDevice.pressEnter();
 
-        try {
-            UiObject clear = mDevice.findObject(new UiSelector().text("CLEAR BROWSING DATA…"));
-            clear.click();
+        mDevice.findObject(new UiSelector().text("Imágenes")).click();
 
-            UiObject button = mDevice.findObject(new UiSelector().text("CLEAR DATA"));
-            button.click();
+        mDevice.findObject(new UiSelector().text("Qué es Scrum? | Scrum.org")).click();
 
-            UiObject confirm = mDevice.findObject(new UiSelector().text("CLEAR"));
-            confirm.click();
-        }catch(Exception e){
-            UiObject noHistory = mDevice.findObject(new UiSelector().text("No history here"));
-            assertNotNull(noHistory);
-        }
+        mDevice.findObject(new UiSelector().text("Más acciones para esta imagen")).click();
+
+        mDevice.findObject(new UiSelector().text("Compartir")).clickAndWaitForNewWindow();
+
+        mDevice.findObject(new UiSelector().text("Drive")).clickAndWaitForNewWindow();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.docs:id/upload_title_edittext")).setText("SCRUM 2.0");
+
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains(""));
+
     }
 
-    private static void useAppContext() {
-        // Context of the app under test.
-        Context appContext = getInstrumentation().getTargetContext();
+    @Test
+    public void test3ClearHistoryGoogleChrome() throws UiObjectNotFoundException {
 
-        assertEquals("com.example.chrome", appContext.getPackageName());
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
+
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Chrome"));
+
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("Chrome"));
+        testingApp.clickAndWaitForNewWindow();
+
+        List<String> initialState = labelsDetection();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/menu_button")).click();
+
+        mDevice.findObject(new UiSelector().text("History")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/clear_browsing_data_button")).click();
+
+        mDevice.findObject(new UiSelector().text("Basic")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/spinner")).click();
+
+        mDevice.findObject(new UiSelector().text("All time")).click();
+
+        mDevice.findObject(new UiSelector().text("Advanced")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/spinner")).click();
+
+        mDevice.findObject(new UiSelector().text("All time")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.chrome:id/clear_button")).click();
+
+        mDevice.findObject(new UiSelector().text("CLEAR")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Pages that you visit appear here"));
+
     }
+
 }

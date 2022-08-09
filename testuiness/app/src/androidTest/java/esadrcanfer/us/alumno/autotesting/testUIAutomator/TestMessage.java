@@ -86,7 +86,7 @@ public class TestMessage{
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_new_conversation_button")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_chat_fab")).click();
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
@@ -117,13 +117,13 @@ public class TestMessage{
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_new_conversation_button")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_chat_fab")).click();
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/attach_media_button")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_gallery_button")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_text")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji")).click();
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/send_message_button_icon")).click();
 
@@ -152,7 +152,7 @@ public class TestMessage{
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        mDevice.findObject(new UiSelector().description("More options")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/action_bar_overflow")).click();
 
         mDevice.findObject(new UiSelector().text("Delete")).click();
 
@@ -160,7 +160,7 @@ public class TestMessage{
 
         List<String> finalState = labelsDetection();
 
-        assertTrue(finalState.size() < initialState.size());
+        assertTrue(!finalState.contains("Alejandro Garcia Fernandez"));
 
     }
 

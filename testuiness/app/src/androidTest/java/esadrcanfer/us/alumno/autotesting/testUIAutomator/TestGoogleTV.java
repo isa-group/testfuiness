@@ -32,10 +32,10 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestPlayMovies{
+public class TestGoogleTV {
 
     private static final int LAUNCH_TIMEOUT = 5000;
-    private static final String BASIC_SAMPLE_PACKAGE = "Play Movies";
+    private static final String BASIC_SAMPLE_PACKAGE = "Google TV";
     private UiDevice mDevice;
 
     @Before
@@ -70,7 +70,7 @@ public class TestPlayMovies{
     }
 
     @Test
-    public void testPlayMovies() throws UiObjectNotFoundException {
+    public void testAddToWatchlist() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
@@ -79,25 +79,27 @@ public class TestPlayMovies{
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Play Movies & TV"));
+        appViews.scrollIntoView(new UiSelector().text("Google TV"));
 
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Movies & TV"));
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("Google TV"));
         testingApp.clickAndWaitForNewWindow();
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/card")).click();
+        mDevice.findObject(new UiSelector().text("Top picks for you")).clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/header_play_trailer_button")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/tvm_entity_card_component")).clickAndWaitForNewWindow();
+
+        mDevice.findObject(new UiSelector().text("Watchlist")).click();
 
         List<String> finalState = labelsDetection();
 
-        assertTrue(finalState.size() < initialState.size());
+        assertTrue(finalState.contains("Watchlisted"));
 
     }
 
     @Test
-    public void testSearchMovies() throws UiObjectNotFoundException {
+    public void testSearchMovie() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
@@ -106,20 +108,18 @@ public class TestPlayMovies{
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Play Movies & TV"));
+        appViews.scrollIntoView(new UiSelector().text("Google TV"));
 
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Movies & TV"));
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("Google TV"));
         testingApp.clickAndWaitForNewWindow();
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/menu_search")).click();
+        mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0)).clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/search_box_text_input")).setText("Megalodon");
+        mDevice.findObject(new UiSelector().resourceId("android:id/search_src_text")).setText("Megalodon");
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.videos:id/text_frame")).click();
-
-        mDevice.findObject(new UiSelector().text("The Meg")).click();
+        mDevice.findObject(new UiSelector().text("The Meg")).clickAndWaitForNewWindow();
 
         List<String> finalState = labelsDetection();
 
