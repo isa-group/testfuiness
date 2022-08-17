@@ -37,10 +37,10 @@ public class TestsAuto {
 
         // CALCULATOR
 
-        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestDivisión.txt",
-                            "Test Calculator/API 25, 27, 28/TestMultiplicación.txt",
-                            "Test Calculator/API 25, 27, 28/TestResta.txt",
-                            "Test Calculator/API 25, 27, 28/TestSuma.txt");*/
+        /*return Arrays.asList("Test Calculator/API 25, 27, 28/TestAdition.txt",
+                            "Test Calculator/API 25, 27, 28/TestSubstraction.txt",
+                            "Test Calculator/API 25, 27, 28/TestMultiplication.txt",
+                            "Test Calculator/API 25, 27, 28/TestDivision.txt");*/
 
         // CLOCK
 
