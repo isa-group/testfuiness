@@ -1,9 +1,11 @@
 package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -20,14 +22,17 @@ import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestGmail {
+public class TestGmail{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Gmail";
@@ -35,11 +40,20 @@ public class TestGmail {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -56,17 +70,10 @@ public class TestGmail {
     }
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = getInstrumentation().getTargetContext();
-
-        assertEquals("com.example.gmail", appContext.getPackageName());
-    }
-
-    @Test
     public void test1SendEmail() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -77,37 +84,31 @@ public class TestGmail {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Gmail"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject email = mDevice.findObject(new UiSelector().description("Compose"));
-        email.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        try {
-            UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-            user.setText("yalejandro9@gmail.com");
-        }catch(Exception e){
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/compose_button")).click();
 
-            UiObject okButton = mDevice.findObject(new UiSelector().text("OK"));
-            okButton.click();
+        mDevice.findObject(new UiSelector().className("android.widget.EditText").index(0)).setText("alegarfer4@alum.us.es");
 
-            UiObject user = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/to"));
-            user.setText("yalejandro9@gmail.com");
-        }
+        mDevice.pressEnter();
 
-        UiObject subject = mDevice.findObject(new UiSelector().text("Subject"));
-        subject.setText("UI Automator");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/subject")).setText("Test ficheros");
 
-        UiObject body = mDevice.findObject(new UiSelector().text("Compose email"));
-        body.setText("Test probando aplicación de Gmail");
+        mDevice.findObject(new UiSelector().text("Compose email")).setText("Test probando aplicacion de Gmail");
 
-        UiObject button = mDevice.findObject(new UiSelector().description("Send"));
-        button.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/send")).click();
 
-        mDevice.pressHome();
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Sent"));
+
     }
 
     @Test
     public void test2EditDraft() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -118,54 +119,41 @@ public class TestGmail {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Gmail"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject options = mDevice.findObject(new UiSelector().description("Open navigation drawer"));
-        options.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject drafts = mDevice.findObject(new UiSelector().text("Drafts"));
-        drafts.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().description("Open navigation drawer")).click();
 
-        try {
-            //UiObject email = mDevice.findObject(new UiSelector().descriptionStartsWith(" me, UI Automator, Test probando aplicación de Gmail"));
-            UiObject email = mDevice.findObject(new UiSelector().text("Draft"));
-            email.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Drafts")).click();
 
-            UiObject edit = mDevice.findObject(new UiSelector().description("Edit"));
-            edit.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/viewified_conversation_item_view")).click();
 
-            UiObject text = mDevice.findObject(new UiSelector().description("Attach file"));
-            text.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/edit_draft")).click();
 
-            UiObject attachment = mDevice.findObject(new UiSelector().text("Attach file"));
-            attachment.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/add_attachment")).click();
 
-            UiObject root = mDevice.findObject(new UiSelector().description("Show roots"));
-            root.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Insert from Drive")).click();
 
-            UiObject drive = mDevice.findObject(new UiSelector().text("Drive"));
-            drive.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("My Drive")).click();
 
-            UiObject drive2 = mDevice.findObject(new UiSelector().text("My Drive"));
-            drive2.clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().resourceId("com.google.android.apps.docs:id/doclist_recycler_view")).scrollIntoView(new UiSelector().text(" SCRUM 2.0"));
 
-            UiScrollable app = new UiScrollable(new UiSelector().scrollable(false));
-            app.scrollIntoView(new UiSelector().text("SCRUM.png"));
+        mDevice.findObject(new UiSelector().text("SCRUM 2.0")).click();
 
-            UiObject file = mDevice.findObject(new UiSelector().text("SCRUM.png"));
-            file.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Select")).click();
 
-            UiObject save = mDevice.findObject(new UiSelector().description("Navigate up"));
-            save.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().description("Navigate up")).click();
 
-        }catch(Exception e){
-            UiObject noDrafts = mDevice.findObject(new UiSelector().text("Nothing in Drafts"));
-            assertNotNull(noDrafts);
-        }
+        List<String> finalState = labelsDetection();
+
+        assertTrue(!finalState.contains("Compose"));
+
     }
 
     @Test
     public void test3DeleteEmail() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -176,25 +164,27 @@ public class TestGmail {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Gmail"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject options = mDevice.findObject(new UiSelector().description("Open navigation drawer"));
-        options.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject sent = mDevice.findObject(new UiSelector().text("Sent"));
-        sent.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().description("Open navigation drawer")).click();
 
-        // UiObject body = mDevice.findObject(new UiSelector().text("me"));
-        // UiObject body = mDevice.findObject(new UiSelector().descriptionContains("me"));
-        UiObject body = mDevice.findObject(new UiSelector().className("android.view.View").index(0));
-        body.click();
+        mDevice.findObject(new UiSelector().text("Sent")).click();
 
-        UiObject delete = mDevice.findObject(new UiSelector().description("Delete"));
-        delete.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/viewified_conversation_item_view")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/delete")).click();
+
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("1 deleted");
+
     }
 
     @Test
     public void test4EmptyTrash() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -205,23 +195,21 @@ public class TestGmail {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Gmail"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject options = mDevice.findObject(new UiSelector().description("Open navigation drawer"));
-        options.click();
+        List<String> initialState = labelsDetection();
 
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(false));
-        scroll.scrollIntoView(new UiSelector().text("Trash"));
+        mDevice.findObject(new UiSelector().description("Open navigation drawer")).click();
 
-        UiObject sent = mDevice.findObject(new UiSelector().text("Trash"));
-        sent.clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().resourceId("android:id/list")).scrollIntoView(new UiSelector().text("Trash"));
 
+        mDevice.findObject(new UiSelector().text("Trash")).click();
 
-        // UiObject trash = mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/empty_trash_spam_action")); // API 25
-        UiObject trash = mDevice.findObject(new UiSelector().text("EMPTY TRASH NOW"));
-        trash.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.gm:id/empty_trash_spam_action")).click();
 
-        // UiObject confirm = mDevice.findObject(new UiSelector().resourceId("android:id/button1")); // API 25
-        UiObject confirm = mDevice.findObject(new UiSelector().text("EMPTY"));
-        confirm.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Nothing in Trash"));
 
     }
 

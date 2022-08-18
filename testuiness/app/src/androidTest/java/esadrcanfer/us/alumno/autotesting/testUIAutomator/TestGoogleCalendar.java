@@ -1,9 +1,11 @@
 package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -22,11 +24,16 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestGoogleCalendar {
+public class TestGoogleCalendar{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Calendar";
@@ -34,11 +41,20 @@ public class TestGoogleCalendar {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -58,184 +74,131 @@ public class TestGoogleCalendar {
     public void test1CreateEvent() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollIntoView(new UiSelector().text("Calendar"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calendar"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/floating_action_button"));
-        button.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().description("Create new event and more")).click();
 
-        UiObject eventBtn = mDevice.findObject(new UiSelector().text("Event"));
-        eventBtn.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Event")).click();
 
-        UiObject title = mDevice.findObject(new UiSelector().text("Enter title, times, people, places…"));
-        title.setText("UI Automator");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/input")).setText("Prueba ficheros test");
 
-        UiObject startDate = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/start_date"));
-        startDate.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/start_date")).click();
 
-        UiObject done = mDevice.findObject(new UiSelector().text("OK"));
-        UiObject cancel = mDevice.findObject(new UiSelector().text("CANCEL"));
+        mDevice.findObject(new UiSelector().text("30")).click();
 
-        UiObject date1 = mDevice.findObject(new UiSelector().text("10"));
-        date1.click();
-        done.click();
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
 
-        UiObject endDate = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/end_date"));
-        endDate.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/end_date")).click();
 
-        UiObject date2 = mDevice.findObject(new UiSelector().text("10"));
-        date2.click();
-        done.click();
+        mDevice.findObject(new UiSelector().text("30")).click();
 
-        UiObject startTime = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/start_time"));
-        startTime.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
 
-        UiObject time1 = mDevice.findObject(new UiSelector().description("12"));
-        UiObject time2 = mDevice.findObject(new UiSelector().description("15"));
-        time1.click();
-        time2.click();
-        done.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/start_time")).click();
 
-        UiObject endTime = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/end_time"));
-        endTime.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().description("11")).click();
 
-        UiObject time3 = mDevice.findObject(new UiSelector().description("12"));
-        UiObject time4 = mDevice.findObject(new UiSelector().description("45"));
-        time3.click();
-        time4.click();
-        done.click();
+        mDevice.findObject(new UiSelector().description("15")).click();
 
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
-        scroll.scrollToEnd(10);
+        mDevice.findObject(new UiSelector().text("AM")).click();
 
-        UiObject color = mDevice.findObject(new UiSelector().text("Default color"));
-        color.click();
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
 
-        UiObject select = mDevice.findObject(new UiSelector().text("Blueberry"));
-        select.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/end_time")).click();
 
-        UiObject description = mDevice.findObject(new UiSelector().text("Add note"));
-        description.setText("UI Automator test");
+        mDevice.findObject(new UiSelector().description("12")).click();
 
-        UiObject save = mDevice.findObject(new UiSelector().text("SAVE"));
-        save.click();
+        mDevice.findObject(new UiSelector().description("30")).click();
+
+        mDevice.findObject(new UiSelector().text("PM")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
+
+        mDevice.findObject(new UiSelector().text("SAVE")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_button")).click();
+
+        mDevice.findObject(new UiSelector().className("android.view.View").index(29)).click();
+
+        mDevice.findObject(new UiSelector().description("11:15 AM – 12:30 PM: Prueba ficheros test")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Prueba ficheros test"));
+
     }
 
     @Test
     public void test2EditEvent() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollIntoView(new UiSelector().text("Calendar"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calendar"));
         testingApp.clickAndWaitForNewWindow();
 
-        // UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_text_view")); // API 27
-        // UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_arrow")); // API 29
-        // calendar.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_button")).click();
 
-        // UiObject day = mDevice.findObject(new UiSelector().className("android.view.View").index(9));
-        // day.click();
+        mDevice.findObject(new UiSelector().className("android.view.View").index(29)).click();
 
-        UiObject event = mDevice.findObject(new UiSelector().descriptionContains("UI Automator"));
-        event.click();
+        mDevice.findObject(new UiSelector().description("11:15 AM – 12:30 PM: Prueba ficheros test")).click();
 
-        UiObject edit = mDevice.findObject(new UiSelector().description("Edit"));
-        edit.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/info_action_edit_hit")).click();
 
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
-        scroll.scrollToEnd(10);
+        new UiScrollable(new UiSelector().resourceId("com.google.android.calendar:id/editor_scroll_view")).scrollIntoView(new UiSelector().text("Add note"));
 
-        // UiObject notification = mDevice.findObject(new UiSelector().description("Remove notification")); NOT IN API 28
-        // notification.click();
+        mDevice.findObject(new UiSelector().text("Add note")).setText("Evento importante");
 
-        UiObject location = mDevice.findObject(new UiSelector().text("Add location"));
-        location.click();
-        location.setText("Avenida Reina Mercedes");
+        mDevice.findObject(new UiSelector().text("SAVE")).click();
 
-        try{
-            UiObject select = mDevice.findObject(new UiSelector().text("Avenida Reina Mercedes, Seville"));
-            select.click();
-        }catch(Exception e){
-            mDevice.pressEnter();
-        }
+        List<String> finalState = labelsDetection();
 
-        // APP NOT UPDATED ENOUGH TO RUN THESE ACTIONS
+        assertTrue(finalState.contains("Evento importante"));
 
-        // UiObject attachment = mDevice.findObject(new UiSelector().text("Add attachment"));
-        // attachment.click();
-
-        // UiObject drive = mDevice.findObject(new UiSelector().text("My Drive"));
-        // drive.click();
-
-        // scroll.scrollIntoView(new UiSelector().text("UI Automator"));
-
-        // UiObject file = mDevice.findObject(new UiSelector().text("UI Automator"));
-        // file.click();
-
-        // UiObject button = mDevice.findObject(new UiSelector().text("Select"));
-        // button.click();
-
-        // UiObject sheet = mDevice.findObject(new UiSelector().description("Collapse event sheet"));
-        // sheet.click();
-
-        UiObject save = mDevice.findObject(new UiSelector().text("SAVE"));
-        save.click();
     }
 
     @Test
     public void test3DeleteEvent() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
         appViews.scrollIntoView(new UiSelector().text("Calendar"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Calendar"));
         testingApp.clickAndWaitForNewWindow();
 
-        // UiObject calendar = mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_text_view"));
-        // calendar.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.calendar:id/date_picker_button")).click();
 
-        // UiObject day = mDevice.findObject(new UiSelector().className("android.view.View").index(9));
-        // day.click();
+        mDevice.findObject(new UiSelector().className("android.view.View").index(29)).click();
 
-        // UiObject event = mDevice.findObject(new UiSelector().descriptionContains("UI Automator"));
-        // event.click();
+        mDevice.findObject(new UiSelector().description("11:15 AM – 12:30 PM: Prueba ficheros test")).click();
 
-        UiObject options = mDevice.findObject(new UiSelector().description("More options"));
-        options.click();
+        mDevice.findObject(new UiSelector().description("More options")).click();
 
-        UiObject delete = mDevice.findObject(new UiSelector().text("Delete"));
-        delete.click();
+        mDevice.findObject(new UiSelector().text("Delete")).click();
 
-        UiObject confirm = mDevice.findObject(new UiSelector().text("DELETE"));
-        confirm.click();
-    }
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
 
-    private static void useAppContext() {
-        // Context of the app under test.
-        Context appContext = getInstrumentation().getTargetContext();
-
-        assertEquals("com.example.calendar", appContext.getPackageName());
     }
 
 }

@@ -4,4 +4,4 @@ com.google.android.play.games
 BUTTON, UiSelector[TEXT=Library],
 BUTTON, UiSelector[TEXT=Whirlybird],
 BUTTON, UiSelector[TEXT=Play],
-finalState.contains(testActions[1].value)
+finalState.size() == 0

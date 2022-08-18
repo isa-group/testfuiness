@@ -3,6 +3,9 @@ package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -20,11 +23,16 @@ import org.junit.runners.MethodSorters;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestPlayGames {
+public class TestPlayGames{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Play Games";
@@ -32,11 +40,20 @@ public class TestPlayGames {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -56,22 +73,28 @@ public class TestPlayGames {
     public void test1PlayGame() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
-        appViews.scrollForward();
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Play Games"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Games"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject game = mDevice.findObject(new UiSelector().text("Whirlybird"));
-        game.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject play = mDevice.findObject(new UiSelector().text("Play"));
-        play.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Library")).click();
+
+        mDevice.findObject(new UiSelector().text("Whirlybird")).click();
+
+        mDevice.findObject(new UiSelector().text("Play")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.size() == 0);
 
     }
 
@@ -79,31 +102,33 @@ public class TestPlayGames {
     public void test2SearchGame() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 25 y 27
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));   // API 28 y 29
-        appViews.scrollForward();
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Play Games"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Play Games"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject search = mDevice.findObject(new UiSelector().description("Search"));
-        search.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject game = mDevice.findObject(new UiSelector().text("Search for games"));
-        game.setText("Call of Duty");
+        mDevice.findObject(new UiSelector().description("Search")).click();
 
-        UiObject game2 = mDevice.findObject(new UiSelector().text("call of duty"));
-        game2.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.play.games:id/open_search_view_edit_text")).setText("Call of Duty");
 
-        UiObject feature = mDevice.findObject(new UiSelector().text("Install for €0"));
-        feature.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.play.games:id/replay__listitem__body")).click();
 
-        UiObject select = mDevice.findObject(new UiSelector().resourceId("com.google.android.play.games:id/search_result").index(2));
-        select.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Install for €0")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.play.games:id/search_result")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Call of WW2 Frontline Duty OPS"));
+
     }
 
 }

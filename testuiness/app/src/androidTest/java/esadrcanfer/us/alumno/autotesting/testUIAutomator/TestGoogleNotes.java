@@ -3,6 +3,9 @@ package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -20,23 +23,37 @@ import org.junit.runners.MethodSorters;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestGoogleNotes {
+public class TestGoogleNotes{
 
     private static final int LAUNCH_TIMEOUT = 5000;
-    private static final String BASIC_SAMPLE_PACKAGE = "Notes";
+    private static final String BASIC_SAMPLE_PACKAGE = "Keep Notes";
     private UiDevice mDevice;
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -53,9 +70,10 @@ public class TestGoogleNotes {
     }
 
     @Test
-    public void test1CreateNote() throws UiObjectNotFoundException {
+    public void test1CreateGoogleNotes() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -66,24 +84,27 @@ public class TestGoogleNotes {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Keep Notes"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().description("New text note"));
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject title = mDevice.findObject(new UiSelector().text("Title"));
-        title.setText("UI Automator");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/new_note_button")).click();
 
-        UiObject description = mDevice.findObject(new UiSelector().text("Note"));
-        description.setText("Prueba UI Automator");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/editable_title")).setText("title");
 
-        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
-        close.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/edit_note_text")).setText("description");
+
+        mDevice.findObject(new UiSelector().description("Open navigation drawer")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("title"));
 
     }
 
     @Test
-    public void test2EditNoteAddImage() throws UiObjectNotFoundException {
+    public void test2ListGoogleNotes() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -94,38 +115,29 @@ public class TestGoogleNotes {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Keep Notes"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject note = mDevice.findObject(new UiSelector().text("UI Automator"));
-        note.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/new_list_button"));
-        options.click();
+        mDevice.findObject(new UiSelector().text("title")).click();
 
-        UiObject image = mDevice.findObject(new UiSelector().text("Add image"));
-        image.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/new_list_button")).click();
 
-        UiObject menu = mDevice.findObject(new UiSelector().description("Show roots"));
-        menu.click();
+        mDevice.findObject(new UiSelector().text("Checkboxes")).click();
 
-        UiObject option = mDevice.findObject(new UiSelector().className("android.widget.LinearLayout").index(1).childSelector(new UiSelector().text("Drive")));
-        option.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/description")).setText("List item 1");
 
-        UiObject drive = mDevice.findObject(new UiSelector().text("My Drive"));
-        drive.click();
+        mDevice.findObject(new UiSelector().description("Navigate up")).click();
 
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(false));
-        scroll.scrollIntoView(new UiSelector().text("SCRUM.png"));
+        List<String> finalState = labelsDetection();
 
-        UiObject file = mDevice.findObject(new UiSelector().text("SCRUM.png"));
-        file.click();
+        assertTrue(!finalState.contains("description"));
 
-        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
-        close.click();
     }
 
     @Test
-    public void test3EditNoteAddList() throws UiObjectNotFoundException {
+    public void test3EditGoogleNotes() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -136,26 +148,27 @@ public class TestGoogleNotes {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Keep Notes"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject note = mDevice.findObject(new UiSelector().text("UI Automator"));
-        note.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject options = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/new_list_button"));
-        options.click();
+        mDevice.findObject(new UiSelector().text("title")).click();
 
-        UiObject checkbox = mDevice.findObject(new UiSelector().text("Checkboxes"));
-        checkbox.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/editable_title")).setText("modified title");
 
-        UiObject list = mDevice.findObject(new UiSelector().text("List item"));
-        list.click();
+        mDevice.findObject(new UiSelector().text("List item 1")).setText("Modified List item 1");
 
-        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
-        close.click();
+        mDevice.findObject(new UiSelector().description("Navigate up")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("modified title"));
+
     }
 
     @Test
-    public void test4EditNoteAddReminder() throws UiObjectNotFoundException {
+    public void test4ReminderGoogleNotes() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -166,50 +179,51 @@ public class TestGoogleNotes {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Keep Notes"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject note = mDevice.findObject(new UiSelector().text("UI Automator"));
-        note.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject reminder = mDevice.findObject(new UiSelector().description("Reminder"));
-        reminder.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("modified title")).click();
 
-        UiObject showOptions = mDevice.findObject(new UiSelector().text("Pick a date & time"));
-        showOptions.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/menu_reminder")).click();
 
-        UiObject day = mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/spinner_inside_error_state").index(0));
-        day.click();
+        mDevice.findObject(new UiSelector().text("Pick a date & time")).click();
 
-        UiObject tomorrow = mDevice.findObject(new UiSelector().text("Tomorrow"));
-        tomorrow.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/date_spinner")).click();
 
-        UiObject repeat = mDevice.findObject(new UiSelector().text("Does not repeat"));
-        repeat.click();
+        mDevice.findObject(new UiSelector().text("Tomorrow")).click();
 
-        UiObject daily = mDevice.findObject(new UiSelector().text("Daily"));
-        daily.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/time_spinner")).click();
 
-        UiObject place = mDevice.findObject(new UiSelector().text("Place"));
-        place.click();
+        mDevice.findObject(new UiSelector().text("Pick a time…")).click();
 
-        UiObject location = mDevice.findObject(new UiSelector().text("Edit location"));
-        location.click();
+        mDevice.findObject(new UiSelector().text("12")).click();
 
-        UiObject search = mDevice.findObject(new UiSelector().text("Search"));
-        search.setText("Avenida Reina Mercedes");
+        mDevice.findObject(new UiSelector().text("30")).click();
 
-        UiObject select = mDevice.findObject(new UiSelector().text("Seville, Spain"));
-        select.click();
+        mDevice.findObject(new UiSelector().text("OK")).click();
 
-        UiObject save = mDevice.findObject(new UiSelector().text("Save"));
-        save.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/recurrence_spinner")).click();
 
-        UiObject close = mDevice.findObject(new UiSelector().className("android.widget.ImageButton").index(0));
-        close.click();
+        mDevice.findObject(new UiSelector().text("Weekly")).click();
+
+        mDevice.findObject(new UiSelector().text("Place")).click();
+
+        mDevice.findObject(new UiSelector().text("Home")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/save")).click();
+
+        mDevice.findObject(new UiSelector().description("Navigate up")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Home"));
+
     }
 
     @Test
-    public void test5RemoveNote() throws UiObjectNotFoundException {
+    public void test5DeleteGoogleNotes() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -220,13 +234,18 @@ public class TestGoogleNotes {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Keep Notes"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject note = mDevice.findObject(new UiSelector().text("UI Automator"));
-        note.clickAndWaitForNewWindow();
+        List<String> initialState = labelsDetection();
 
-        UiObject options = mDevice.findObject(new UiSelector().description("Action"));
-        options.click();
+        mDevice.findObject(new UiSelector().text("modified title")).click();
 
-        UiObject delete = mDevice.findObject(new UiSelector().text("Delete"));
-        delete.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/bs_action_button")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.keep:id/menu_text")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Note moved to trash"));
+
     }
+
 }

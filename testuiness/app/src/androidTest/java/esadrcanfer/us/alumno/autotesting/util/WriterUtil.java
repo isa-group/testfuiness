@@ -32,7 +32,7 @@ public class WriterUtil {
 		if(assets.exists()){
 			testFile = new File("src/main/assets/tests/", fileName);
 		}else{
-			testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/repairedTests", fileName);
+			testFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/repairedTests", fileName);
 		}
 
 		if(testFile.getParentFile().mkdirs()==true){
@@ -62,7 +62,7 @@ public class WriterUtil {
 		if(assets.exists()){
 			testFile = new File("src/main/assets/tests/", fileName);
 		}else{
-			testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/repairedTests", fileName);
+			testFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/repairedTests", fileName);
 		}
 
 		if(testFile.getParentFile().mkdirs()==true){
@@ -92,7 +92,7 @@ public class WriterUtil {
 		if(assets.exists()){
 			testFile = new File("src/main/assets/"+path, name);
 		}else{
-			testFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+path, fileName);
+			testFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+path, fileName);
 		}
 
 		if(testFile.getParentFile().mkdirs()==true){

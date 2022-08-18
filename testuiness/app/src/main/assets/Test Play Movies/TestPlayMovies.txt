@@ -1,7 +1,0 @@
-com.google.android.videos
--1
-3
-BUTTON, UiSelector[TEXT=New release movies],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/card], Movie
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/trailer_button], Trailer
-finalState.contains(testActions[1].value)

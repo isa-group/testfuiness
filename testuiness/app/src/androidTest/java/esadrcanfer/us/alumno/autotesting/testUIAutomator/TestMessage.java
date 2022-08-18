@@ -3,6 +3,9 @@ package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -20,11 +23,16 @@ import org.junit.runners.MethodSorters;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestMessage {
+public class TestMessage{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Messages";
@@ -32,11 +40,20 @@ public class TestMessage {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -56,6 +73,7 @@ public class TestMessage {
     public void test1SendMessage() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -66,20 +84,19 @@ public class TestMessage {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Messages"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_new_conversation_button"));
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject number = mDevice.findObject(new UiSelector().text("Type a name, phone number, or email"));
-        number.setText("620832528");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_chat_fab")).click();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
-        contact.click();
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        UiObject message = mDevice.findObject(new UiSelector().text("Text message"));
-        message.setText("UI Automator");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/compose_message_text")).setText("Prueba ficheros test");
 
-        UiObject send = mDevice.findObject(new UiSelector().text("SMS"));
-        send.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/send_message_button_icon")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Prueba ficheros test"));
 
     }
 
@@ -87,6 +104,7 @@ public class TestMessage {
     public void test2SendIcon() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -97,23 +115,21 @@ public class TestMessage {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Messages"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_new_conversation_button"));
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject number = mDevice.findObject(new UiSelector().text("Type a name, phone number, or email"));
-        number.setText("620832528");
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/start_chat_fab")).click();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
-        contact.click();
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        UiObject icon = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/attach_media_button"));
-        icon.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_gallery_button")).click();
 
-        UiObject emoji = mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji_text"));
-        emoji.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/emoji")).click();
 
-        UiObject send = mDevice.findObject(new UiSelector().text("SMS"));
-        send.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/send_message_button_icon")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Now • SMS"));
 
     }
 
@@ -121,6 +137,7 @@ public class TestMessage {
     public void test3DeleteMessage() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -131,17 +148,20 @@ public class TestMessage {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Messages"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject options = mDevice.findObject(new UiSelector().description("More options"));
-        options.click();
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        UiObject delete = mDevice.findObject(new UiSelector().text("Delete"));
-        delete.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/action_bar_overflow")).click();
 
-        UiObject send = mDevice.findObject(new UiSelector().resourceId("android:id/button1"));
-        send.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Delete")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(!finalState.contains("Alejandro Garcia Fernandez"));
+
     }
 
 }

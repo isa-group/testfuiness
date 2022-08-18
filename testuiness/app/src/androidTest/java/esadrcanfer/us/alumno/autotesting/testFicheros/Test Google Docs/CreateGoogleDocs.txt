@@ -5,4 +5,4 @@ BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.docs:id/fab_
 BUTTON, UiSelector[TEXT=New document], 
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.docs:id/action_mode_close_button], 
 BUTTON, UiSelector[DESCRIPTION=Back],
-finalState.contains(testActions[1].value)
+finalState.contains("Untitled document")

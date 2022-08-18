@@ -3,6 +3,9 @@ package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -20,11 +23,16 @@ import org.junit.runners.MethodSorters;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestGoogleMaps {
+public class TestGoogleMaps{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Maps";
@@ -32,11 +40,20 @@ public class TestGoogleMaps {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -56,6 +73,7 @@ public class TestGoogleMaps {
     public void test1SearchGoogleMaps() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -66,43 +84,25 @@ public class TestGoogleMaps {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject search = mDevice.findObject(new UiSelector().text("Search here"));
-        search.clickAndWaitForNewWindow();
-        search.setText("Reina Mercedes");
+        List<String> initialState = labelsDetection();
 
-        UiObject location = mDevice.findObject(new UiSelector().text("Avenida de la Reina Mercedes"));
-        location.clickAndWaitForNewWindow();
-    }
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/search_omnibox_text_box")).click();
 
-    @Test
-    public void test2ShareLocation() throws UiObjectNotFoundException {
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/search_omnibox_edit_text")).setText("Avenida de la Reina Mercedes");
 
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressEnter();
 
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
+        List<String> finalState = labelsDetection();
 
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Maps"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiObject moreInfo = mDevice.findObject(new UiSelector().text("MORE INFO"));
-        moreInfo.click();
-
-        UiObject share = mDevice.findObject(new UiSelector().text("SHARE PLACE"));
-        share.clickAndWaitForNewWindow();
-
-        UiObject message = mDevice.findObject(new UiSelector().text("Copy to clipboard"));
-        message.clickAndWaitForNewWindow();
+        assertTrue(finalState.contains("Av. de la Reina Mercedes"));
 
     }
 
     @Test
-    public void test3Journey() throws UiObjectNotFoundException {
+    public void test2ShareLocationGoogleMaps() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -113,111 +113,37 @@ public class TestGoogleMaps {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject clear = mDevice.findObject(new UiSelector().description("Clear"));
-        clear.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("GO"));
-        button.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/search_omnibox_text_box")).click();
 
-        UiObject location = mDevice.findObject(new UiSelector().text("Your location"));
-        location.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/search_omnibox_edit_text")).setText("Avenida de la Reina Mercedes");
 
-        UiObject startingPoint = mDevice.findObject(new UiSelector().text("Choose starting point"));
-        startingPoint.setText("Centro Comercial Lagoh Sevilla");
+        mDevice.pressEnter();
 
-        UiObject start = mDevice.findObject(new UiSelector().text("Avenida de Palmas Altas, Seville, Spain"));
-        start.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/place_page_view")).click();
 
-        UiObject destination = mDevice.findObject(new UiSelector().text("Choose destination"));
-        destination.clickAndWaitForNewWindow();
-        destination.setText("Plaza Colón");
+        mDevice.findObject(new UiSelector().text("Share")).click();
 
-        UiObject end = mDevice.findObject(new UiSelector().text("Plaza de Colón, Madrid, Spain"));
-        end.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().text("Messages")).click();
+
+        mDevice.findObject(new UiSelector().text("NEW MESSAGE")).click();
+
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/send_message_button_icon")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Alejandro Garcia Fernandez"));
+
     }
 
-    // HOTELS OPTION NOT LONGER AVAILABLE
-    // This test will be deleted after confirmation.
-
-    /*@Test
-    public void test4Hotels() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Maps"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiScrollable filter = new UiScrollable(new UiSelector().scrollable(false));
-        filter.scrollForward();
-
-        UiObject hotels = mDevice.findObject(new UiSelector().text("Hotels"));
-        hotels.clickAndWaitForNewWindow();
-
-        UiObject configuration = mDevice.findObject(new UiSelector().description("More filters"));
-        configuration.clickAndWaitForNewWindow();
-
-        UiObject checkIn = mDevice.findObject(new UiSelector().text("Check in"));
-        checkIn.clickAndWaitForNewWindow();
-
-        UiObject startDate = mDevice.findObject(new UiSelector().text("20"));
-        UiObject endDate = mDevice.findObject(new UiSelector().text("25"));
-
-        UiObject done = mDevice.findObject(new UiSelector().text("Done"));
-        UiObject cancel = mDevice.findObject(new UiSelector().text("Cancel"));
-
-        if (startDate.isEnabled()) {
-            startDate.click();
-            done.click();
-        } else {
-            cancel.click();
-        }
-
-        UiObject checkOut = mDevice.findObject(new UiSelector().text("Check out"));
-        checkOut.clickAndWaitForNewWindow();
-
-        if (endDate.isEnabled()) {
-            endDate.click();
-            done.click();
-        } else {
-            cancel.click();
-        }
-
-        UiObject price = mDevice.findObject(new UiSelector().text("Lowest price"));
-        price.click();
-
-        UiObject rating = mDevice.findObject(new UiSelector().text("4.5"));
-        rating.click();
-
-        UiObject star = mDevice.findObject(new UiSelector().text("4-star"));
-        star.click();
-
-        UiScrollable scroll = new UiScrollable(new UiSelector().scrollable(true));
-        scroll.scrollToEnd(10);
-
-        UiObject pool = mDevice.findObject(new UiSelector().text("Pool"));
-        pool.click();
-
-        UiObject bar = mDevice.findObject(new UiSelector().text("Bar"));
-        bar.click();
-
-        UiObject restaurant = mDevice.findObject(new UiSelector().text("Restaurant"));
-        restaurant.click();
-
-        UiObject button = mDevice.findObject(new UiSelector().text("Apply"));
-        button.clickAndWaitForNewWindow();
-
-    }*/
-
     @Test
-    public void test4Restaurants() throws UiObjectNotFoundException {
+    public void test3JourneyGoogleMaps() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -228,14 +154,27 @@ public class TestGoogleMaps {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Maps"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject back = mDevice.findObject(new UiSelector().description("Navigate up"));
-        back.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject restaurants = mDevice.findObject(new UiSelector().text("Restaurants"));
-        restaurants.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().description("Directions")).click();
 
-        UiObject topRated = mDevice.findObject(new UiSelector().text("Top rated"));
-        topRated.click();
+        mDevice.findObject(new UiSelector().text("Your location")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/search_omnibox_edit_text")).setText("Centro Comercial Lagoh Sevilla");
+
+        mDevice.pressEnter();
+
+        mDevice.findObject(new UiSelector().text("Choose destination")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/search_omnibox_edit_text")).setText("Plaza Colón");
+
+        mDevice.pressEnter();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.apps.maps:id/start_button")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Route preview"));
 
     }
 

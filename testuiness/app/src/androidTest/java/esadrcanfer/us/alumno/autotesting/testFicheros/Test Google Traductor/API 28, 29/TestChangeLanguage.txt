@@ -1,0 +1,10 @@
+com.google.android.apps.translate
+-1
+6
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/language_button_a],
+BUTTON, UiSelector[TEXT=Armenian],
+BUTTON, UiSelector[DESCRIPTION=Swap languages],
+BUTTON, UiSelector[TEXT=Enter text],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/text_input_field],En verano hace calor
+GO_BACK, UiSelector[backButton],
+finalState.size() > initialState.size()

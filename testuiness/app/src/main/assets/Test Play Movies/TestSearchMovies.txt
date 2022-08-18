@@ -1,8 +1,0 @@
-com.google.android.videos
--1
-4
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/open_search_bar_text_view], 
-TEXT, UiSelector[RESOURCE_ID=com.google.android.videos:id/open_search_view_edit_text], Megalodon
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/title],
-BUTTON, UiSelector[TEXT=The Meg],
-finalState.contains(testActions[1].value)

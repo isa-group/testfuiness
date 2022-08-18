@@ -3,6 +3,9 @@ package esadrcanfer.us.alumno.autotesting.testUIAutomator;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.view.KeyEvent;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -12,16 +15,24 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
-public class TestPhone {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class TestPhone{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Phone";
@@ -29,11 +40,20 @@ public class TestPhone {
 
     @Before
     public void startMainActivityFromHomeScreen() {
+
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+        try{
+            mDevice.pressKeyCode(KeyEvent.KEYCODE_APP_SWITCH);
+            UiScrollable appScroll = new UiScrollable(new UiSelector().resourceId("com.google.android.apps.nexuslauncher:id/workspace"));
+            appScroll.swipeRight(5);
+            mDevice.findObject(new UiSelector().text("CLEAR ALL")).click();
+        }catch(UiObjectNotFoundException e){
+            Log.d("ISA", "There are no open apps");
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -49,21 +69,11 @@ public class TestPhone {
         assertThat(mDevice, notNullValue());
     }
 
-    // UiObject numero0 = mDevice.findObject(new UiSelector().text("0"));
-    // UiObject numero1 = mDevice.findObject(new UiSelector().text("1"));
-    // UiObject numero2 = mDevice.findObject(new UiSelector().text("2"));
-    // UiObject numero3 = mDevice.findObject(new UiSelector().text("3"));
-    // UiObject numero4 = mDevice.findObject(new UiSelector().text("4"));
-    // UiObject numero5 = mDevice.findObject(new UiSelector().text("5"));
-    // UiObject numero6 = mDevice.findObject(new UiSelector().text("6"));
-    // UiObject numero7 = mDevice.findObject(new UiSelector().text("7"));
-    // UiObject numero8 = mDevice.findObject(new UiSelector().text("8"));
-    // UiObject numero9 = mDevice.findObject(new UiSelector().text("9"));
-
     @Test
-    public void testCallPhone() throws UiObjectNotFoundException {
+    public void test1AddFavourites() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -74,44 +84,19 @@ public class TestPhone {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().description("key pad")); // API 27, 28, 29
-        //UiObject button = mDevice.findObject(new UiSelector().description("dial pad")); // API 25
-        button.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contacts_tab")).click();
 
-        UiObject numero0 = mDevice.findObject(new UiSelector().text("0"));
-        UiObject numero2 = mDevice.findObject(new UiSelector().text("2"));
-        UiObject numero3 = mDevice.findObject(new UiSelector().text("3"));
-        UiObject numero5 = mDevice.findObject(new UiSelector().text("5"));
-        UiObject numero6 = mDevice.findObject(new UiSelector().text("6"));
-        UiObject numero8 = mDevice.findObject(new UiSelector().text("8"));
-        UiObject numero9 = mDevice.findObject(new UiSelector().text("9"));
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        numero6.click();
-        numero2.click();
-        numero0.click();
-
-        numero8.click();
-        numero3.click();
-
-        numero2.click();
-        numero5.click();
-
-        numero2.click();
-        numero8.click();
-
-        UiObject call = mDevice.findObject(new UiSelector().description("dial"));
-        call.clickAndWaitForNewWindow();
-
-        UiObject end = mDevice.findObject(new UiSelector().description("End call")); // API 28, 29
-        end.waitUntilGone(20000);
-        end.clickAndWaitForNewWindow();
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star")).click();
 
     }
 
     @Test
-    public void testCallContact() throws UiObjectNotFoundException {
+    public void test2CallContact() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -122,25 +107,33 @@ public class TestPhone {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        // UiObject button = mDevice.findObject(new UiSelector().descriptionStartsWith("Contacts")); // API 25, 27
-        UiObject button = mDevice.findObject(new UiSelector().text("Contacts")); // API 28, 29
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
-        contact.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contacts_tab")).click();
 
-        UiObject call = mDevice.findObject(new UiSelector().text("(620) 832-528"));
-        call.click();
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        UiObject end = mDevice.findObject(new UiSelector().description("End call"));
-        end.waitUntilGone(20000);
-        end.click();
+        mDevice.findObject(new UiSelector().text("(640) 936-528")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/incall_end_call")).waitUntilGone(10000);
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/incall_end_call")).click();
+
+        mDevice.pressBack();
+
+        mDevice.findObject(new UiSelector().text("Recents")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Alejandro Garcia Fernandez"));
+
     }
 
     @Test
-    public void testClearHistory() throws UiObjectNotFoundException {
+    public void test3CallPhone() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -151,25 +144,47 @@ public class TestPhone {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().description("More options"));
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject option = mDevice.findObject(new UiSelector().textStartsWith("Call"));
-        option.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/fab")).click();
 
-        button.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/six")).click();
 
-        UiObject clear = mDevice.findObject(new UiSelector().text("Clear call history"));
-        clear.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/nine")).click();
 
-        UiObject confirm = mDevice.findObject(new UiSelector().text("OK"));
-        confirm.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/two")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/five")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/two")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/five")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/three")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/five")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/five")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/dialpad_floating_action_button")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/incall_end_call")).waitUntilGone(10000);
+
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/incall_end_call")).click();
+
+        mDevice.findObject(new UiSelector().text("Recents")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("692525355"));
+
     }
 
     @Test
-    public void testAddFavorite() throws UiObjectNotFoundException {
+    public void test4ClearCallHistory() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -180,21 +195,29 @@ public class TestPhone {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        // UiObject button = mDevice.findObject(new UiSelector().descriptionStartsWith("Contacts")); // API 25, 27
-        UiObject button = mDevice.findObject(new UiSelector().text("Contacts")); // API 28, 29
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez"));
-        contact.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/main_options_menu_button")).click();
 
-        UiObject favorite = mDevice.findObject(new UiSelector().description("Add to favorites"));
-        favorite.click();
+        mDevice.findObject(new UiSelector().text("Call history")).click();
+
+        mDevice.findObject(new UiSelector().description("More options")).click();
+
+        mDevice.findObject(new UiSelector().text("Clear call history")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
+
+        List<String> finalState = labelsDetection();
+
+        assertTrue(finalState.contains("Your call history is empty"));
+
     }
 
     @Test
-    public void testDeleteFavorite() throws UiObjectNotFoundException {
+    public void test5DeleteFavourites() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
@@ -205,13 +228,16 @@ public class TestPhone {
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject button = mDevice.findObject(new UiSelector().text("Favorites"));
-        button.click();
+        List<String> initialState = labelsDetection();
 
-        UiObject option = mDevice.findObject(new UiSelector().description("View contact"));
-        option.click();
+        mDevice.findObject(new UiSelector().text("Favorites")).click();
 
-        UiObject favorite = mDevice.findObject(new UiSelector().description("Remove from favorites"));
-        favorite.click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contact_tile_secondary_button")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star")).click();
+
+        List<String> finalState = labelsDetection();
+
     }
+
 }

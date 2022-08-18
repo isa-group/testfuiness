@@ -22,11 +22,16 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
+
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = 18)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestContacts {
+public class TestContacts{
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final String BASIC_SAMPLE_PACKAGE = "Contacts";
@@ -56,315 +61,150 @@ public class TestContacts {
     }
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = getInstrumentation().getTargetContext();
-
-        assertEquals("com.example.contacts", appContext.getPackageName());
-    }
-
-    @Test
-    //MODIFIED
-    public void testCreateContact() throws UiObjectNotFoundException {
+    public void test1CreateContact() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
+        List<String> initialState = labelsDetection();
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
-
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable apps = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
-        apps.scrollIntoView(new UiSelector().text("Contacts"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/floating_action_button"));
-        button.clickAndWaitForNewWindow();
-
-        UiObject expansion = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/expansion_view"));
-        expansion.click();
-
-        // UiObject namePrefix = mDevice.findObject(new UiSelector().text("Name prefix"));
-        UiObject firstName  = mDevice.findObject(new UiSelector().text("First name"));
-        UiObject middleName = mDevice.findObject(new UiSelector().text("Middle name"));
-        UiObject lastName   = mDevice.findObject(new UiSelector().text("Last name"));
-        // UiObject nameSuffix   = mDevice.findObject(new UiSelector().text("Name suffix"));
-
-        firstName.setText("Juan");    // Gonzalo
-        middleName.setText("Parra");  // Aguilar
-        lastName.setText("Serna");    // Hermoso
-
-        expansion.click();
-
-        UiObject phone = mDevice.findObject(new UiSelector().text("Phone"));
-        phone.setText("654123987");
-
-        UiObject mobile = mDevice.findObject(new UiSelector().text("Mobile"));
-        mobile.click();
-
-        UiObject home = mDevice.findObject(new UiSelector().text("Home"));
-        home.click();
-
-        UiObject phoneHome = mDevice.findObject(new UiSelector().text("Phone"));
-        phoneHome.setText("924556677");
-
-        UiScrollable appViews2 = new UiScrollable(new UiSelector().scrollable(false));
-        appViews2.scrollIntoView(new UiSelector().text("Email"));
-
-        UiObject email = mDevice.findObject(new UiSelector().text("Email"));
-        email.setText("automator@gmail.com");
-
-        UiScrollable appViews3 = new UiScrollable(new UiSelector().scrollable(false));
-        appViews3.scrollIntoView(new UiSelector().text("More fields"));
-
-        UiObject moreData = mDevice.findObject(new UiSelector().text("More fields"));
-        moreData.click();
-
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_save")); // API 25
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button")); // API 28
-
-        // UiObject save1 = mDevice.findObject(new UiSelector().description("Save"));
-        // UiObject save2 = mDevice.findObject(new UiSelector().text("SAVE"));
-
-        // UiObject save = mDevice.findObject(new UiSelector().className("android.widget.Button"));
-        UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button"));
-        save.click();
-
-        // if(save1 != null){
-        //    save1.click();
-        // } else {
-        //    save2.click();
-        // }
-
-        // mDevice.pressHome();
-        // allAppsButton.click();
-        // testingApp.clickAndWaitForNewWindow();
-
-        // UiObject contact = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/cliv_name_textview"));
-        // contact.exists();
-    }
-
-    @Test
-    public void testCreateOtherContact() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable apps = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
-        apps.scrollIntoView(new UiSelector().text("Contacts"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
-        testingApp.clickAndWaitForNewWindow();
-
-        mDevice.pressBack();
-
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/floating_action_button"));
-        button.clickAndWaitForNewWindow();
-
-        UiObject expansion = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/expansion_view"));
-        expansion.click();
-
-        // UiObject namePrefix = mDevice.findObject(new UiSelector().text("Name prefix"));
-        UiObject firstName  = mDevice.findObject(new UiSelector().text("First name"));
-        UiObject middleName = mDevice.findObject(new UiSelector().text("Middle name"));
-        UiObject lastName   = mDevice.findObject(new UiSelector().text("Last name"));
-        // UiObject nameSuffix   = mDevice.findObject(new UiSelector().text("Name suffix"));
-
-        firstName.setText("Pedro");
-        middleName.setText("Martín");
-        lastName.setText("Chávez");
-
-        expansion.click();
-
-        UiObject phone = mDevice.findObject(new UiSelector().text("Phone"));
-        phone.setText("654987123");
-
-        UiObject mobile = mDevice.findObject(new UiSelector().text("Mobile"));
-        mobile.click();
-
-        UiObject home = mDevice.findObject(new UiSelector().text("Home"));
-        home.click();
-
-        UiObject phoneHome = mDevice.findObject(new UiSelector().text("Phone"));
-        phoneHome.setText("924223344");
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Email"));
-
-        UiObject email = mDevice.findObject(new UiSelector().text("Email"));
-        email.setText("automator@gmail.com");
-
-        UiScrollable appViews2 = new UiScrollable(new UiSelector().scrollable(false));
-        appViews2.scrollIntoView(new UiSelector().text("More fields"));
-
-        UiObject moreData = mDevice.findObject(new UiSelector().text("More fields"));
-        moreData.click();
-
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_save")); // API 25
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button")); // API 28
-
-        // UiObject save1 = mDevice.findObject(new UiSelector().description("Save"));
-        // UiObject save2 = mDevice.findObject(new UiSelector().text("SAVE"));
-
-        UiObject save = mDevice.findObject(new UiSelector().className("android.widget.Button"));
-        save.click();
-
-        // mDevice.pressHome();
-        // allAppsButton.click();
-        // testingApp.clickAndWaitForNewWindow();
-
-        // UiObject contact = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/cliv_name_textview"));
-        // contact.exists();
-    }
-
-    @Test
-    public void testEditContact() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable apps = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
-        apps.scrollIntoView(new UiSelector().text("Contacts"));
+        appViews.scrollIntoView(new UiSelector().text("Contacts"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
         testingApp.clickAndWaitForNewWindow();
 
-        UiObject contact = mDevice.findObject(new UiSelector().description("Pedro Martín Chávez"));
-        contact.click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/floating_action_button")).click();
 
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_edit"));
-        button.click();
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/expansion_view")).click();
 
-        // UiObject option = mDevice.findObject(new UiSelector().text("Antonio Macías Zambrano"));
-        // option.click();
+        mDevice.findObject(new UiSelector().text("First name")).setText("Alejandro");
+
+        mDevice.findObject(new UiSelector().text("Middle name")).setText("Garcia");
+
+        mDevice.pressBack();
+
+        mDevice.findObject(new UiSelector().text("Last name")).setText("Fernandez");
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/expansion_view")).click();
+
+        mDevice.findObject(new UiSelector().text("Phone")).setText("640936528");
+
+        mDevice.findObject(new UiSelector().text("Email")).setText("yalejandro9@gmail.com");
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button")).click();
+
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("Alejandro Garcia Fernandez");
+
+    }
+
+    @Test
+    public void test4DeleteContact() throws UiObjectNotFoundException {
+
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+
+        List<String> initialState = labelsDetection();
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("More fields"));
+        appViews.scrollIntoView(new UiSelector().text("Contacts"));
 
-        UiObject moreData = mDevice.findObject(new UiSelector().text("More fields"));
-        moreData.click();
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
+        testingApp.clickAndWaitForNewWindow();
 
-        UiScrollable appViews0 = new UiScrollable(new UiSelector().scrollable(true));
-        appViews0.scrollIntoView(new UiSelector().text("Company"));
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
-        UiObject company = mDevice.findObject(new UiSelector().text("Company"));
-        company.setText("Escuela Técnica Superior de Ingeniería Informática");
+        mDevice.findObject(new UiSelector().description("More options")).click();
 
-        UiScrollable appViews1 = new UiScrollable(new UiSelector().scrollable(false));
-        appViews1.scrollIntoView(new UiSelector().text("Address"));
+        mDevice.findObject(new UiSelector().text("Delete")).click();
 
-        UiObject address = mDevice.findObject(new UiSelector().text("Address"));
-        address.setText("Avenida Reina Mercedes nº 4");
+        mDevice.findObject(new UiSelector().resourceId("android:id/button1")).click();
 
-        UiScrollable appViews2 = new UiScrollable(new UiSelector().scrollable(false));
-        appViews2.scrollIntoView(new UiSelector().text("Website"));
+        List<String> finalState = labelsDetection();
 
-        UiObject website = mDevice.findObject(new UiSelector().text("Website"));
-        website.setText("https://www.informatica.us.es/");
-
-        UiScrollable appViews3 = new UiScrollable(new UiSelector().scrollable(false));
-        appViews3.scrollIntoView(new UiSelector().text("Notes"));
-
-        UiObject notes = mDevice.findObject(new UiSelector().text("Notes"));
-        notes.setText("UI Automator");
-
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_save")); // API 25
-        // UiObject save = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button")); // API 28
-
-        // UiObject save1 = mDevice.findObject(new UiSelector().description("Save"));
-        // UiObject save2 = mDevice.findObject(new UiSelector().text("SAVE"));
-
-        UiObject save = mDevice.findObject(new UiSelector().className("android.widget.Button"));
-        save.click();
+        assertTrue(finalState.size() < initialState.size());
 
     }
 
     @Test
-    public void testDeleteContact() throws UiObjectNotFoundException {
+    public void test2EditContact() throws UiObjectNotFoundException {
 
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+
+        List<String> initialState = labelsDetection();
+        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        allAppsButton.click();
+
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Contacts"));
+
+        UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
+        testingApp.clickAndWaitForNewWindow();
+
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_edit")).click();
+
+        new UiScrollable(new UiSelector().resourceId("com.android.contacts:id/contact_editor_fragment")).scrollIntoView(new UiSelector().text("More fields"));
+
+        mDevice.findObject(new UiSelector().text("More fields")).click();
+
+        mDevice.findObject(new UiSelector().text("Company")).setText("Escuela Técnica Superior de Ingeniería Informática");
+
+        new UiScrollable(new UiSelector().resourceId("com.android.contacts:id/contact_editor_fragment")).scrollIntoView(new UiSelector().text("Address"));
+
+        mDevice.findObject(new UiSelector().text("Address")).setText("Avenida Reina Mercedes nº 4");
+
+        new UiScrollable(new UiSelector().resourceId("com.android.contacts:id/contact_editor_fragment")).scrollIntoView(new UiSelector().text("Website"));
+
+        mDevice.findObject(new UiSelector().text("Website")).setText("https://www.informatica.us.es/");
+
+        new UiScrollable(new UiSelector().resourceId("com.android.contacts:id/contact_editor_fragment")).scrollIntoView(new UiSelector().text("Notes"));
+
+        mDevice.findObject(new UiSelector().text("Notes")).setText("Prueba test ficheros");
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/editor_menu_save_button")).click();
+
+        List<String> finalState = labelsDetection();
+
+        finalState.contains("Avenida Reina Mercedes nº 4");
+
+    }
+
+    @Test
+    public void test3FavoriteContact() throws UiObjectNotFoundException {
+
+        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
 
         UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable apps = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
-        apps.scrollIntoView(new UiSelector().text("Contacts"));
+        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
+        appViews.scrollIntoView(new UiSelector().text("Contacts"));
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
         testingApp.clickAndWaitForNewWindow();
+
+        List<String> initialState = labelsDetection();
+
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
+
+        mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star")).click();
 
         mDevice.pressBack();
 
-        UiObject contact = mDevice.findObject(new UiSelector().text("Juan Parra Serna"));
-        contact.click();
+        List<String> finalState = labelsDetection();
 
-        UiObject options = mDevice.findObject(new UiSelector().className("android.widget.ImageButton"));
-        options.click();
+        assertTrue(finalState.size() > initialState.size());
 
-        UiObject delete = mDevice.findObject(new UiSelector().text("Delete"));
-        delete.click();
-
-        UiObject button = mDevice.findObject(new UiSelector().resourceId("android:id/button1"));
-        button.click();
-    }
-
-    @Test
-    public void testEndAddFavourites() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable apps = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
-        apps.scrollIntoView(new UiSelector().text("Contacts"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
-        testingApp.clickAndWaitForNewWindow();
-
-        UiObject contact = mDevice.findObject(new UiSelector().description("Pedro Martín Chávez"));
-        contact.click();
-
-        // UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star"));
-        UiObject button = mDevice.findObject(new UiSelector().description("Add to favorites"));
-        button.click();
-    }
-
-    @Test
-    public void testEndDeleteFavourites() throws UiObjectNotFoundException {
-
-        UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
-
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
-        allAppsButton.click();
-
-        // UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true)); // API 27
-        UiScrollable apps = new UiScrollable(new UiSelector().scrollable(false)); // API 28/29
-        apps.scrollIntoView(new UiSelector().text("Contacts"));
-
-        UiObject testingApp = mDevice.findObject(new UiSelector().text("Contacts"));
-        testingApp.clickAndWaitForNewWindow();
-
-        mDevice.pressBack();
-
-        // UiObject favorites = mDevice.findObject(new UiSelector().text("FAVORITES"));
-        // favorites.click();
-
-        UiObject contact = mDevice.findObject(new UiSelector().text("Pedro Martín Chávez"));
-        contact.click();
-
-        // UiObject button = mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star"));
-        UiObject button = mDevice.findObject(new UiSelector().description("Remove from favorites"));
-        button.click();
     }
 
 }

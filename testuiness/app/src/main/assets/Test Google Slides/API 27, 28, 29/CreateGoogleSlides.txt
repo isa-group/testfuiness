@@ -1,7 +1,9 @@
 com.google.android.apps.docs.editors.slides
 -1
-3
+4
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/fab_base_button], 
 BUTTON, UiSelector[TEXT=New presentation], 
-BUTTON, UiSelector[DESCRIPTION=Navigate up],
-finalState.contains(testActions[1].value)
+BUTTON, UiSelector[DESCRIPTION=Back],
+BUTTON, UiSelector[DESCRIPTION=Back],
+finalState.size() > initialState.size()
+
