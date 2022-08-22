@@ -145,11 +145,11 @@ public class TestsAuto {
 
         // PHONE
 
-        /*return Arrays.asList("Test Phone/API 28/TestCallContact.txt",
+        return Arrays.asList("Test Phone/API 28/TestCallContact.txt",
                             "Test Phone/API 28/TestCallPhone.txt",
                             "Test Phone/API 28/TestAddFavourites.txt",
                             "Test Phone/API 28/TestDeleteFavourites.txt",
-                            "Test Phone/API 28/TestClearCallHistory.txt");*/
+                            "Test Phone/API 28/TestClearCallHistory.txt");
 
         // PLAY BOOKS
 
@@ -164,8 +164,8 @@ public class TestsAuto {
 
         // GOOGLE TV
 
-        return Arrays.asList("Test Google TV/TestAddToWatchlist.txt",
-                            "Test Google TV/TestSearchMovie.txt");
+        /*return Arrays.asList("Test Google TV/TestAddToWatchlist.txt",
+                            "Test Google TV/TestSearchMovie.txt");*/
 
         // PLAY STORE
 
