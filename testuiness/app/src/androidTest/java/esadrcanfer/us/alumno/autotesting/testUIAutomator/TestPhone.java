@@ -75,16 +75,16 @@ public class TestPhone{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        /*UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Phone"));
+        appViews.scrollIntoView(new UiSelector().text("Phone"));*/
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contacts_tab")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/tab_contacts")).click();
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
@@ -98,18 +98,18 @@ public class TestPhone{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        /*UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Phone"));
+        appViews.scrollIntoView(new UiSelector().text("Phone"));*/
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contacts_tab")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/tab_contacts")).click();
 
         mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
@@ -135,18 +135,18 @@ public class TestPhone{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        /*UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Phone"));
+        appViews.scrollIntoView(new UiSelector().text("Phone"));*/
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/fab")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/dialpad_fab")).click();
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/six")).click();
 
@@ -166,7 +166,7 @@ public class TestPhone{
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/five")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/dialpad_floating_action_button")).click();
+        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/dialpad_voice_call_button")).click();
 
         mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/incall_end_call")).waitUntilGone(10000);
 
@@ -186,18 +186,18 @@ public class TestPhone{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        /*UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Phone"));
+        appViews.scrollIntoView(new UiSelector().text("Phone"));*/
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/main_options_menu_button")).click();
+        mDevice.findObject(new UiSelector().description("More options")).click();
 
         mDevice.findObject(new UiSelector().text("Call history")).click();
 
@@ -209,7 +209,7 @@ public class TestPhone{
 
         List<String> finalState = labelsDetection();
 
-        assertTrue(finalState.contains("Your call history is empty"));
+        assertTrue(finalState.contains("Calls you make will show up here"));
 
     }
 
@@ -219,20 +219,20 @@ public class TestPhone{
         UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
 
-        UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
+        /*UiObject allAppsButton = mDevice.findObject(new UiSelector().description("Apps list"));
         allAppsButton.click();
 
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(false));
-        appViews.scrollIntoView(new UiSelector().text("Phone"));
+        appViews.scrollIntoView(new UiSelector().text("Phone"));*/
 
         UiObject testingApp = mDevice.findObject(new UiSelector().text("Phone"));
         testingApp.clickAndWaitForNewWindow();
 
         List<String> initialState = labelsDetection();
 
-        mDevice.findObject(new UiSelector().text("Favorites")).click();
+        mDevice.findObject(new UiSelector().text("Contacts")).click();
 
-        mDevice.findObject(new UiSelector().resourceId("com.google.android.dialer:id/contact_tile_secondary_button")).click();
+        mDevice.findObject(new UiSelector().text("Alejandro Garcia Fernandez")).click();
 
         mDevice.findObject(new UiSelector().resourceId("com.android.contacts:id/menu_star")).click();
 
