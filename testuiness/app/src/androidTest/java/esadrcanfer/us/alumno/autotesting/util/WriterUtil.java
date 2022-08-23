@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 
@@ -114,10 +115,18 @@ public class WriterUtil {
 		return logFile;
 	}
 
-	public static void saveInDevice(TestCase testCase, Long seed, String fileName){
+	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime){
 
-		WriterUtil writer = new WriterUtil("/Download/repairedTests", fileName);
+		WriterUtil writer = new WriterUtil("/repairedTests", fileName);
 		writer.write(testCase, (long) seed);
+		if(reparationTime != null){
+			int seconds = (int) (reparationTime / 1000) % 60 ;
+			int minutes = (int) ((reparationTime / (1000*60)) % 60);
+			int hours   = (int) ((reparationTime / (1000*60*60)) % 24);
+
+			writer.write("\n-------------- METRICS ------------------\n");
+			writer.write(String.format("Reparation time: %d h %d min %d sec", hours, minutes, seconds));
+		}
 
 	}
 
