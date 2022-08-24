@@ -1,4 +1,4 @@
-com.android.deskclock
+com.google.android.deskclock
 -1
 11
 BUTTON, UiSelector[DESCRIPTION=Alarm],
