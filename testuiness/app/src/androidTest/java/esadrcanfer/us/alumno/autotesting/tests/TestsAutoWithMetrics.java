@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -39,10 +40,19 @@ public class TestsAutoWithMetrics {
     @Parameterized.Parameters
     public static Collection<String> data(){
 
-        return Arrays.asList("Test Clock/API 25/TestAlarm.txt",
-                            "Test Clock/API 25/TestOtherAlarm.txt",
-                            "Test Clock/API 25/TestStopWatch.txt",
-                            "Test Clock/API 25/TestTimer.txt");
+        List<String> tests = Arrays.asList("Test Clock/API 25/TestAlarm.txt",
+                                "Test Clock/API 25/TestOtherAlarm.txt",
+                                "Test Clock/API 25/TestStopWatch.txt",
+                                "Test Clock/API 25/TestTimer.txt");
+
+        List<String> res = new ArrayList<>();
+
+        for(int i = 0; i<120; i++){
+            res.add(tests.get(i%4));
+        }
+
+
+        return res;
     }
 
     public TestsAutoWithMetrics(String path) {
@@ -82,7 +92,12 @@ public class TestsAutoWithMetrics {
             String[] pathSplitted = path.split("/");
             String name = pathSplitted[pathSplitted.length-1];
 
-            WriterUtil.saveInDevice(testCase, (long) -1, name, null);
+            if(testCase == null){
+                WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
+                dataMetrics.write(name+";ReparationFailed");
+            }else{
+                WriterUtil.saveInDevice(testCase, (long) -1, name, null);
+            }
 
         }
 

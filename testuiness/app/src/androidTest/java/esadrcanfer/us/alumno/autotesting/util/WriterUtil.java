@@ -118,14 +118,15 @@ public class WriterUtil {
 	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime){
 
 		WriterUtil writer = new WriterUtil("/repairedTests", fileName);
+		WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
 		writer.write(testCase, (long) seed);
 		if(reparationTime != null){
 			int seconds = (int) (reparationTime / 1000) % 60 ;
 			int minutes = (int) ((reparationTime / (1000*60)) % 60);
 			int hours   = (int) ((reparationTime / (1000*60*60)) % 24);
 
-			writer.write("\n-------------- METRICS ------------------\n");
-			writer.write(String.format("Reparation time: %d h %d min %d sec", hours, minutes, seconds));
+
+			dataMetrics.write(String.format(fileName+";%d h %d min %d sec", hours, minutes, seconds));
 		}
 
 	}
