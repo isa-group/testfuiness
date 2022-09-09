@@ -32,7 +32,7 @@ import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 
 @RunWith(Parameterized.class)
 @SdkSuppress(minSdkVersion = 18)
-public class TestsAutoWithMetrics {
+public class TestsAutoWithMetricsRandom {
 
     private String path;
     private static Long reparationTime = (long) 0;
@@ -41,9 +41,9 @@ public class TestsAutoWithMetrics {
     public static Collection<String> data(){
 
         List<String> tests = Arrays.asList("Test Clock/API 25/TestAlarm.txt",
-                                "Test Clock/API 25/TestOtherAlarm.txt",
-                                "Test Clock/API 25/TestStopWatch.txt",
-                                "Test Clock/API 25/TestTimer.txt");
+                "Test Clock/API 25/TestOtherAlarm.txt",
+                "Test Clock/API 25/TestStopWatch.txt",
+                "Test Clock/API 25/TestTimer.txt");
 
         List<String> res = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class TestsAutoWithMetrics {
         return res;
     }
 
-    public TestsAutoWithMetrics(String path) {
+    public TestsAutoWithMetricsRandom(String path) {
         this.path = path;
     }
 
