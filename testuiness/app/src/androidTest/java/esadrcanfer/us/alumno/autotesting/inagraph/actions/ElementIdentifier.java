@@ -25,9 +25,16 @@ public class ElementIdentifier {
         List<UiObject2> elements = device.findObjects(sel);
         UiSelector selector = null;
         UiObject button = null;
+        String elementId = null;
         for (UiObject2 btn : elements) {
-            selector = new UiSelector().resourceId(btn.getResourceName());
-            button = device.findObject(selector);
+
+            elementId = btn.getResourceName();
+
+            if(elementId != null) {
+                selector = new UiSelector().resourceId(elementId);
+                button = device.findObject(selector);
+            }
+
             result.add(button);
         }
         return result;

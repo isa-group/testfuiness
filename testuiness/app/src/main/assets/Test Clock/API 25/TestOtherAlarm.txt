@@ -12,4 +12,4 @@ BUTTON, UiSelector[DESCRIPTION=Friday],
 BUTTON, UiSelector[DESCRIPTION=Saturday],
 CHECKBOX, UiSelector[RESOURCE_ID=com.android.deskclock:id/repeat_onoff],
 BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/arrow],
-finalState.contains(testActions[1].value)
+finalState.contains("12:00")

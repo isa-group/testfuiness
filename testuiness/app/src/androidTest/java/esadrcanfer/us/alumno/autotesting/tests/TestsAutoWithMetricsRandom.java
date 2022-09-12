@@ -40,14 +40,14 @@ public class TestsAutoWithMetricsRandom {
     @Parameterized.Parameters
     public static Collection<String> data(){
 
-        List<String> tests = Arrays.asList("Test Clock/API 25/TestAlarm.txt",
-                "Test Clock/API 25/TestOtherAlarm.txt",
-                "Test Clock/API 25/TestStopWatch.txt",
-                "Test Clock/API 25/TestTimer.txt");
+        List<String> tests = Arrays.asList(//"Test Clock/API 25/TestAlarm.txt",
+                "Test Clock/API 25/TestOtherAlarm.txt");
+                //"Test Clock/API 25/TestStopWatch.txt",
+                //"Test Clock/API 25/TestTimer.txt");
 
         List<String> res = new ArrayList<>();
 
-        for(int i = 0; i<120; i++){
+        for(int i = 0; i< tests.size(); i++){
             res.add(tests.get(i%4));
         }
 
@@ -82,26 +82,34 @@ public class TestsAutoWithMetricsRandom {
 
         } catch (Exception ex) {
 
-            RandomReparation randomReparation = new RandomReparation(5, testCase, testCase.getAppPackage());
-            long startTime = System.currentTimeMillis();
-            testCase = randomReparation.run(device, testCase.getAppPackage());
-            long endTime = System.currentTimeMillis();
+            try {
+                RandomReparation randomReparation = new RandomReparation(500, testCase, testCase.getAppPackage());
+                long startTime = System.currentTimeMillis();
+                testCase = randomReparation.run(device, testCase.getAppPackage());
+                long endTime = System.currentTimeMillis();
 
-            reparationTime += endTime - startTime;
+                reparationTime += endTime - startTime;
 
-            String[] pathSplitted = path.split("/");
-            String name = pathSplitted[pathSplitted.length-1];
+                String[] pathSplitted = path.split("/");
+                String name = pathSplitted[pathSplitted.length-1];
 
-            if(testCase == null){
+                if(testCase == null){
+                    WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
+                    dataMetrics.write(name+";ReparationFailed");
+                }else{
+                    WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime);
+                }
+            }catch(Exception e){
+                String[] pathSplitted = path.split("/");
+                String name = pathSplitted[pathSplitted.length-1];
+
                 WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
                 dataMetrics.write(name+";ReparationFailed");
-            }else{
-                WriterUtil.saveInDevice(testCase, (long) -1, name, null);
             }
 
         }
 
-        Log.d("ISA", "TestCase found: " + testCase);
+        // Log.d("ISA", "TestCase found: " + testCase);
     }
 
     @AfterClass

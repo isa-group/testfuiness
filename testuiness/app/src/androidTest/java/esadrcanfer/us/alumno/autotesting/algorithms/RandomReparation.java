@@ -54,27 +54,35 @@ public class RandomReparation extends BaseReparationAlgorithm{
             availableActions = createAction(device, seeds.nextLong());
             List<String> initialState = labelsDetection();
             while (testCaseActions.size() < bugTestCase.getTestActions().size()*2 && availableActions.size() > 0) {
-                chosenAction = availableActions.get(getRandom().nextInt(availableActions.size()));
-                testCaseActions.add(chosenAction);
-                Log.d("ISA", "Executing action: " + chosenAction);
-                chosenAction.perform();
-                String appName = UiDevice.getInstance().getCurrentPackageName();
-                if (!appName.equals(appPackage)) {
-                    break;
-                }
-                if(testCaseActions.size()>=bugTestCase.getTestActions().size()){
-                    List<String> finalState = labelsDetection();
-                    res = new TestCase(bugTestCase.getAppPackage(), Collections.EMPTY_SET, beforeActions, testCaseActions, afterActions, initialState, finalState);
-                    res.setPredicate(bugTestCase.getPredicate());
-                    eval = res.evaluate();
-                    objectiveFunctionEvaluations++;
-                    if (eval == true) {
-                        currentOptimum=(double)bugTestCase.getPredicate().getNClauses();
-                        executionTime=System.currentTimeMillis()-startInstant;
-                        return res;
+
+                try{
+                    chosenAction = availableActions.get(getRandom().nextInt(availableActions.size()));
+                    if(!chosenAction.toString().contains("android:id/action0")) {
+                        testCaseActions.add(chosenAction);
+                        Log.d("ISA", "Executing action: " + chosenAction);
+                        chosenAction.perform();
+                        String appName = UiDevice.getInstance().getCurrentPackageName();
+                        if (!appName.equals(appPackage)) {
+                            break;
+                        }
+                        if (testCaseActions.size() >= bugTestCase.getTestActions().size()) {
+                            List<String> finalState = labelsDetection();
+                            res = new TestCase(bugTestCase.getAppPackage(), Collections.EMPTY_SET, beforeActions, testCaseActions, afterActions, initialState, finalState);
+                            res.setPredicate(bugTestCase.getPredicate());
+                            eval = res.evaluate();
+                            objectiveFunctionEvaluations++;
+                            if (eval == true) {
+                                currentOptimum = (double) bugTestCase.getPredicate().getNClauses();
+                                executionTime = System.currentTimeMillis() - startInstant;
+                                return res;
+                            }
+                        }
+                        availableActions = createAction(device, seeds.nextLong());
                     }
+                }catch(NullPointerException e){
+                    Log.w("ISA", "The chosen action is null.");
                 }
-                availableActions = createAction(device, seeds.nextLong());
+
             }
             closeApp(bugTestCase.getAppPackage());
             i++;
