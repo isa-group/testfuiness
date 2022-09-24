@@ -40,10 +40,10 @@ public class TestsAutoWithMetricsRandom {
     @Parameterized.Parameters
     public static Collection<String> data(){
 
-        List<String> tests = Arrays.asList(//"Test Clock/API 25/TestAlarm.txt",
-                "Test Clock/API 25/TestOtherAlarm.txt");
-                //"Test Clock/API 25/TestStopWatch.txt",
-                //"Test Clock/API 25/TestTimer.txt");
+        List<String> tests = Arrays.asList("Test Clock/API 25/TestAlarm.txt",
+                "Test Clock/API 25/TestOtherAlarm.txt",
+                "Test Clock/API 25/TestStopWatch.txt",
+                "Test Clock/API 25/TestTimer.txt");
 
         List<String> res = new ArrayList<>();
 
