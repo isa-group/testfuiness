@@ -86,7 +86,7 @@ public class ActionFactory {
             }
 
             try {
-                clickable.addAll(ElementIdentifier.findElements(device, "android.widget.<<View>>"));
+                clickable.addAll(ElementIdentifier.findElements(device, "android.widget.View"));
             }catch(Exception e){
                 Log.d("ISA", "No elements found with class 'android.widget.View'");
             }
