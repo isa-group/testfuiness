@@ -1,5 +1,6 @@
 package esadrcanfer.us.alumno.autotesting.objectivefunctions;
 
+import android.support.test.InstrumentationRegistry;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -11,8 +12,6 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.BrokenTestCaseException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
-
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 public class PredicateMeetingObjectiveFunction implements ObjectiveFunction {
 
@@ -44,7 +43,7 @@ public class PredicateMeetingObjectiveFunction implements ObjectiveFunction {
     }
 
     public List<String> labelsDetection() throws UiObjectNotFoundException {
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         List<String> finalState = new ArrayList<>();
         List<UiObject2> elements = device.findObjects(By.clazz(TextView.class));
         for (UiObject2 label : elements) {

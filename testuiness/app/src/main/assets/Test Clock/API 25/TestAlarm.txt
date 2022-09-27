@@ -1,10 +1,10 @@
-com.android.deskclock
+com.google.android.deskclock
 -1
 12
 BUTTON, UiSelector[DESCRIPTION=Alarm],
 BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/arrow],
 BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/choose_ringtone],
-SCROLL_DOWN, UiSelector[RESOURCE_ID=android:id/select_dialog_listview], toElementByText=Krypton
+SCROLL_TO, UiSelector[RESOURCE_ID=android:id/select_dialog_listview], toElementByText=Krypton
 BUTTON, UiSelector[TEXT=Krypton],
 BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
 BUTTON, UiSelector[RESOURCE_ID=com.android.deskclock:id/edit_label],

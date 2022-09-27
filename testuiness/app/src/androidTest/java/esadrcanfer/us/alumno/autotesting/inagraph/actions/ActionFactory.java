@@ -2,14 +2,17 @@ package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import androidx.test.uiautomator.StaleObjectException;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 
@@ -35,6 +38,12 @@ public class ActionFactory {
         Map<UiObject, Action> result = new HashMap<>();
         try{
             List<UiObject> buttons = ElementIdentifier.findElements(device, "android.widget.Button");
+
+            try {
+                buttons.addAll(ElementIdentifier.findElements(device, "android.widget.CompoundButton"));
+            }catch(Exception e){
+                Log.d("ISA", "No elements found with class 'android.widget.CompoundButton'");
+            }
             for (UiObject input : buttons) {
                 result.put(input, new ButtonAction(input));
             }
@@ -64,12 +73,41 @@ public class ActionFactory {
 
     }
 
+    public static Map<UiObject, Action> createClickableActions(UiDevice device) {
+        Map<UiObject, Action> result = new HashMap<>();
+        try{
+
+            List<UiObject> clickable = new ArrayList<>();
+
+            try {
+                clickable.addAll(ElementIdentifier.findElements(device, "android.widget.TextView"));
+            }catch(Exception e){
+                Log.d("ISA", "No elements found with class 'android.widget.View'");
+            }
+
+            try {
+                clickable.addAll(ElementIdentifier.findElements(device, "android.widget.View"));
+            }catch(Exception e){
+                Log.d("ISA", "No elements found with class 'android.widget.View'");
+            }
+
+            for (UiObject input : clickable) {
+                result.put(input, new ButtonAction(input));
+            }
+        }catch(StaleObjectException ex){
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
     public static Map<UiObject, Action> createActions(UiDevice device, Long seed) {
         Map<UiObject, Action> actions = new HashMap<>();
         actions.putAll(ActionFactory.createButtonActions(device));
         actions.putAll(ActionFactory.createInputActions(device, seed));
         actions.putAll(ActionFactory.createCheckBoxActions(device));
         actions.putAll(ActionFactory.createRadioActions(device, seed));
+        actions.putAll(ActionFactory.createClickableActions(device));
         return actions;
     }
 }
