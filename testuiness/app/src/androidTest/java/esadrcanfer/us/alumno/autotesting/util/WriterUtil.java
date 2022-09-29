@@ -115,10 +115,12 @@ public class WriterUtil {
 		return logFile;
 	}
 
-	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime){
+	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime, String checkpointId){
 
-		WriterUtil writer = new WriterUtil("/repairedTests", fileName);
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		WriterUtil writer = new WriterUtil("/repairedTests", fileName+"-"+timeLog+".txt");
 		WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
+		WriterUtil checkpointList = new WriterUtil("/repairedTests", "checkpointList.txt");
 		writer.write(testCase, (long) seed);
 		if(reparationTime != null){
 			int seconds = (int) (reparationTime / 1000) % 60 ;
@@ -129,8 +131,36 @@ public class WriterUtil {
 			dataMetrics.write(String.format(fileName+";%d h %d min %d sec", hours, minutes, seconds));
 		}
 
+		if(checkpointId!= null) checkpointList.deleteCheckpoint(checkpointId);
+
 	}
 
+	private void deleteCheckpoint(String checkpointId){
+
+		ReadUtil reader = new ReadUtil(this.getPath());
+		String fileText = reader.readText();
+		String[] fileTextSplitted = fileText.split("\n");
+		String filePath = this.getPath();
+
+		String parentPath = this.getLogFile().getParent().split("Download")[1];
+
+		WriterUtil newFileWriter = new WriterUtil(parentPath, "temp." + filePath.split("\\.")[1]);
+
+		for(String line: fileTextSplitted){
+
+			if(!hasId(line, checkpointId)){
+
+				newFileWriter.write(line);
+			}
+
+		}
+
+		File oldFile = this.getLogFile();
+		oldFile.delete();
+		File newFile = newFileWriter.getLogFile();
+		newFile.renameTo(new File(filePath));
+
+	}
 
 	public void write(TestCase testCase, Long seed){
 		write(testCase.getAppPackage());
@@ -171,7 +201,9 @@ public class WriterUtil {
 		return path;
 	}
 	
-	
+	private static Boolean hasId(String line, String id){
+		return line.split(";")[0].equals(id);
+	}
 	
 
 }

@@ -92,7 +92,7 @@ public class TestsAutoWithMetricsGRASP {
                 WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
                 dataMetrics.write(name+";ReparationFailed");
             }else{
-                WriterUtil.saveInDevice(testCase, (long) -1, name, null);
+                WriterUtil.saveInDevice(testCase, (long) -1, name, null, null);
             }
 
         }

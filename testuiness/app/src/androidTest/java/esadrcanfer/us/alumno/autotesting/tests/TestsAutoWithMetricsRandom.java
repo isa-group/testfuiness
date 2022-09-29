@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
@@ -19,6 +20,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,29 +37,59 @@ import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 @SdkSuppress(minSdkVersion = 18)
 public class TestsAutoWithMetricsRandom {
 
+    private String id;
     private String path;
-    private static Long reparationTime = (long) 0;
 
     @Parameterized.Parameters
-    public static Collection<String> data(){
+    public static Collection<Pair<String, String>> data(){
 
-        List<String> tests = Arrays.asList("Test Clock/API 25/TestAlarm.txt",
-                "Test Clock/API 25/TestOtherAlarm.txt",
-                "Test Clock/API 25/TestStopWatch.txt",
-                "Test Clock/API 25/TestTimer.txt");
+        List<Pair<String, String>> res = new ArrayList<>();
 
-        List<String> res = new ArrayList<>();
+        String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
-        for(int i = 0; i< tests.size(); i++){
-            res.add(tests.get(i%4));
+        Boolean checkpointingExists = Files.exists(Paths.get(downloadsPath + "/repairedTests/checkpointList.txt"));
+
+        if(!checkpointingExists){
+
+            List<String> tests = Arrays.asList("Test Clock/API 25/TestAlarm.txt",
+                    "Test Clock/API 25/TestOtherAlarm.txt",
+                    "Test Clock/API 25/TestStopWatch.txt",
+                    "Test Clock/API 25/TestTimer.txt");
+
+            WriterUtil checkpointWriter = new WriterUtil( "/repairedTests", "checkpointList.txt");
+            checkpointWriter.write("ID;TestPath");
+
+            for(int i = 0; i< tests.size()*4; i++){
+                res.add(new Pair(""+i+1, tests.get(i%4)));
+                checkpointWriter.write(i+1 + ";" + tests.get(i%4));
+            }
+        }else{
+
+            ReadUtil checkpointReader = new ReadUtil(downloadsPath + "/repairedTests/checkpointList.txt");
+
+            String checkpointText = checkpointReader.readText();
+            String[] checkpointSplitted = checkpointText.split("\n");
+            String checkpoint = null;
+            String[] individualCheckpointSplitted = null;
+
+            for(int i = 0; i < checkpointSplitted.length; i++){
+
+                if(i!=0){
+                    checkpoint = checkpointSplitted[i];
+                    individualCheckpointSplitted = checkpoint.split(";");
+                    res.add(new Pair(individualCheckpointSplitted[0], individualCheckpointSplitted[1]));
+                }
+
+            }
+
         }
-
 
         return res;
     }
 
-    public TestsAutoWithMetricsRandom(String path) {
-        this.path = path;
+    public TestsAutoWithMetricsRandom(Pair<String, String> testcase) {
+        this.id = testcase.first;
+        this.path = testcase.second;
     }
 
     @Test
@@ -65,7 +98,7 @@ public class TestsAutoWithMetricsRandom {
         ReadUtil readUtil = new ReadUtil(path, true);
         TestCase testCase = readUtil.generateTestCase();
 
-        Log.d("ISA", "Loadded test case from file!");
+        Log.d("ISA", "Loaded test case from file!");
         Log.d("ISA", "Executing it...");
         try{
             testCase.executeBefore();
@@ -88,16 +121,16 @@ public class TestsAutoWithMetricsRandom {
                 testCase = randomReparation.run(device, testCase.getAppPackage());
                 long endTime = System.currentTimeMillis();
 
-                reparationTime += endTime - startTime;
+                long reparationTime = endTime - startTime;
 
                 String[] pathSplitted = path.split("/");
-                String name = pathSplitted[pathSplitted.length-1];
+                String name = pathSplitted[pathSplitted.length-1].split("\\.")[0];
 
                 if(testCase == null){
                     WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
                     dataMetrics.write(name+";ReparationFailed");
                 }else{
-                    WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime);
+                    WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime, id);
                 }
             }catch(Exception e){
                 String[] pathSplitted = path.split("/");
@@ -109,19 +142,5 @@ public class TestsAutoWithMetricsRandom {
 
         }
 
-        // Log.d("ISA", "TestCase found: " + testCase);
-    }
-
-    @AfterClass
-    public static void writeMetrics(){
-
-        WriterUtil writer = new WriterUtil("repairedTests", "testMetrics.txt");
-
-        int seconds = (int) (reparationTime / 1000) % 60 ;
-        int minutes = (int) ((reparationTime / (1000*60)) % 60);
-        int hours   = (int) ((reparationTime / (1000*60*60)) % 24);
-
-        writer.write("\n-------------- METRICS ------------------\n");
-        writer.write(String.format("Reparation time: %d h %d min %d sec", hours, minutes, seconds));
     }
 }

@@ -57,7 +57,7 @@ public class AutomaticRepairTests {
 
             long reparationTime = endTime - startTime;
 
-            WriterUtil.saveInDevice(testCase, (long) -1, "randomRepairedTest.txt", reparationTime);
+            WriterUtil.saveInDevice(testCase, (long) -1, "randomRepairedTest.txt", reparationTime, null);
         }
         Log.d("ISA", "TestCase found: " + testCase);
     }

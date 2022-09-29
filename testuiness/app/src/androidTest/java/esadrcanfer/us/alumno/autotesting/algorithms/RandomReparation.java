@@ -3,6 +3,7 @@ package esadrcanfer.us.alumno.autotesting.algorithms;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +17,8 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 
 public class RandomReparation extends BaseReparationAlgorithm{
+
+    private static final List<String> INVALID_ACTION_IDENTIFIERS = Arrays.asList("android:id/action0");
 
     long maxIterations;
     List<Action> beforeActions;
@@ -57,7 +60,7 @@ public class RandomReparation extends BaseReparationAlgorithm{
 
                 try{
                     chosenAction = availableActions.get(getRandom().nextInt(availableActions.size()));
-                    if(!chosenAction.toString().contains("android:id/action0")) {
+                    if(validAction(chosenAction)) {
                         testCaseActions.add(chosenAction);
                         Log.d("ISA", "Executing action: " + chosenAction);
                         chosenAction.perform();
@@ -102,6 +105,10 @@ public class RandomReparation extends BaseReparationAlgorithm{
     @Override
     public TestCase repair(UiDevice device, TestCase buggyTestCase, int breakingPoint) throws UiObjectNotFoundException {
         return run(device,buggyTestCase.getAppPackage());
+    }
+
+    private static Boolean validAction(Action chosenAction){
+        return INVALID_ACTION_IDENTIFIERS.stream().allMatch(a -> !chosenAction.toString().contains(a));
     }
 
 
