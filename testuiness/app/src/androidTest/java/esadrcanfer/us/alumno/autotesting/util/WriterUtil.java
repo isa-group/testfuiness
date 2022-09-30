@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -82,6 +83,34 @@ public class WriterUtil {
 
 	}
 
+	public WriterUtil(Path filePath) {
+
+		File assets = new File("src/main/assets");
+
+		File testFile = null;
+
+		if(assets.exists()){
+			testFile = new File("src/main/assets", filePath.toString());
+		}else{
+			testFile = new File(filePath.toUri());
+		}
+
+		if(testFile.getParentFile().mkdirs()==true){
+			Log.d("ISA", "New directory successfully created!!");
+		}else{
+			Log.d("ISA", "Either the directory already exits or it is bad formed");
+		}
+
+		try {
+			testFile.createNewFile();
+		}catch (Exception e){
+			Log.e("ISA", "A file with the given name already exists in the specified directory.");
+			e.printStackTrace();
+		}
+		this.logFile = testFile;
+
+	}
+
 	public WriterUtil(String path, String fileName) {
 
 		File assets = new File("src/main/assets");
@@ -93,7 +122,7 @@ public class WriterUtil {
 		if(assets.exists()){
 			testFile = new File("src/main/assets/"+path, name);
 		}else{
-			testFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+path, fileName);
+			testFile = new File(path, fileName);
 		}
 
 		if(testFile.getParentFile().mkdirs()==true){
@@ -115,12 +144,13 @@ public class WriterUtil {
 		return logFile;
 	}
 
-	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime, String checkpointId){
+	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime, String checkpointId, String algorithm){
 
+		String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		WriterUtil writer = new WriterUtil("/repairedTests", fileName+"-"+timeLog+".txt");
-		WriterUtil dataMetrics = new WriterUtil("/repairedTests", "dataMetrics.csv");
-		WriterUtil checkpointList = new WriterUtil("/repairedTests", "checkpointList.txt");
+		WriterUtil writer = new WriterUtil(downloadsPath+"/repairedTests", fileName+"-"+timeLog+".txt");
+		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/repairedTests", "dataMetrics.csv");
+		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/repairedTests");
 		writer.write(testCase, (long) seed);
 		if(reparationTime != null){
 			int seconds = (int) (reparationTime / 1000) % 60 ;
@@ -128,37 +158,10 @@ public class WriterUtil {
 			int hours   = (int) ((reparationTime / (1000*60*60)) % 24);
 
 
-			dataMetrics.write(String.format(fileName+";%d h %d min %d sec", hours, minutes, seconds));
+			dataMetrics.write(String.format(fileName+";%d h %d min %d sec;%s", hours, minutes, seconds, algorithm));
 		}
 
 		if(checkpointId!= null) checkpointList.deleteCheckpoint(checkpointId);
-
-	}
-
-	private void deleteCheckpoint(String checkpointId){
-
-		ReadUtil reader = new ReadUtil(this.getPath());
-		String fileText = reader.readText();
-		String[] fileTextSplitted = fileText.split("\n");
-		String filePath = this.getPath();
-
-		String parentPath = this.getLogFile().getParent().split("Download")[1];
-
-		WriterUtil newFileWriter = new WriterUtil(parentPath, "temp." + filePath.split("\\.")[1]);
-
-		for(String line: fileTextSplitted){
-
-			if(!hasId(line, checkpointId)){
-
-				newFileWriter.write(line);
-			}
-
-		}
-
-		File oldFile = this.getLogFile();
-		oldFile.delete();
-		File newFile = newFileWriter.getLogFile();
-		newFile.renameTo(new File(filePath));
 
 	}
 
@@ -199,10 +202,6 @@ public class WriterUtil {
 			e.printStackTrace();
 		}
 		return path;
-	}
-	
-	private static Boolean hasId(String line, String id){
-		return line.split(";")[0].equals(id);
 	}
 	
 
