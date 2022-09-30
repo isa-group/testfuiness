@@ -12,10 +12,11 @@ import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,8 +79,14 @@ public class ReadUtil {
             if(filename.equals(""))
                 throw new FileNotFoundException();
 
-            reader = new BufferedReader(
-                    new InputStreamReader(assetManager.open(filename)));
+
+            if(filename.contains("Download")){
+                reader = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(new File(this.getPath()))));
+            }else{
+                reader = new BufferedReader(
+                        new InputStreamReader(assetManager.open(filename)));
+            }
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -153,6 +160,10 @@ public class ReadUtil {
         if (lines.length != actionsSize + 3) predicate = lines[actionsSize + 3];
 
         return createTestCase(appPackage, testActions, predicate);
+    }
+
+    public Boolean isEmpty(){
+    return this.readText().equals("");
     }
 
     /**
