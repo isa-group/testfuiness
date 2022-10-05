@@ -6,11 +6,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.test.uiautomator.By;
@@ -22,6 +24,16 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
 
 public class ElementIdentifier {
+
+    private static final List<String> UI_SELECTORS_LIST = Arrays.asList("android.widget.Button",
+                                                                        "android.widget.EditText",
+                                                                        "android.widget.RadioGroup",
+                                                                        "android.widget.CheckBox",
+                                                                        "android.widget.Spinner",
+                                                                        "android.widget.DatePicker",
+                                                                        "android.widget.TextView",
+                                                                        "android.widget.View",
+                                                                        "android.widget.ImageButton");
 
     public static List<UiObject> findElements(UiDevice device, String finder) {
         List<UiObject> result = new ArrayList<>();
@@ -55,10 +67,22 @@ public class ElementIdentifier {
         return result;
     }
 
+    public static List<UiObject2> findAll(UiDevice device){
+        List<UiObject2> result = new ArrayList<>();
+        for(String finder: UI_SELECTORS_LIST){
+            BySelector sel = resolveSelector(finder);
+            List<UiObject2> elements = device.findObjects(sel);
+
+            result.addAll(elements);
+        }
+
+        return result;
+    }
+
     private static BySelector resolveSelector(String finder) {
         BySelector result = null;
         finder = finder.substring(finder.lastIndexOf(".") + 1);
-        if (finder.equalsIgnoreCase("button")) {
+        if (finder.equalsIgnoreCase("Button")) {
             result = By.clazz(Button.class);
         } else if (finder.equalsIgnoreCase("EditText")) {
             result = By.clazz(EditText.class);
@@ -74,6 +98,8 @@ public class ElementIdentifier {
             result = By.clazz(TextView.class);
         }else if (finder.equalsIgnoreCase("View")){
             result = By.clazz(View.class);
+        }else if (finder.equalsIgnoreCase("ImageButton")){
+            result = By.clazz(ImageButton.class);
         }
         return result;
     }

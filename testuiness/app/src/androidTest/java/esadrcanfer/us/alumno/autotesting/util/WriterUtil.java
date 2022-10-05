@@ -58,7 +58,7 @@ public class WriterUtil {
 		File assets = new File("src/main/assets");
 
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		String fileName = baseFileName + timeLog+".txt";
+		String fileName = baseFileName+".txt";
 		File testFile = null;
 
 		if(assets.exists()){

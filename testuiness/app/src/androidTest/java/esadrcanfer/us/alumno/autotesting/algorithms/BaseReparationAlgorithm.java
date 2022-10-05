@@ -19,6 +19,7 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ActionFactory;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.ElementIdentifier;
 
 public abstract class BaseReparationAlgorithm implements ReparationAlgorithm {
 
@@ -33,6 +34,12 @@ public abstract class BaseReparationAlgorithm implements ReparationAlgorithm {
         Map<UiObject, Action> actions;
         actions = ActionFactory.createActions(device, seed);
         return new ArrayList<>(actions.values());
+    }
+
+    protected static List<UiObject2> listUiObjects(UiDevice device){
+        List<UiObject2> elements;
+        elements = ElementIdentifier.findAll(device);
+        return elements;
     }
 
     public List<String> labelsDetection() throws UiObjectNotFoundException {
