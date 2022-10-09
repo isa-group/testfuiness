@@ -56,13 +56,11 @@ public class ElementIdentifier {
                 button = device.findObject(selector);
             }
 
-            try{
-                if(button != null && button.isClickable()) {
-                    result.add(button);
-                }
-            }catch(UiObjectNotFoundException e){
-                Log.d("ISA", "The element with id '"+elementId+"' and text '"+elementText+"'i not clickable or does not exit.");
-            }
+
+            if(button != null && btn.isClickable()) {
+                result.add(button);
+            }Log.d("ISA", "The element with id '"+elementId+"' and text '"+elementText+"'i not clickable or does not exit.");
+
         }
         return result;
     }

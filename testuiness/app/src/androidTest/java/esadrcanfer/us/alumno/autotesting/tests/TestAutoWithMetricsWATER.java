@@ -67,8 +67,11 @@ public class TestAutoWithMetricsWATER {
     public void runTxtTests() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+        CheckpointUtil checkpoints = new CheckpointUtil(downloadsPath+"/repairedTests");
+
         ReadUtil readUtil = new ReadUtil(path, true);
         TestCase testCase = readUtil.generateTestCase();
+        List<TestCase> repairs = new ArrayList<>();
 
         Log.d("ISA", "Loaded test case from file!");
         Log.d("ISA", "Executing it...");
@@ -76,8 +79,7 @@ public class TestAutoWithMetricsWATER {
 
             testCase.executeBefore();
             List<String> initialState = labelsDetection();
-            //testCase.executeTest();
-            WATERReparation.getTestWATERData(device, testCase, "pruebas-old");
+            testCase.executeTest();
             List<String> finalState = labelsDetection();
             testCase.setInitialState(initialState);
             testCase.setFinalState(finalState);
@@ -90,21 +92,20 @@ public class TestAutoWithMetricsWATER {
         } catch (Exception ex) {
 
             try {
-                RandomReparation randomReparation = new RandomReparation(500, testCase, testCase.getAppPackage());
+                WATERReparation waterReparation = new WATERReparation(checkpoints, id);
                 long startTime = System.currentTimeMillis();
-                //testCase = randomReparation.run(device, testCase.getAppPackage());
+                repairs = waterReparation.repair(device, testCase);
                 long endTime = System.currentTimeMillis();
 
                 long reparationTime = endTime - startTime;
 
-                String[] pathSplitted = path.split("/");
-                String name = pathSplitted[pathSplitted.length-1].split("\\.")[0];
+                String name = checkpoints.getFileName(id).split("\\.")[0].trim();
 
-                if(testCase == null){
+                if(repairs.size() == 0){
                     WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/repairedTests", "dataMetrics.csv");
                     dataMetrics.write(name+";ReparationFailed");
                 }else{
-                    WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime, id, "WATER Algorithm");
+                    WriterUtil.saveInDeviceWATER(repairs, (long) -1, name, reparationTime, id, "WATER Algorithm");
                 }
             }catch(Exception e){
                 String[] pathSplitted = path.split("/");

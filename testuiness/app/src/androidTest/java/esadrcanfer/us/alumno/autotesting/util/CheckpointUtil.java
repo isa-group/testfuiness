@@ -127,6 +127,31 @@ public class CheckpointUtil {
 
     }
 
+    public String getFileName(String checkpointId){
+        ReadUtil reader = new ReadUtil(checkpointFile.getPath());
+        String fileText = reader.readText();
+        String[] fileTextSplitted = fileText.split("\n");
+
+        String fileName = null;
+        String filePath = null;
+
+        for(String line: fileTextSplitted){
+
+            if(line.split(";")[0].trim().equals(checkpointId)){
+                filePath = line.split(";")[1].trim();
+                fileName = filePath.substring(filePath.lastIndexOf("/")+1);
+                break;
+            }
+
+        }
+
+        return fileName;
+    }
+
+    public String getExperimentPath(){
+        return this.checkpointFile.getPath().substring(0, checkpointFile.getPath().lastIndexOf("/")+1);
+    }
+
     private static Boolean isCheckpointFileCreated(String folderPath){
         return Files.exists(Paths.get(folderPath + "/" + "checkpointList.txt"));
     }
