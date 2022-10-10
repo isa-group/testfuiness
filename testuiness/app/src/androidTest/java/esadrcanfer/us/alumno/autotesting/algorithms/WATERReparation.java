@@ -4,6 +4,7 @@ import static esadrcanfer.us.alumno.autotesting.algorithms.BaseReparationAlgorit
 import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -247,9 +248,14 @@ public class WATERReparation {
         String xpathNode0 = node0Properties.get("xpath");
         String xpathNewNode = newNodeProperties.get("xpath");
 
+        Pair<String, String> simplifiedPaths = simplifyPaths(xpathNode0, xpathNewNode);
+
+        String pseudoXPathNode0 = simplifiedPaths.first;
+        String pseudoXPathNewNode = simplifiedPaths.second;
+
         if(node0Properties.get("class").equals(newNodeProperties.get("class"))){
-            //TODO preguntar que hacer, dado que como los xpath son muy largos, al hacer la división suele dar 0.
-            rho1 = 1-(levenshteinDistance(xpathNode0, xpathNewNode)/Math.max(xpathNode0.length(), xpathNewNode.length()));
+
+            rho1 = 1-(levenshteinDistance(pseudoXPathNode0, pseudoXPathNewNode)/Math.max(pseudoXPathNode0.length(), pseudoXPathNewNode.length()));
 
             for(String prop: SIMILARITY_INDEX_NEEDED_PROPS.split(",")){
 
@@ -266,6 +272,30 @@ public class WATERReparation {
         }
 
         return similarityIndex;
+    }
+
+    private static Pair<String, String> simplifyPaths(String path1, String path2){
+
+        String[] path1Split = path1.substring(2).split("/");
+        String[] path2Split = path2.substring(2).split("/");
+
+        String pseudoXPath1 = "//";
+        String pseudoXPath2 = "//";
+
+        for (int i = 0; i<path1Split.length-1; i++){
+
+            if(path1Split[i+1]!=path2Split[i+1]){
+                for(int j = i; j<Math.max(path1Split.length, path2Split.length); j++){
+                    pseudoXPath1 += path1Split[j]+"/";
+                    pseudoXPath2 += path2Split[j]+"/";
+                }
+                break;
+            }
+
+        }
+
+        return new Pair<>(pseudoXPath1, pseudoXPath2);
+
     }
 
     private static int minimum(int a, int b, int c) {
