@@ -16,6 +16,7 @@ import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
@@ -58,7 +59,7 @@ public class WriterUtil {
 		File assets = new File("src/main/assets");
 
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		String fileName = baseFileName + timeLog+".txt";
+		String fileName = baseFileName+".txt";
 		File testFile = null;
 
 		if(assets.exists()){
@@ -152,6 +153,36 @@ public class WriterUtil {
 		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/repairedTests", "dataMetrics.csv");
 		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/repairedTests");
 		writer.write(testCase, (long) seed);
+		if(reparationTime != null){
+			int seconds = (int) (reparationTime / 1000) % 60 ;
+			int minutes = (int) ((reparationTime / (1000*60)) % 60);
+			int hours   = (int) ((reparationTime / (1000*60*60)) % 24);
+
+
+			dataMetrics.write(String.format(fileName+";%d h %d min %d sec;%s", hours, minutes, seconds, algorithm));
+		}
+
+		if(checkpointId!= null) checkpointList.deleteCheckpoint(checkpointId);
+
+	}
+
+	public static void saveInDeviceWATER(List<TestCase> repairs, Long seed, String fileName, Long reparationTime, String checkpointId, String algorithm){
+
+		String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/repairedTests", "dataMetrics.csv");
+		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/repairedTests");
+		WriterUtil testWriter = null;
+		TestCase repair;
+
+		for(int i = 0; i<repairs.size(); i++){
+
+			repair = repairs.get(i);
+
+			testWriter = new WriterUtil(downloadsPath+"/repairedTests", fileName+"-repair"+i+"-"+timeLog+".txt");
+			testWriter.write(repair, (long) seed);
+
+		}
 		if(reparationTime != null){
 			int seconds = (int) (reparationTime / 1000) % 60 ;
 			int minutes = (int) ((reparationTime / (1000*60)) % 60);

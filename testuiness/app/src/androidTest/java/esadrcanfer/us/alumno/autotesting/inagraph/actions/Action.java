@@ -44,6 +44,8 @@ public abstract class  Action {
         return target;
     }
 
+    public void setTarget(UiObject target){ this.target = target; }
+
     public String toString(){
         return actionType+", "+ target.getSelector().toString()+", "+ value;
     }
