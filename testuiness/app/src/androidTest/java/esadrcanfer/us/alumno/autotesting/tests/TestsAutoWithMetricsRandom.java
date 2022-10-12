@@ -40,9 +40,10 @@ public class TestsAutoWithMetricsRandom {
 
     private String id;
     private String path;
+    private String algorithm;
 
     @Parameterized.Parameters
-    public static Collection<Pair<String, String>> data(){
+    public static Collection<String> data(){
 
         List<String> testSuite = new ArrayList<>();
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
@@ -61,9 +62,13 @@ public class TestsAutoWithMetricsRandom {
         return checkpoints.getTestSuite();
     }
 
-    public TestsAutoWithMetricsRandom(Pair<String, String> testcase) {
-        this.id = testcase.first;
-        this.path = testcase.second;
+    public TestsAutoWithMetricsRandom(String testcase) {
+
+        String[] testCaseSplit = testcase.split(";");
+
+        this.id = testCaseSplit[0];
+        this.path = testCaseSplit[1];
+        this.algorithm = testCaseSplit[2];
     }
 
     @Test

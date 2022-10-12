@@ -49,6 +49,25 @@ public class CheckpointUtil {
         this.checkpointFile =  new File(folderPath + "/checkpointList.txt");
     }
 
+    public CheckpointUtil(String folderPath, List<String> tests, List<String> algorithmsList){
+
+        if(!isCheckpointFileCreated(folderPath)){
+            WriterUtil checkpointWriter = new WriterUtil(folderPath, "checkpointList.txt");
+            checkpointWriter.write("ID;TestPath;Algorithm");
+
+            Integer index = 1;
+
+            for(String algorithm: algorithmsList){
+                for(String test: tests){
+                    checkpointWriter.write(index + ";" + test + ";" + algorithm);
+                    index++;
+                }
+            }
+        }
+
+        this.checkpointFile =  new File(folderPath + "/checkpointList.txt");
+    }
+
     /**
      * Add all the tests suite given at the end of the checkpoint list.
      * @param tests is the list with the path of the test files inside assets.
@@ -73,22 +92,20 @@ public class CheckpointUtil {
      *
      * @return the test suite inside a checkpoint list
      */
-    public List<Pair<String, String>> getTestSuite(){
+    public List<String> getTestSuite(){
 
-        List<Pair<String, String>> res = new ArrayList<>();
+        List<String> res = new ArrayList<>();
 
         ReadUtil checkpointReader = new ReadUtil(checkpointFile.getPath());
         String checkpointText = checkpointReader.readText();
         String[] checkpointSplitted = checkpointText.split("\n");
         String checkpoint = null;
-        String[] individualCheckpointSplitted = null;
 
         for(int i = 0; i < checkpointSplitted.length; i++){
 
             if(i!=0){
                 checkpoint = checkpointSplitted[i];
-                individualCheckpointSplitted = checkpoint.split(";");
-                res.add(new Pair(individualCheckpointSplitted[0], individualCheckpointSplitted[1]));
+                res.add(checkpoint);
             }
 
         }
