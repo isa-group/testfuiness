@@ -38,10 +38,9 @@ public class OldTestWATERDataExtractor {
     @Parameterized.Parameters
     public static Collection<Pair<String, String>> data() {
 
-        List<Pair<String, String>> tests = Arrays.asList(new Pair("1", "Test Clock/API 25/TestAlarm.txt"));
-                                                        /*new Pair("2", "Test Clock/API 25/TestOtherAlarm.txt"),
-                                                        new Pair("3", "Test Clock/API 25/TestStopWatch.txt"),
-                                                        new Pair("4", "Test Clock/API 25/TestTimer.txt"));*/
+        List<Pair<String, String>> tests = Arrays.asList(new Pair("1", "Test Google Maps/Old/TestJourneyGoogleMaps.txt"),
+                                                        new Pair("2", "Test Google Maps/Old/TestSearchGoogleMaps.txt"),
+                                                        new Pair("3", "Test Google Maps/Old/TestShareLocationGoogleMaps.txt"));
 
         return tests;
     }

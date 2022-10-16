@@ -38,11 +38,10 @@ import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 @SdkSuppress(minSdkVersion = 18)
 public class RunExperiment {
 
-    private static final List<String> TESTS = Arrays.asList("Test Clock/API 25/TestAlarm.txt");
-                                                            //"Test Clock/API 25/TestOtherAlarm.txt",
-                                                            //"Test Clock/API 25/TestStopWatch.txt",
-                                                            //"Test Clock/API 25/TestTimer.txt");
-    private static final int NUMBER_OF_EXEC = 1;
+    private static final List<String> TESTS = Arrays.asList("Test Google Maps/Old/TestJourneyGoogleMaps.txt",
+                                                            "Test Google Maps/Old/TestSearchGoogleMaps.txt",
+                                                            "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
+    private static final int NUMBER_OF_EXEC = 4;
     private static final List<String> ALGORITHMS = Arrays.asList("WATER Algorithm",
                                                                 "Random Algorithm");
 
@@ -57,7 +56,7 @@ public class RunExperiment {
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
         for(int i = 0; i< TESTS.size()*NUMBER_OF_EXEC; i++){
-            testSuite.add(TESTS.get(i%NUMBER_OF_EXEC));
+            testSuite.add(TESTS.get(i%TESTS.size()));
         }
 
         CheckpointUtil checkpoints = new CheckpointUtil(downloadsPath+"/reparation_experiment", testSuite, ALGORITHMS);
