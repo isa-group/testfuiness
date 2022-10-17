@@ -20,8 +20,9 @@ public class ExperimentGoogleMaps extends Experiment {
                                                             "Test Google Maps/Old/TestSearchGoogleMaps.txt",
                                                             "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
     private static final int numberOfExec = 4;
-    private static final List<String> algorithms = Arrays.asList("WATER Algorithm",
-                                                                 "Random Algorithm");
+    private static final List<String> algorithms = Arrays.asList("Random Algorithm",
+                                                                "WATER Algorithm");
+    private static final int timeout = 60;
 
     private String id;
     private String path;
@@ -47,7 +48,7 @@ public class ExperimentGoogleMaps extends Experiment {
     @Test
     public void runTest() throws UiObjectNotFoundException {
         try {
-            runTest(id, path, algorithm);
+            runTest(id, path, algorithm, timeout);
         }catch(UiObjectNotFoundException e){
             throw new UiObjectNotFoundException(e.getMessage());
         }

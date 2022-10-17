@@ -15,6 +15,12 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import esadrcanfer.us.alumno.autotesting.BrokenTestCaseException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
@@ -31,6 +37,7 @@ public abstract class Experiment {
     private String id;
     private String path;
     private String algorithm;
+    private long timeout;
 
     public Experiment() {}
 
@@ -48,11 +55,12 @@ public abstract class Experiment {
         return checkpoints.getTestSuite();
     }
 
-    protected void runTest(String id, String path, String algorithm) throws UiObjectNotFoundException {
+    protected void runTest(String id, String path, String algorithm, long timeout) throws UiObjectNotFoundException {
 
         this.id = id;
         this.path = path;
         this.algorithm = algorithm;
+        this.timeout = timeout;
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
@@ -79,36 +87,56 @@ public abstract class Experiment {
 
         } catch (BrokenTestCaseException ex) {
 
+            BaseReparationAlgorithm isaReparationAlgorithm = null;
+            WATERReparation waterReparation;
+
+            switch (algorithm){
+                case "Random Algorithm":
+                    isaReparationAlgorithm = new RandomReparation(500, testCase, testCase.getAppPackage());
+                    break;
+
+                case "GRASP Algorithm":
+                    isaReparationAlgorithm = new GRASPReparation(10, 3, 5);
+                    break;
+            }
+
+            Log.i("ISA", "The reparation algorithm used to repair this test is: " + algorithm);
+
+
+            Future future;
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+
+            if(isaReparationAlgorithm == null){
+                waterReparation = new WATERReparation(checkpoints, id);
+                Runnable waterTask = () -> {
+                    try {
+                        executeWATER(device, testCase, waterReparation, checkpoints);
+                    } catch (UiObjectNotFoundException e) {
+                        handleCatch();
+                    }
+                };
+                future = executor.submit(waterTask);
+            }else{
+                BaseReparationAlgorithm finalIsaReparationAlgorithm = isaReparationAlgorithm;
+                Runnable isaAlgorithmTask = () -> {
+                    try {
+                        executeIsaAlgorithm(device, testCase, ex.getBreakingIndex(), finalIsaReparationAlgorithm);
+                    } catch (UiObjectNotFoundException e) {
+                        handleCatch();
+                    }
+                };
+                future = executor.submit(isaAlgorithmTask);
+            }
+
             try {
-
-                BaseReparationAlgorithm isaReparationAlgorithm = null;
-                WATERReparation waterReparation = null;
-
-                switch (algorithm){
-                    case "Random Algorithm":
-                        isaReparationAlgorithm = new RandomReparation(500, testCase, testCase.getAppPackage());
-                        break;
-
-                    case "GRASP Algorithm":
-                        isaReparationAlgorithm = new GRASPReparation(10, 3, 5);
-                        break;
-                }
-
-                Log.i("ISA", "The reparation algorithm used to repair this test is: " + algorithm);
-
-                if(isaReparationAlgorithm == null){
-                    waterReparation = new WATERReparation(checkpoints, id);
-                    executeWATER(device, testCase, waterReparation, checkpoints);
-                }else{
-                    executeIsaAlgorithm(device, testCase, ex.getBreakingIndex(), isaReparationAlgorithm);
-                }
-
-            }catch(Exception e){
-                String[] pathSplitted = path.split("/");
-                String name = pathSplitted[pathSplitted.length-1];
-
-                WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
-                dataMetrics.write(name+";"+algorithm+";ReparationFailed");
+                future.get(timeout, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                future.cancel(true);
+                handleCatch();
+            } catch (Exception e) {
+                Log.e("ISA", "An exception has occurred, here is its message: " + e.getMessage());
+            } finally {
+                executor.shutdownNow();
             }
 
         }
@@ -155,6 +183,16 @@ public abstract class Experiment {
         }else{
             WriterUtil.saveInDeviceWATER(repairs, (long) -1, name, reparationTime, id, algorithm);
         }
+    }
+
+    private void handleCatch(){
+        String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+
+        String[] pathSplitted = path.split("/");
+        String name = pathSplitted[pathSplitted.length-1];
+
+        WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
+        dataMetrics.write(name+";"+algorithm+";ReparationFailed");
     }
 
 }
