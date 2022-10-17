@@ -32,22 +32,20 @@ import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 @SdkSuppress(minSdkVersion = 18)
 public class OldTestWATERDataExtractor {
 
-    private String id;
     private String path;
 
     @Parameterized.Parameters
-    public static Collection<Pair<String, String>> data() {
+    public static Collection<String> data() {
 
-        List<Pair<String, String>> tests = Arrays.asList(new Pair("1", "Test Google Maps/Old/TestJourneyGoogleMaps.txt"),
-                                                        new Pair("2", "Test Google Maps/Old/TestSearchGoogleMaps.txt"),
-                                                        new Pair("3", "Test Google Maps/Old/TestShareLocationGoogleMaps.txt"));
+        List<String> tests = Arrays.asList("Test Google Maps/Old/TestJourneyGoogleMaps.txt",
+                                            "Test Google Maps/Old/TestSearchGoogleMaps.txt",
+                                            "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
 
         return tests;
     }
 
-    public OldTestWATERDataExtractor(Pair<String, String> testcase) {
-        this.id = testcase.first;
-        this.path = testcase.second;
+    public OldTestWATERDataExtractor(String testPath) {
+        this.path = testPath;
     }
 
     @Test

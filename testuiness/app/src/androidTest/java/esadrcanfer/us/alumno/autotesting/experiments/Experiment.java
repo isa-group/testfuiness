@@ -1,27 +1,20 @@
-package esadrcanfer.us.alumno.autotesting.tests;
+package esadrcanfer.us.alumno.autotesting.experiments;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 import android.os.Environment;
-import android.support.test.filters.SdkSuppress;
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import esadrcanfer.us.alumno.autotesting.BrokenTestCaseException;
 import esadrcanfer.us.alumno.autotesting.TestCase;
@@ -30,51 +23,37 @@ import esadrcanfer.us.alumno.autotesting.algorithms.GRASPReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.RandomReparation;
 import esadrcanfer.us.alumno.autotesting.algorithms.WATERReparation;
 import esadrcanfer.us.alumno.autotesting.util.CheckpointUtil;
-import esadrcanfer.us.alumno.autotesting.util.ObjectsMapParser;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 
-@RunWith(Parameterized.class)
-@SdkSuppress(minSdkVersion = 18)
-public class RunExperiment {
-
-    private static final List<String> TESTS = Arrays.asList("Test Google Maps/Old/TestJourneyGoogleMaps.txt",
-                                                            "Test Google Maps/Old/TestSearchGoogleMaps.txt",
-                                                            "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
-    private static final int NUMBER_OF_EXEC = 4;
-    private static final List<String> ALGORITHMS = Arrays.asList("WATER Algorithm",
-                                                                "Random Algorithm");
+public abstract class Experiment {
 
     private String id;
     private String path;
     private String algorithm;
 
-    @Parameterized.Parameters
-    public static Collection<String> data(){
+    public Experiment() {}
+
+    protected static Collection<String> createTestData(List<String> tests, int numberOfExec, List<String> algorithms){
 
         List<String> testSuite = new ArrayList<>();
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
-        for(int i = 0; i< TESTS.size()*NUMBER_OF_EXEC; i++){
-            testSuite.add(TESTS.get(i%TESTS.size()));
+        for(int i = 0; i< tests.size()*numberOfExec; i++){
+            testSuite.add(tests.get(i%tests.size()));
         }
 
-        CheckpointUtil checkpoints = new CheckpointUtil(downloadsPath+"/reparation_experiment", testSuite, ALGORITHMS);
+        CheckpointUtil checkpoints = new CheckpointUtil(downloadsPath+"/reparation_experiment", testSuite, algorithms);
 
         return checkpoints.getTestSuite();
     }
 
-    public RunExperiment(String testcase) {
+    protected void runTest(String id, String path, String algorithm) throws UiObjectNotFoundException {
 
-        String[] testCaseSplit = testcase.split(";");
+        this.id = id;
+        this.path = path;
+        this.algorithm = algorithm;
 
-        this.id = testCaseSplit[0];
-        this.path = testCaseSplit[1];
-        this.algorithm = testCaseSplit[2];
-    }
-
-    @Test
-    public void runTxtTests() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
         CheckpointUtil checkpoints = new CheckpointUtil(downloadsPath+"/reparation_experiment");

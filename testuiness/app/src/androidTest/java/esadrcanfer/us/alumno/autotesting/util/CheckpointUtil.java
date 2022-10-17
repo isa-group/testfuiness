@@ -1,7 +1,5 @@
 package esadrcanfer.us.alumno.autotesting.util;
 
-import android.util.Pair;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
