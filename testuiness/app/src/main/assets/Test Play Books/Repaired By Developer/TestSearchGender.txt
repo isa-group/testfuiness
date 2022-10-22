@@ -1,0 +1,8 @@
+com.google.android.apps.books
+-1
+4
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/open_search_view], toElementByText=Genres
+BUTTON, UiSelector[TEXT=Genres],
+BUTTON, UiSelector[TEXT=Science],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/card_image_body_button_list_item_root],
+finalState.size() > initialState.size()

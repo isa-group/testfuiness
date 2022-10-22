@@ -1,0 +1,8 @@
+com.google.android.apps.docs.editors.sheets
+-1
+4
+BUTTON, UiSelector[DESCRIPTION=More actions for Prueba ficheros],
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.sheets:id/menu_recycler_view], Elements=10
+BUTTON, UiSelector[TEXT=Remove], Remove
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.sheets:id/positive_button],
+finalState.contains("File moved to trash. ")

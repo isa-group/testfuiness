@@ -1,0 +1,17 @@
+com.google.android.deskclock
+-1
+13
+BUTTON, UiSelector[TEXT=Alarm],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/arrow],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/day_button_1],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/day_button_2],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/day_button_3],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/day_button_4],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/day_button_6],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/day_button_0],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/digital_clock],
+BUTTON, UiSelector[TEXT=10],
+BUTTON, UiSelector[TEXT=30],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/material_timepicker_ok_button],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/arrow],
+finalState.contains("10:30")

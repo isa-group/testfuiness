@@ -1,0 +1,11 @@
+com.android.vending
+-1
+7
+BUTTON, UiSelector[CLASS=android.widget.ImageView(1)],
+BUTTON, UiSelector[TEXT=Manage apps & device],
+BUTTON, UiSelector[TEXT=Manage],
+BUTTON, UiSelector[TEXT=Updates available],
+SCROLL_TO, UiSelector[CLASS=android.widget.FrameLayout(1)], toElementByText=Google Duo
+BUTTON, UiSelector[TEXT=Google Duo],
+BUTTON, UiSelector[TEXT=Update],
+finalState.contains("Google Duo") && finalState.contains("Pending...")

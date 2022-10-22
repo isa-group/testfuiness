@@ -1,0 +1,8 @@
+com.android.vending
+-1
+4
+BUTTON, UiSelector[TEXT=Apps],
+BUTTON, UiSelector[TEXT=Based on your recent activity],
+BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/mini_blurb],
+BUTTON, UiSelector[TEXT=Install],
+finalState.contains("Verified by Play Protect")

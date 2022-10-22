@@ -1,0 +1,7 @@
+com.google.android.videos
+-1
+3
+BUTTON, UiSelector[CLASS=android.widget.ImageButton(0)],
+TEXT, UiSelector[RESOURCE_ID=android:id/search_src_text], Megalodon
+BUTTON, UiSelector[TEXT=The Meg],
+finalState.contains("The Meg")

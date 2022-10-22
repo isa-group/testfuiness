@@ -1,9 +1,0 @@
-com.google.android.apps.docs
--1
-5
-BUTTON, UiSelector[TEXT=Files],
-BUTTON, UiSelector[DESCRIPTION=More actions for Test Folder],
-SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/menu_recycler_view], Elements=10
-BUTTON, UiSelector[TEXT=Remove], Remove
-BUTTON, UiSelector[TEXT=Move to trash],
-finalState.contains("Folder moved to trash. ")

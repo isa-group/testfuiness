@@ -1,9 +1,0 @@
-com.google.android.calendar
--1
-6
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/date_picker_button],
-BUTTON, UiSelector[CLASS=android.view.View(29)],
-BUTTON, UiSelector[DESCRIPTION=11:15 AM – 12:30 PM: Prueba ficheros test],
-BUTTON, UiSelector[DESCRIPTION=More options],
-BUTTON, UiSelector[TEXT=Delete],
-BUTTON, UiSelector[RESOURCE_ID=android:id/button1], Delete

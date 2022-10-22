@@ -1,9 +1,0 @@
-com.google.android.apps.youtube.music
--1
-6
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/action_search_button],
-TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/search_edit_text], Radioactive
-BUTTON, UiSelector[CLASS=android.widget.LinearLayout(1)],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/contextual_menu_anchor],
-BUTTON, UiSelector[TEXT=Add to library],
-finalState.contains("Added to library")

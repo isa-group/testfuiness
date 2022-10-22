@@ -1,7 +1,0 @@
-com.google.android.apps.youtube.music
--1
-4
-BUTTON, UiSelector[TEXT=Library],
-BUTTON, UiSelector[TEXT=Subscriptions],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.youtube.music:id/contextual_menu_anchor],
-BUTTON, UiSelector[TEXT=Unsubscribe],

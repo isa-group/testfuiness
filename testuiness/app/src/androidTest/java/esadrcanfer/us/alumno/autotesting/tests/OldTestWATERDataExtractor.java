@@ -37,9 +37,8 @@ public class OldTestWATERDataExtractor {
     @Parameterized.Parameters
     public static Collection<String> data() {
 
-        List<String> tests = Arrays.asList("Test Google Maps/Old/TestJourneyGoogleMaps.txt",
-                                            "Test Google Maps/Old/TestSearchGoogleMaps.txt",
-                                            "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
+        List<String> tests = Arrays.asList(
+                                            "Test Gmail/Old/TestDeleteEmail.txt");
 
         return tests;
     }

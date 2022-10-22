@@ -1,0 +1,8 @@
+com.android.vending
+-1
+4
+BUTTON, UiSelector[TEXT=Search for apps & games],
+TEXT, UiSelector[TEXT=Search for apps & games],Google Classroom
+ENTER, UiSelector[enterButton],
+BUTTON, UiSelector[TEXT=Install],
+finalState.contains("Cancel")

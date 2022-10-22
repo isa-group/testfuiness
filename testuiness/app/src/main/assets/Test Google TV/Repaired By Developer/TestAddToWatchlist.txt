@@ -1,0 +1,7 @@
+com.google.android.videos
+-1
+3
+BUTTON, UiSelector[TEXT=Top picks for you],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.videos:id/tvm_entity_card_component],
+BUTTON, UiSelector[TEXT=Watchlist],
+finalState.contains("Watchlisted")

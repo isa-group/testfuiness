@@ -1,9 +1,0 @@
-com.google.android.apps.books
--1
-5
-BUTTON, UiSelector[TEXT=Library],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/overflow_icon_view],
-BUTTON, UiSelector[TEXT=Remove download],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/primary_button], Remove
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/overflow_icon_view],
-finalState.contains("Download")

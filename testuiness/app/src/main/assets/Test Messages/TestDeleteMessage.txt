@@ -1,8 +1,0 @@
-com.google.android.apps.messaging
--1
-4
-BUTTON, UiSelector[TEXT=Alejandro Garcia Fernandez],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.messaging:id/action_bar_overflow],
-BUTTON, UiSelector[TEXT=Delete],
-BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
-!finalState.contains("Alejandro Garcia Fernandez")
