@@ -3,6 +3,6 @@ com.google.android.apps.docs
 4
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/branded_fab],
 BUTTON, UiSelector[TEXT=Folder], Folder
-TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text],Trabajo Fin de Grado 3.0
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text],Testing folder
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/positive_button], Create
-finalState.contains(testActions[1].value)
+finalState.contains("Testing folder")

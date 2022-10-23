@@ -95,7 +95,7 @@ public class WATERReparation {
 
                 a=testActions.get(index);
                 a.perform();
-                Thread.sleep(250);
+                Thread.sleep(1000);
 
             }
 

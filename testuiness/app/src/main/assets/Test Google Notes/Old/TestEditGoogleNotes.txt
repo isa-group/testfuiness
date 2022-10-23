@@ -1,8 +1,0 @@
-com.google.android.keep
--1
-4
-BUTTON, UiSelector[TEXT=title], 
-TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/editable_title], modified title 
-TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/edit_note_text], modified description
-BUTTON, UiSelector[DESCRIPTION=Navigate up], 
-finalState.contains(testActions[1].value)

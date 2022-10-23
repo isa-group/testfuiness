@@ -1,9 +1,0 @@
-com.google.android.apps.docs.editors.slides
--1
-5
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/more_actions_button], More actions
-SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/menu_recycler_view], Elements=10
-BUTTON, UiSelector[TEXT=Rename], Rename
-TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/edit_text], Prueba ficheros
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs.editors.slides:id/positive_button], Rename
-finalState.contains(testActions[1].value)

@@ -1,8 +1,0 @@
-com.google.earth
--1
-4
-BUTTON, UiSelector[TEXT=Search], Search
-TEXT, UiSelector[RESOURCE_ID=com.google.earth:id/search_text_view], Avenida Reina Mercedes
-BUTTON, UiSelector[RESOURCE_ID=com.google.earth:id/search_suggestion_primary_text_view], Location
-BUTTON, UiSelector[DESCRIPTION=Fly here],
-finalState.contains(testActions[1].value)

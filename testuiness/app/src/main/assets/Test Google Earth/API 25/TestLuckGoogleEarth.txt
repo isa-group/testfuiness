@@ -1,9 +1,0 @@
-com.google.earth
--1
-5
-BUTTON, UiSelector[RESOURCE_ID=com.google.earth:id/toolbar_feeling_lucky], Luck
-BUTTON, UiSelector[DESCRIPTION=More options], Options
-BUTTON, UiSelector[TEXT=Share link], Share
-BUTTON, UiSelector[TEXT=Keep Notes], Notes
-BUTTON, UiSelector[TEXT=Save], Save
-finalState.contains(testActions[1].value)

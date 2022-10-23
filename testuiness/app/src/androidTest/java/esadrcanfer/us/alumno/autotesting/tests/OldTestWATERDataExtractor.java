@@ -38,7 +38,7 @@ public class OldTestWATERDataExtractor {
     public static Collection<String> data() {
 
         List<String> tests = Arrays.asList(
-                                            "Test Gmail/Old/TestDeleteEmail.txt");
+                                            "Test Google Slides/Old/SendCopyGoogleSlides.txt");
 
         return tests;
     }

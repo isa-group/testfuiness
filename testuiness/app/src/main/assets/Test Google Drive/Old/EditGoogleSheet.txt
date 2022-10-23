@@ -1,11 +1,11 @@
 com.google.android.apps.docs
 -1
 7
-SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/drives_pager], toElementByText=Trabajo Fin de Grado 2.0
-BUTTON, UiSelector[TEXT=Trabajo Fin de Grado 2.0], Trabajo Fin de Grado 2.0
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/drives_pager], toElementByText=Testing folder
+BUTTON, UiSelector[TEXT=Testing folder], Testing folder
 BUTTON, UiSelector[DESCRIPTION=More actions for Untitled spreadsheet],
-SCROLL_DOWN, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/menu_recycler_view], Elements=10
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/menu_recycler_view], Elements=10
 BUTTON, UiSelector[TEXT=Rename], Rename
-TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text], Prueba ficheros
+TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/edit_text], Prueba spreadsheet
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/positive_button], Rename
-finalState.contains(testActions[1].value)
+finalState.contains("Prueba spreadsheet")
