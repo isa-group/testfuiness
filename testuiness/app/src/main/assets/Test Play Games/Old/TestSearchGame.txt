@@ -1,0 +1,7 @@
+com.google.android.play.games
+-1
+3
+BUTTON, UiSelector[DESCRIPTION=Search],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.play.games:id/open_search_view_edit_text], Call of Duty
+ENTER, UiSelector[enterButton]
+finalState.contains("Call of WW2 Frontline Duty OPS")

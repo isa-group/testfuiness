@@ -4,6 +4,6 @@ com.android.vending
 BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/main_nav_item],
 BUTTON, UiSelector[TEXT=My apps & games],
 BUTTON, UiSelector[TEXT=Installed],
-BUTTON, UiSelector[TEXT=Clock],
-BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/left_button], Uninstall
+BUTTON, UiSelector[TEXT=Google],
+BUTTON, UiSelector[TEXT=Uninstall], Uninstall
 finalState.contains(testActions[1].value)

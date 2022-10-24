@@ -1,8 +1,8 @@
 com.google.android.apps.messaging
 -1
 4
-BUTTON, UiSelector[TEXT=Gonzalo Aguilar Hermoso],
+BUTTON, UiSelector[TEXT=Alejandro Garcia Fernandez],
 BUTTON, UiSelector[DESCRIPTION=More options],
 BUTTON, UiSelector[TEXT=Delete],
 BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
-finalState.contains(testActions[1].value)
+finalState.size() < initialState.size()

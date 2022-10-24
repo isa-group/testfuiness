@@ -1,8 +1,0 @@
-com.android.vending
--1
-4
-BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/main_nav_item],
-BUTTON, UiSelector[TEXT=My apps & games],
-BUTTON, UiSelector[TEXT=Library],
-BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/li_cancel], Remove
-finalState.contains(testActions[1].value)

@@ -1,9 +1,0 @@
-com.google.android.apps.translate
--1
-5
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/spinner1_frame],
-BUTTON, UiSelector[TEXT=Bosnian],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/btn_swap],
-TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/edit_input], En verano hace calor
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/result_selector],
-finalState.contains(testActions[1].value)

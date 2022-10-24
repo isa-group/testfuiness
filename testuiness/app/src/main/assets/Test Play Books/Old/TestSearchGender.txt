@@ -1,6 +1,7 @@
 com.google.android.apps.books
 -1
-4
+5
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/stream], toElementByText=Genres
 BUTTON, UiSelector[TEXT=Genres],
 BUTTON, UiSelector[TEXT=Science],
 BUTTON, UiSelector[RESOURCE_ID=com.android.vending:id/play_card],

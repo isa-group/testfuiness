@@ -37,8 +37,7 @@ public class OldTestWATERDataExtractor {
     @Parameterized.Parameters
     public static Collection<String> data() {
 
-        List<String> tests = Arrays.asList(
-                                            "Test Google Slides/Old/SendCopyGoogleSlides.txt");
+        List<String> tests = Arrays.asList("");
 
         return tests;
     }

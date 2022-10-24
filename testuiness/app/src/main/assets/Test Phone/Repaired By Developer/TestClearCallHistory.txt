@@ -1,0 +1,9 @@
+com.google.android.dialer
+-1
+5
+BUTTON, UiSelector[DESCRIPTION=More options],
+BUTTON, UiSelector[TEXT=Call history],
+BUTTON, UiSelector[DESCRIPTION=More options],
+BUTTON, UiSelector[TEXT=Clear call history],
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], OK
+finalState.contains("Calls you make will show up here")

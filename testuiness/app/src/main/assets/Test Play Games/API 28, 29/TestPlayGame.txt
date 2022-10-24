@@ -1,7 +1,0 @@
-com.google.android.play.games
--1
-3
-BUTTON, UiSelector[TEXT=Library],
-BUTTON, UiSelector[TEXT=Whirlybird],
-BUTTON, UiSelector[TEXT=Play],
-finalState.size() == 0

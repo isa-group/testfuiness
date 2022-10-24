@@ -1,7 +1,0 @@
-com.google.android.apps.translate
--1
-3
-BUTTON, UiSelector[TEXT=Enter text],
-TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.translate:id/text_input_field],Can i go to the toilet please?
-GO_BACK, UiSelector[backButton],
-finalState.contains("¿Puedo ir al baño por favor?")

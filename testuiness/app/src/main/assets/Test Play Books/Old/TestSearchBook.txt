@@ -3,7 +3,7 @@ com.google.android.apps.books
 5
 BUTTON, UiSelector[TEXT=Search Play Books],
 TEXT, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/open_search_view_edit_text], el archivo de las tormentas
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/replay__listitem__body],
+ENTER, UiSelector[RESOURCE_ID=enterButton],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/title],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.books:id/secondary_button],
 finalState.contains(testActions[1].value)
