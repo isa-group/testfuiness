@@ -1,0 +1,18 @@
+com.google.android.deskclock
+-1
+14
+BUTTON, UiSelector[DESCRIPTION=Alarm],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/fab],
+BUTTON, UiSelector[DESCRIPTION=12],
+BUTTON, UiSelector[DESCRIPTION=0],
+BUTTON, UiSelector[TEXT=OK],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/choose_ringtone],
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/ringtone_content], toElementByText=Krypton
+BUTTON, UiSelector[TEXT=Krypton],
+BUTTON, UiSelector[DESCRIPTION=Navigate up],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/edit_label],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/label_input_field], Prueba Clock
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
+CHECKBOX, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/repeat_onoff],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.deskclock:id/arrow],
+finalState.contains("12:00 AM")

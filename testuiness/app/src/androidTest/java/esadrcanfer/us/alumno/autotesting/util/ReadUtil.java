@@ -187,7 +187,7 @@ public class ReadUtil {
         String value = "";
 
         if(splitAction.length>1) {
-            selector = splitAction[1].trim();
+            selector = "UiSelector["+action.split("\\[")[1].split("]")[0].trim()+"]";
             value = splitAction.length == 2 ? "" : splitAction[2].trim();
         }
 

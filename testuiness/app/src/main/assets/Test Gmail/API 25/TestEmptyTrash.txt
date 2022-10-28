@@ -1,9 +1,0 @@
-com.google.android.gm
--1
-5
-BUTTON, UiSelector[DESCRIPTION=Open navigation drawer],
-SCROLL_DOWN, UiSelector[RESOURCE_ID=android:id/list], toElementByText=Trash
-BUTTON, UiSelector[TEXT=Trash], Trash
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.gm:id/empty_trash_spam_action], Empty trash now
-BUTTON, UiSelector[RESOURCE_ID=android:id/button1], Empty
-finalState.contains(testActions[1].value)

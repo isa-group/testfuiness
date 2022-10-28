@@ -12,18 +12,15 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
@@ -52,7 +49,7 @@ public class WATERReparation {
     public List<TestCase> repair(UiDevice device, TestCase buggyTestCase) throws UiObjectNotFoundException {
 
         String buggyTestCaseFileName = checkpoints.getFileName(buggyTestCheckpointId);
-        this.oldVersionData = ObjectsMapParser.parse(checkpoints.getExperimentPath()+buggyTestCaseFileName.split("\\.")[0]+"-old.txt");
+        this.oldVersionData = ObjectsMapParser.parse(checkpoints.getExperimentPath()+"old_versions_data/"+buggyTestCaseFileName.split("\\.")[0]+"-old.txt");
 
         buggyTestCase.executeBefore();
         this.newVersionData = getTestWATERData(device, buggyTestCase, null);
@@ -62,9 +59,6 @@ public class WATERReparation {
         int breakingPoint = Integer.parseInt(newVersionData.get(newVersionData.size()-1).get("exception").get("errorActionIndex"));
 
         repairLocators(device, buggyTestCase, breakingPoint, oldVersionData.get(breakingPoint), newVersionData.get(breakingPoint));
-
-        //TODO Preguntar sobre necesidad de funcionalidad para reparar tests en caso de necesitar añadir acciones
-        //TODO comentar la debilidad de la técnica en test como el reloj (por lo de la flecha al principio)
 
         if(repairs.size() == 0){
             TestCase lastReparationTry = removeActionFromTestCase(buggyTestCase, breakingPoint);
@@ -101,6 +95,7 @@ public class WATERReparation {
 
                 a=testActions.get(index);
                 a.perform();
+                Thread.sleep(1000);
 
             }
 
@@ -191,42 +186,19 @@ public class WATERReparation {
     private void repairLocators(UiDevice device, TestCase buggyTestCase, int breakingPoint, Map<String, Map<String, String>> oldVersionUiObjects, Map<String, Map<String, String>> newVersionUiObjects){
 
         List<String> matches = new ArrayList<>();
-        TestCase auxTestCase = null;
-        TestCase repairSuggestion = null;
+        TestCase auxTestCase;
+        TestCase repairSuggestion;
 
         Map<String, String> node0 = getNodeByLocator(oldVersionUiObjects, buggyTestCase.getTestActions().get(breakingPoint));
 
-        for(String prop: node0.keySet()){
-            if(REPAIR_LOCATOR_NEEDED_PROPS.contains(prop) && !node0.get(prop).isEmpty() && node0.get(prop) != null){
-                matches.addAll(getNodesByProperty(prop, node0.get(prop), newVersionUiObjects));
-            }
-        }
-
-        for(String node: matches){
-            auxTestCase = replaceLocator(device, buggyTestCase, breakingPoint, node);
-
-            repairSuggestion = checkRepair(device, auxTestCase, breakingPoint);
-
-            if(repairSuggestion != null){
-                repairs.add(repairSuggestion);
-            }//TODO Add an else clause if interested in counting the precision of the algorithm (null retrievals in checkRepair)
-        }
-
-        if(repairs.size() == 0){
-            List<String> similarNodes = new ArrayList<>();
-            Double similarityIndex;
-
-            for(String nodeLocator: newVersionUiObjects.keySet()){
-
-                similarityIndex = getSimilarityIndex(node0, newVersionUiObjects.get(nodeLocator));
-
-                if(similarityIndex>0.5){
-                    similarNodes.add(nodeLocator);
+        if(node0 != null){
+            for(String prop: node0.keySet()){
+                if(REPAIR_LOCATOR_NEEDED_PROPS.contains(prop) && !Objects.requireNonNull(node0.get(prop)).isEmpty() && node0.get(prop) != null){
+                    matches.addAll(getNodesByProperty(prop, node0.get(prop), newVersionUiObjects));
                 }
-
             }
 
-            for(String node: similarNodes){
+            for(String node: matches){
                 auxTestCase = replaceLocator(device, buggyTestCase, breakingPoint, node);
 
                 repairSuggestion = checkRepair(device, auxTestCase, breakingPoint);
@@ -234,6 +206,31 @@ public class WATERReparation {
                 if(repairSuggestion != null){
                     repairs.add(repairSuggestion);
                 }//TODO Add an else clause if interested in counting the precision of the algorithm (null retrievals in checkRepair)
+            }
+
+            if(repairs.size() == 0){
+                List<String> similarNodes = new ArrayList<>();
+                Double similarityIndex;
+
+                for(String nodeLocator: newVersionUiObjects.keySet()){
+
+                    similarityIndex = getSimilarityIndex(node0, Objects.requireNonNull(newVersionUiObjects.get(nodeLocator)));
+
+                    if(similarityIndex>0.5){
+                        similarNodes.add(nodeLocator);
+                    }
+
+                }
+
+                for(String node: similarNodes){
+                    auxTestCase = replaceLocator(device, buggyTestCase, breakingPoint, node);
+
+                    repairSuggestion = checkRepair(device, auxTestCase, breakingPoint);
+
+                    if(repairSuggestion != null){
+                        repairs.add(repairSuggestion);
+                    }//TODO Add an else clause if interested in counting the precision of the algorithm (null retrievals in checkRepair)
+                }
             }
         }
 
@@ -243,7 +240,7 @@ public class WATERReparation {
 
         double alpha = 0.9;
         double similarityIndex = 0.;
-        int rho1 = 0;
+        int rho1;
         double rho2 = 0.;
         String xpathNode0 = node0Properties.get("xpath");
         String xpathNewNode = newNodeProperties.get("xpath");
@@ -253,13 +250,13 @@ public class WATERReparation {
         String pseudoXPathNode0 = simplifiedPaths.first;
         String pseudoXPathNewNode = simplifiedPaths.second;
 
-        if(node0Properties.get("class").equals(newNodeProperties.get("class"))){
+        if(Objects.equals(node0Properties.get("class"), newNodeProperties.get("class"))){
 
             rho1 = 1-(levenshteinDistance(pseudoXPathNode0, pseudoXPathNewNode)/Math.max(pseudoXPathNode0.length(), pseudoXPathNewNode.length()));
 
             for(String prop: SIMILARITY_INDEX_NEEDED_PROPS.split(",")){
 
-                if(node0Properties.get(prop.trim()).equals(newNodeProperties.get(prop.trim()))){
+                if(Objects.equals(node0Properties.get(prop.trim()), newNodeProperties.get(prop.trim()))){
                     rho2+=1;
                 }
 
@@ -276,25 +273,56 @@ public class WATERReparation {
 
     private static Pair<String, String> simplifyPaths(String path1, String path2){
 
-        String[] path1Split = path1.substring(2).split("/");
-        String[] path2Split = path2.substring(2).split("/");
+        String[] path1Split = null;
+        String[] path2Split = null;
 
-        String pseudoXPath1 = "//";
-        String pseudoXPath2 = "//";
-
-        for (int i = 0; i<path1Split.length-1; i++){
-
-            if(path1Split[i+1]!=path2Split[i+1]){
-                for(int j = i; j<Math.max(path1Split.length, path2Split.length); j++){
-                    pseudoXPath1 += path1Split[j]+"/";
-                    pseudoXPath2 += path2Split[j]+"/";
-                }
-                break;
-            }
-
+        if(path1 != null){
+            path1Split = path1.substring(2).split("/");
+        }
+        if(path2 != null){
+            path2Split = path2.substring(2).split("/");
         }
 
-        return new Pair<>(pseudoXPath1, pseudoXPath2);
+        StringBuilder pseudoXPath1 = new StringBuilder();
+        StringBuilder pseudoXPath2 = new StringBuilder();
+
+        pseudoXPath1.append("//");
+        pseudoXPath2.append("//");
+
+        int indexBuffer;
+
+        if(path1Split == null && path2Split != null){
+            for(int i = 0; i<path2Split.length-1; i++){
+                pseudoXPath2.append(path2Split[i]).append("/");
+            }
+        }else if(path1Split != null && path2Split == null){
+            for(int i = 0; i<path1Split.length-1; i++){
+                pseudoXPath1.append(path1Split[i]).append("/");
+            }
+        }else if(path1Split != null && path2Split != null){
+            for (indexBuffer = 0; indexBuffer<Math.min(path1Split.length-1, path2Split.length-1); indexBuffer++){
+
+                if(!Objects.equals(path1Split[indexBuffer + 1], path2Split[indexBuffer + 1])){
+                    for(int j = indexBuffer; j<Math.min(path1Split.length, path2Split.length); j++){
+                        pseudoXPath1.append(path1Split[j]).append("/");
+                        pseudoXPath2.append(path2Split[j]).append("/");
+                    }
+                    break;
+                }
+            }
+
+            if(path1Split.length == indexBuffer+1){
+                for(int j = indexBuffer; j<path2Split.length;j++){
+                    pseudoXPath2.append(path2Split[j]).append("/");
+                }
+            }else if(path2Split.length == indexBuffer+1){
+                for(int j = indexBuffer; j<path1Split.length;j++){
+                    pseudoXPath1.append(path1Split[j]).append("/");
+                }
+            }
+        }
+
+        return new Pair<>(pseudoXPath1.toString(), pseudoXPath2.toString());
 
     }
 
@@ -350,7 +378,7 @@ public class WATERReparation {
             Map<String, String> objectProps = newVersionUiObjects.get(key);
 
             if(objectProps.get(prop)!=null){
-                if(objectProps.get(prop).equals(propValue)) {
+                if(Objects.equals(objectProps.get(prop), propValue)) {
                     result.add(key);
                 }
             }
@@ -366,7 +394,7 @@ public class WATERReparation {
 
         List<Action> actions = result.getTestActions();
 
-        UiObject newTarget = device.findObject(resolveUiObjectSelector(match));;
+        UiObject newTarget = device.findObject(resolveUiObjectSelector(match));
 
         actions.get(breakingPoint).setTarget(newTarget);
 
@@ -410,12 +438,12 @@ public class WATERReparation {
             List<String> finalState = labelsDetection();
             repairedTestCaseSuggestion.setInitialState(initialState);
             repairedTestCaseSuggestion.setFinalState(finalState);
-            Boolean predicatePassed = repairedTestCaseSuggestion.evaluate();
+            boolean predicatePassed = repairedTestCaseSuggestion.evaluate();
             repairedTestCaseSuggestion.executeAfter();
 
             if(suggestionData.get(suggestionData.size()-1).containsKey("exception")){
 
-                if(Integer.parseInt(suggestionData.get(suggestionData.size()-1).get("exception").get("errorActionIndex")) == breakingPoint){
+                if(Integer.parseInt(Objects.requireNonNull(suggestionData.get(suggestionData.size() - 1).get("exception").get("errorActionIndex"))) == breakingPoint){
                     Log.i("ISA", "The suggestion does not work");
                     return null;
                 }else{
@@ -426,7 +454,11 @@ public class WATERReparation {
 
                     List<TestCase> newSuggestions = newReparation.repair(device, repairedTestCaseSuggestion);
 
-                    return newSuggestions.get(ThreadLocalRandom.current().nextInt(0, newSuggestions.size()));
+                    if(newSuggestions.size() != 0){
+                        return newSuggestions.get(ThreadLocalRandom.current().nextInt(0, newSuggestions.size()-1));
+                    }else{
+                        return null;
+                    }
                 }
             }else if(!predicatePassed){
 

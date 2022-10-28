@@ -1,0 +1,20 @@
+com.google.android.keep
+-1
+16
+BUTTON, UiSelector[TEXT=modified title],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/menu_reminder], 
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/date_spinner],
+BUTTON, UiSelector[TEXT=Tomorrow], Tomorrow
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/time_spinner],
+BUTTON, UiSelector[TEXT=Pick a time…], Pick a time…
+BUTTON, UiSelector[DESCRIPTION=12], 12
+BUTTON, UiSelector[DESCRIPTION=30], 30
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/recurrence_spinner],
+BUTTON, UiSelector[TEXT=Weekly], Weekly
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/radio_location], Place
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/location_reminder_edit_text], Edit location
+TEXT, UiSelector[RESOURCE_ID=com.google.android.keep:id/places_autocomplete_search_bar], Avenida Reina Mercedes
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/places_autocomplete_prediction_secondary_text], Seville, Spain
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.keep:id/save], Save
+finalState.contains("Avenida Reina Mercedes")

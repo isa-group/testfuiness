@@ -1,0 +1,8 @@
+com.google.earth
+-1
+4
+BUTTON, UiSelector[DESCRIPTION=I'm Feeling Lucky], Luck
+BUTTON, UiSelector[DESCRIPTION=More options], Options
+BUTTON, UiSelector[TEXT=Share link], Share
+BUTTON, UiSelector[TEXT=Copy to clipboard], Copy to clipboard
+finalState.size() > initialState.size()

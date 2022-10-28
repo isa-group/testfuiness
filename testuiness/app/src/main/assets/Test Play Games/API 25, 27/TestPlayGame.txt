@@ -1,7 +1,0 @@
-com.google.android.play.games
--1
-3
-BUTTON, UiSelector[DESCRIPTION=Library],
-BUTTON, UiSelector[TEXT=PAC-MAN],
-BUTTON, UiSelector[DESCRIPTION=Play],
-finalState.contains(testActions[1].value)

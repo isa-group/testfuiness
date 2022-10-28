@@ -1,0 +1,8 @@
+com.google.earth
+-1
+4
+BUTTON, UiSelector[DESCRIPTION=Voyager],
+BUTTON, UiSelector[DESCRIPTION=Nature],
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.earth:id/earth_feed_grid], toElementByText=Timelapse in Google Earth
+BUTTON, UiSelector[TEXT=Timelapse in Google Earth],
+finalState.contains("Timelapse in Google Earth")

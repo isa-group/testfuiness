@@ -32,23 +32,18 @@ import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 @SdkSuppress(minSdkVersion = 18)
 public class OldTestWATERDataExtractor {
 
-    private String id;
     private String path;
 
     @Parameterized.Parameters
-    public static Collection<Pair<String, String>> data() {
+    public static Collection<String> data() {
 
-        List<Pair<String, String>> tests = Arrays.asList(new Pair("1", "Test Clock/API 25/TestAlarm.txt"));
-                                                        /*new Pair("2", "Test Clock/API 25/TestOtherAlarm.txt"),
-                                                        new Pair("3", "Test Clock/API 25/TestStopWatch.txt"),
-                                                        new Pair("4", "Test Clock/API 25/TestTimer.txt"));*/
+        List<String> tests = Arrays.asList("");
 
         return tests;
     }
 
-    public OldTestWATERDataExtractor(Pair<String, String> testcase) {
-        this.id = testcase.first;
-        this.path = testcase.second;
+    public OldTestWATERDataExtractor(String testPath) {
+        this.path = testPath;
     }
 
     @Test

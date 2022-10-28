@@ -1,0 +1,11 @@
+com.android.chrome
+-1
+7
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/tab_switcher_button]
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/new_tab_button]
+BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/search_box_text], Search or type web address
+TEXT, UiSelector[RESOURCE_ID=com.android.chrome:id/url_bar], SCRUM
+BUTTON, UiSelector[TEXT=SCRUM],
+BUTTON, UiSelector[TEXT=Images],
+BUTTON, UiSelector[TEXT=Scrum.org What is Scrum? | Scrum.org],
+finalState.contains("What is Scrum? | Scrum.org")

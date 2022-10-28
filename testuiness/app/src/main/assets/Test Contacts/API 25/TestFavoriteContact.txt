@@ -1,6 +1,0 @@
-com.android.contacts
--1
-2
-BUTTON, UiSelector[TEXT=Gonzalo Aguilar Hermoso],
-BUTTON, UiSelector[RESOURCE_ID=com.android.contacts:id/menu_star],
-finalState.contains(testActions[1].value)

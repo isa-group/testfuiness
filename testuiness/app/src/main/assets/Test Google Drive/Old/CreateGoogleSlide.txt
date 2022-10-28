@@ -1,0 +1,9 @@
+com.google.android.apps.docs
+-1
+5
+SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/drives_pager], toElementByText=Testing folder
+BUTTON, UiSelector[TEXT=Testing folder], Testing folder
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.apps.docs:id/branded_fab], 
+BUTTON, UiSelector[TEXT=Google Slides], Google Slides
+BUTTON, UiSelector[DESCRIPTION=Navigate up], 
+finalState.contains("Untitled presentation")

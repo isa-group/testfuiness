@@ -1,0 +1,14 @@
+com.google.android.calendar
+-1
+11
+BUTTON, UiSelector[DESCRIPTION=Create new event and more],
+BUTTON, UiSelector[DESCRIPTION=Create new event and more],
+TEXT, UiSelector[TEXT=Add title], Prueba ficheros test
+BUTTON, UiSelector[TEXT=OFF],
+BUTTON, UiSelector[DESCRIPTION=Start date:],
+BUTTON, UiSelector[TEXT=30],
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], OK
+BUTTON, UiSelector[TEXT=Add location],
+TEXT, UiSelector[RESOURCE_ID=com.google.android.calendar:id/search_text], Avenida Reina Mercedes
+BUTTON, UiSelector[TEXT=Spain],
+BUTTON, UiSelector[TEXT=Save],
