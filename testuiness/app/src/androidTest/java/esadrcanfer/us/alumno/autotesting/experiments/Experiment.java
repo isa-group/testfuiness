@@ -39,7 +39,11 @@ public abstract class Experiment {
     private String algorithm;
     private long timeout;
 
-    public Experiment() {}
+    public Experiment(String id, String path, String algorithm) {
+        this.id = id;
+        this.path = path;
+        this.algorithm = algorithm;
+    }
 
     protected static Collection<String> createTestData(List<String> tests, int numberOfExec, List<String> algorithms){
 
@@ -55,11 +59,8 @@ public abstract class Experiment {
         return checkpoints.getTestSuite();
     }
 
-    protected void runTest(String id, String path, String algorithm, long timeout) throws UiObjectNotFoundException {
+    protected void runTest(long timeout) throws UiObjectNotFoundException {
 
-        this.id = id;
-        this.path = path;
-        this.algorithm = algorithm;
         this.timeout = timeout;
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());

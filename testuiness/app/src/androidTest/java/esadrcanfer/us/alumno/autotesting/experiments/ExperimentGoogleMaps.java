@@ -36,19 +36,13 @@ public class ExperimentGoogleMaps extends Experiment {
 
     public ExperimentGoogleMaps(String testcase) {
 
-        super();
-
-        String[] testCaseSplit = testcase.split(";");
-
-        this.id = testCaseSplit[0];
-        this.path = testCaseSplit[1];
-        this.algorithm = testCaseSplit[2];
+        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2]);
     }
 
     @Test
     public void runTest() throws UiObjectNotFoundException {
         try {
-            runTest(id, path, algorithm, timeout);
+            runTest(timeout);
         }catch(UiObjectNotFoundException e){
             throw new UiObjectNotFoundException(e.getMessage());
         }

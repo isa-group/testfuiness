@@ -49,7 +49,7 @@ public class WATERReparation {
     public List<TestCase> repair(UiDevice device, TestCase buggyTestCase) throws UiObjectNotFoundException {
 
         String buggyTestCaseFileName = checkpoints.getFileName(buggyTestCheckpointId);
-        this.oldVersionData = ObjectsMapParser.parse(checkpoints.getExperimentPath()+"old_versions_data/"+buggyTestCaseFileName.split("\\.")[0]+"-old.txt");
+        this.oldVersionData = ObjectsMapParser.parse("**/"+buggyTestCaseFileName.split("\\.")[0]+"-old.txt");
 
         buggyTestCase.executeBefore();
         this.newVersionData = getTestWATERData(device, buggyTestCase, null);
@@ -95,7 +95,7 @@ public class WATERReparation {
 
                 a=testActions.get(index);
                 a.perform();
-                Thread.sleep(1000);
+                Thread.sleep(250);
 
             }
 
