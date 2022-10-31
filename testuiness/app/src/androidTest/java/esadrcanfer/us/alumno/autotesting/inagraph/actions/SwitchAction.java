@@ -8,8 +8,9 @@ public class SwitchAction extends Action{
         super(aSwitch, ActionType.SWITCH);
     }
 
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         value = target.getText();
         this.target.click();
+        Thread.sleep(timeout);
     }
 }

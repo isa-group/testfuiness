@@ -10,9 +10,9 @@ public class CountDownAction extends Action {
     }
 
     @Override
-    public void perform() throws UiObjectNotFoundException {
-        value = target.getText();
-        this.target.waitUntilGone(20000);
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
+        this.target.waitUntilGone(Integer.parseInt(value));
+        Thread.sleep(timeout);
     }
 
 }

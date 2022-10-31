@@ -21,7 +21,7 @@ public class ScreenshotAction extends Action{
     }
 
     @Override
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         List<String> currentState = labelsDetection();
         AssertionChecker.setScreenshotLabels(currentState);
         File dir = new File("storage/emulated/0/Download/Screenshots");
@@ -31,6 +31,7 @@ public class ScreenshotAction extends Action{
         WriterUtil writerUtil = new WriterUtil("Screenshot", "storage/emulated/0/Download/Screenshots");
         File screenShot = writerUtil.getLogFile();
         device.takeScreenshot(screenShot);
+        Thread.sleep(timeout);
     }
 
     @Override

@@ -12,8 +12,9 @@ public class GoBackAction extends Action {
     }
 
     @Override
-    public void perform() throws UiObjectNotFoundException {
-            device.pressBack();
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
+        device.pressBack();
+        Thread.sleep(timeout);
     }
 
     @Override

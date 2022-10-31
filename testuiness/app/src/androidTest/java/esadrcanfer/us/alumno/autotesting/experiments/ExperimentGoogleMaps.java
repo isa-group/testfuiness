@@ -16,17 +16,13 @@ import java.util.List;
 @SdkSuppress(minSdkVersion = 18)
 public class ExperimentGoogleMaps extends Experiment {
 
-    private static final List<String> tests = Arrays.asList("Test Google Maps/Old/TestJourneyGoogleMaps.txt",
-                                                            "Test Google Maps/Old/TestSearchGoogleMaps.txt",
-                                                            "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
+    private static final List<String> tests = Arrays.asList("Test Google Maps/Repaired By Developer/TestJourneyGoogleMaps.txt",
+                                                            "Test Google Maps/Repaired By Developer/TestSearchGoogleMaps.txt",
+                                                            "Test Google Maps/Repaired By Developer/TestShareLocationGoogleMaps.txt");
     private static final int numberOfExec = 4;
     private static final List<String> algorithms = Arrays.asList("Random Algorithm",
                                                                 "WATER Algorithm");
     private static final int timeout = 60;
-
-    private String id;
-    private String path;
-    private String algorithm;
 
     @Parameterized.Parameters
     public static Collection<String> getData(){

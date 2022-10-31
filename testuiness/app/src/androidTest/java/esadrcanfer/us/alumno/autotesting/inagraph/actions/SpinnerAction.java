@@ -9,8 +9,9 @@ public class SpinnerAction extends Action {
         super(spinner, ActionType.SPINNER);
     }
 
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         value = target.getText();
         this.target.click();
+        Thread.sleep(timeout);
     }
 }

@@ -15,7 +15,7 @@ public class ScrollToAction extends Action{
     }
 
     @Override
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
 
         UiScrollable scrollable =  new UiScrollable(target.getSelector());
 
@@ -29,6 +29,8 @@ public class ScrollToAction extends Action{
             scrollable.scrollIntoView(new UiSelector().description(value.replace("toElementByDescription=","")));
         } else
             scrollable.scrollToEnd(Integer.MAX_VALUE);
+
+        Thread.sleep(timeout);
     }
 }
 

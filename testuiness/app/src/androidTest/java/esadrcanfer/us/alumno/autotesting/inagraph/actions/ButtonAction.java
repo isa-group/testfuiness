@@ -9,8 +9,9 @@ public class ButtonAction extends Action {
         super(button, ActionType.BUTTON);
     }
 
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         value = target.getText();
         this.target.click();
+        Thread.sleep(timeout);
     }
 }

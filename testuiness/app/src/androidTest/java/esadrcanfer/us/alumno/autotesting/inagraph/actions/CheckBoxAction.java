@@ -10,8 +10,9 @@ public class CheckBoxAction extends Action {
         }
 
         @Override
-        public void perform() throws UiObjectNotFoundException {
+        public void perform() throws UiObjectNotFoundException, InterruptedException {
             value = target.getText();
             this.target.click();
+            Thread.sleep(timeout);
     }
 }

@@ -9,8 +9,9 @@ public class CheckedTextAction extends Action {
         super(checkedText, ActionType.CHECKED_TEXT);
     }
 
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         value = target.getText();
         this.target.click();
+        Thread.sleep(timeout);
     }
 }

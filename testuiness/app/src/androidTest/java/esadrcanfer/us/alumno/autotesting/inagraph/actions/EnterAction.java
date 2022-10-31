@@ -13,8 +13,9 @@ public class EnterAction extends Action{
     }
 
     @Override
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         device.pressEnter();
+        Thread.sleep(timeout);
     }
 
     @Override

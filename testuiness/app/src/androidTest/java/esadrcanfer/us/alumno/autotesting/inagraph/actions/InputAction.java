@@ -11,8 +11,9 @@ public abstract class InputAction extends Action {
         this.inputGenerator=generator;
     }
 
-    public void perform() throws UiObjectNotFoundException {
+    public void perform() throws UiObjectNotFoundException, InterruptedException {
         value = inputGenerator.generateInput(target);
+        Thread.sleep(timeout);
     }
 
 }
