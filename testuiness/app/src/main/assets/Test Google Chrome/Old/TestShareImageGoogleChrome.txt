@@ -7,5 +7,5 @@ BUTTON, UiSelector[RESOURCE_ID=com.android.chrome:id/search_box_text], Search or
 TEXT, UiSelector[RESOURCE_ID=com.android.chrome:id/url_bar], SCRUM
 BUTTON, UiSelector[TEXT=SCRUM],
 BUTTON, UiSelector[TEXT=Images],
-BUTTON, UiSelector[TEXT=Scrum.org What is Scrum? | Scrum.org],
-finalState.contains("What is Scrum? | Scrum.org")
+BUTTON, UiSelector[TEXT=Scrum.org The Scrum Framework Poster | Scrum.org],, timeout=3000
+finalState.contains("The Scrum Framework Poster")

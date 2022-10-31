@@ -1,5 +1,7 @@
 package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
+import android.util.Log;
+
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
@@ -12,9 +14,13 @@ public class GoBackAction extends Action {
     }
 
     @Override
-    public void perform() throws UiObjectNotFoundException, InterruptedException {
+    public void perform() throws UiObjectNotFoundException {
         device.pressBack();
-        Thread.sleep(timeout);
+        try{
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            Log.d("ISA", "Interrumpted exception: " + e.getMessage());
+        }
     }
 
     @Override

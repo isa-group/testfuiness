@@ -1,5 +1,7 @@
 package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
+import android.util.Log;
+
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
@@ -11,9 +13,13 @@ public abstract class InputAction extends Action {
         this.inputGenerator=generator;
     }
 
-    public void perform() throws UiObjectNotFoundException, InterruptedException {
+    public void perform() throws UiObjectNotFoundException {
         value = inputGenerator.generateInput(target);
-        Thread.sleep(timeout);
+        try{
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            Log.d("ISA", "Interrumpted exception: " + e.getMessage());
+        }
     }
 
 }

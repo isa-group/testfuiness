@@ -17,7 +17,7 @@ public abstract class  Action {
         timeout = 0;
     }
 
-    public abstract void perform() throws UiObjectNotFoundException, InterruptedException;
+    public abstract void perform() throws UiObjectNotFoundException;
 
     @Override
     public boolean equals(Object o) {

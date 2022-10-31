@@ -1,0 +1,17 @@
+com.google.android.calendar
+-1
+14
+BUTTON, UiSelector[DESCRIPTION=Create new event and more],
+BUTTON, UiSelector[TEXT=Reminder],
+TEXT, UiSelector[TEXT=Remind me to…], Prueba ficheros test
+CHECKBOX, UiSelector[TEXT=ON],
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/first_line_text],
+BUTTON, UiSelector[TEXT=30],
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], OK
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/right_action],
+BUTTON, UiSelector[DESCRIPTION=12],
+BUTTON, UiSelector[DESCRIPTION=30],
+BUTTON, UiSelector[TEXT=AM],
+BUTTON, UiSelector[RESOURCE_ID=android:id/button1], OK
+BUTTON, UiSelector[TEXT=Save],
+CUSTOM ASSERTION, UiSelector[onClass=CreateReminderCustomAssertion],
