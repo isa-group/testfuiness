@@ -108,6 +108,12 @@ public abstract class Experiment {
 
             Assert.assertTrue(eval);
 
+            String[] pathSplitted = path.split("/");
+            String name = pathSplitted[pathSplitted.length-1].split("\\.")[0];
+
+            WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
+            dataMetrics.write(name+";"+algorithm+";No Reparation Needed");
+
         } catch (BrokenTestCaseException ex) {
 
             BaseReparationAlgorithm isaReparationAlgorithm = null;
@@ -166,6 +172,8 @@ public abstract class Experiment {
 
     }
 
+    /* -------------------------------- PRIVATE METHODS SECTION -------------------------------- */
+
     private void executeIsaAlgorithm(UiDevice device, TestCase testCase, long breakingPoint, BaseReparationAlgorithm reparationAlgorithm) throws UiObjectNotFoundException{
 
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
@@ -181,7 +189,7 @@ public abstract class Experiment {
 
         if(testCase == null){
             WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
-            dataMetrics.write(name+";"+algorithm+";ReparationFailed");
+            dataMetrics.write(name+";"+algorithm+";Reparation Failed");
         }else{
             WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime, id, algorithm);
         }
@@ -202,7 +210,7 @@ public abstract class Experiment {
 
         if(repairs.size() == 0){
             WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
-            dataMetrics.write(name+";"+algorithm+";ReparationFailed");
+            dataMetrics.write(name+";"+algorithm+";Reparation Failed");
         }else{
             WriterUtil.saveInDeviceWATER(repairs, (long) -1, name, reparationTime, id, algorithm);
         }
@@ -215,7 +223,7 @@ public abstract class Experiment {
         String name = pathSplitted[pathSplitted.length-1];
 
         WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
-        dataMetrics.write(name+";"+algorithm+";ReparationFailed");
+        dataMetrics.write(name+";"+algorithm+";Reparation Failed");
     }
 
 }
