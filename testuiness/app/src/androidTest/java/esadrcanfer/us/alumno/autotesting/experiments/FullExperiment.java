@@ -97,16 +97,17 @@ public class FullExperiment extends Experiment{
     private static final int numberOfExec = 4;
     private static final List<String> algorithms = Arrays.asList("WATER Algorithm", "Random Algorithm");
     private static final int timeout = 3600;
+    private static final String experimentPath = "Experiments/FullExperiment";
 
     @Parameterized.Parameters
     public static Collection<String> getData(){
 
-        return createTestData(tests, numberOfExec, algorithms);
+        return createTestData(tests, numberOfExec, algorithms, experimentPath);
     }
 
     public FullExperiment(String testcase) {
 
-        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2]);
+        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2], experimentPath);
 
     }
 

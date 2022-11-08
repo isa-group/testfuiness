@@ -23,16 +23,17 @@ public class ExperimentGoogleMaps extends Experiment {
     private static final List<String> algorithms = Arrays.asList("Random Algorithm",
                                                                 "WATER Algorithm");
     private static final int timeout = 60;
+    private static final String experimentPath = "Experiments/ExperimentGoogleMaps";
 
     @Parameterized.Parameters
     public static Collection<String> getData(){
 
-        return createTestData(tests, numberOfExec, algorithms);
+        return createTestData(tests, numberOfExec, algorithms, experimentPath);
     }
 
     public ExperimentGoogleMaps(String testcase) {
 
-        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2]);
+        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2], experimentPath);
     }
 
     @Test
