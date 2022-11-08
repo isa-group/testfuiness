@@ -2,6 +2,8 @@ package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
 import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
+import android.util.Log;
+
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
@@ -31,6 +33,11 @@ public class ScreenshotAction extends Action{
         WriterUtil writerUtil = new WriterUtil("Screenshot", "storage/emulated/0/Download/Screenshots");
         File screenShot = writerUtil.getLogFile();
         device.takeScreenshot(screenShot);
+        try{
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            Log.d("ISA", "Interrumpted exception: " + e.getMessage());
+        }
     }
 
     @Override

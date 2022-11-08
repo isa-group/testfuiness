@@ -185,10 +185,12 @@ public class ReadUtil {
         String selectorType = "";
         String selectorValue = "";
         String value = "";
+        Integer timeout = 0; // In ms
 
         if(splitAction.length>1) {
             selector = "UiSelector["+action.split("\\[")[1].split("]")[0].trim()+"]";
             value = splitAction.length == 2 ? "" : splitAction[2].trim();
+            timeout = action.contains("timeout") ? new Integer(action.split("timeout=")[1].trim()) : 0;
         }
 
         if(!(selector.equals("UiSelector[backButton]") || selector.equals("UiSelector[enterButton]")
@@ -202,7 +204,6 @@ public class ReadUtil {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         UiObject object = objectSelector(device, type, selectorType, selectorValue);
         Action generatedAction = parseAction(type, device, object, seed, value, generatorType, generatorParameters);
-
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);
 
@@ -210,6 +211,12 @@ public class ReadUtil {
             generatedAction.setValue(value.trim());
         }catch(NullPointerException e){
             Log.e("ISA", "Variable 'value' is null!");
+        }
+
+        try{
+            generatedAction.setTimeout(timeout);
+        }catch(NullPointerException e){
+            Log.e("ISA", "'timeout' is null!");
         }
 
         return generatedAction;

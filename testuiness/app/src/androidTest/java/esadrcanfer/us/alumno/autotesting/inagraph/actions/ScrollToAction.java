@@ -2,6 +2,8 @@ package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
+import android.util.Log;
+
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
@@ -29,6 +31,12 @@ public class ScrollToAction extends Action{
             scrollable.scrollIntoView(new UiSelector().description(value.replace("toElementByDescription=","")));
         } else
             scrollable.scrollToEnd(Integer.MAX_VALUE);
+
+        try{
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            Log.d("ISA", "Interrumpted exception: " + e.getMessage());
+        }
     }
 }
 

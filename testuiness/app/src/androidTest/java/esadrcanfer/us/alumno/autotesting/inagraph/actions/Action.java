@@ -8,11 +8,13 @@ public abstract class  Action {
     protected UiObject target;
     protected ActionType actionType;
     protected String value;
+    protected Integer timeout;
 
     public Action(UiObject target, ActionType actionType){
         this.target=target;
         this.actionType = actionType;
         value = null;
+        timeout = 0;
     }
 
     public abstract void perform() throws UiObjectNotFoundException;
@@ -40,11 +42,17 @@ public abstract class  Action {
     }
 
 
-    public UiObject getTarget() {
-        return target;
-    }
+    public UiObject getTarget() {return target;}
 
     public void setTarget(UiObject target){ this.target = target; }
+
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Integer timeout) {
+        this.timeout =  timeout;
+    }
 
     public String toString(){
         return actionType+", "+ target.getSelector().toString()+", "+ value;

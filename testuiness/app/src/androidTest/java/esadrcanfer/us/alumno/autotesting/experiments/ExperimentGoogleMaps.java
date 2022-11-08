@@ -20,23 +20,21 @@ public class ExperimentGoogleMaps extends Experiment {
                                                             "Test Google Maps/Old/TestSearchGoogleMaps.txt",
                                                             "Test Google Maps/Old/TestShareLocationGoogleMaps.txt");
     private static final int numberOfExec = 4;
-    private static final List<String> algorithms = Arrays.asList("Random Algorithm",
+    private static final List<String> algorithms = Arrays.asList("GRASP Algorithm",
+                                                                "Random Algorithm",
                                                                 "WATER Algorithm");
-    private static final int timeout = 60;
-
-    private String id;
-    private String path;
-    private String algorithm;
+    private static final int timeout = 3600;
+    private static final String experimentPath = "Experiments/ExperimentGoogleMaps";
 
     @Parameterized.Parameters
     public static Collection<String> getData(){
 
-        return createTestData(tests, numberOfExec, algorithms);
+        return createTestData(tests, numberOfExec, algorithms, experimentPath);
     }
 
     public ExperimentGoogleMaps(String testcase) {
 
-        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2]);
+        super(testcase.split(";")[0], testcase.split(";")[1], testcase.split(";")[2], experimentPath);
     }
 
     @Test

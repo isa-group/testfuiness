@@ -1,5 +1,7 @@
 package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
+import android.util.Log;
+
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
@@ -15,6 +17,11 @@ public class EnterAction extends Action{
     @Override
     public void perform() throws UiObjectNotFoundException {
         device.pressEnter();
+        try{
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            Log.d("ISA", "Interrumpted exception: " + e.getMessage());
+        }
     }
 
     @Override
