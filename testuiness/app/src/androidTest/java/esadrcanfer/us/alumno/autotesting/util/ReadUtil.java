@@ -190,7 +190,7 @@ public class ReadUtil {
         if(splitAction.length>1) {
             selector = "UiSelector["+action.split("\\[")[1].split("]")[0].trim()+"]";
             value = splitAction.length == 2 ? "" : splitAction[2].trim();
-            timeout = splitAction.length <= 3 ? 0 : new Integer(splitAction[3].replace("timeout=","").trim());
+            timeout = action.contains("timeout") ? new Integer(action.split("timeout=")[1].trim()) : 0;
         }
 
         if(!(selector.equals("UiSelector[backButton]") || selector.equals("UiSelector[enterButton]")

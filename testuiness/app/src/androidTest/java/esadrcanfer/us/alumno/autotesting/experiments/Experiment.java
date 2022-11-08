@@ -119,13 +119,16 @@ public abstract class Experiment {
             Log.d("ISA", "Initial evaluation: " + eval.toString());
             testCase.executeAfter();
 
-            Assert.assertTrue(eval);
-
             String[] pathSplitted = path.split("/");
             String name = pathSplitted[pathSplitted.length-1].split("\\.")[0];
 
             WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/"+experimentPath, "dataMetrics.csv");
-            dataMetrics.write(name+";"+algorithm+";No Reparation Needed");
+
+            if(!eval){
+                dataMetrics.write(name+";"+algorithm+";Assertion Failed");
+            }else {
+                dataMetrics.write(name+";"+algorithm+";No Reparation Needed");
+            }
 
         } catch (BrokenTestCaseException ex) {
 
@@ -138,7 +141,7 @@ public abstract class Experiment {
                     break;
 
                 case "GRASP Algorithm":
-                    isaReparationAlgorithm = new GRASPReparation(10, 3, 5);
+                    isaReparationAlgorithm = new GRASPReparation(500, 10, 10);
                     break;
             }
 
