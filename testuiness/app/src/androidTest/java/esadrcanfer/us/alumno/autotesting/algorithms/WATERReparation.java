@@ -27,6 +27,9 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.util.CheckpointUtil;
 import esadrcanfer.us.alumno.autotesting.util.ObjectsMapParser;
 
+/**
+ * This class contains the implementation of the WATER approach.
+ */
 public class WATERReparation {
 
     private static final String REPAIR_LOCATOR_NEEDED_PROPS = "id, text, class, description";
@@ -46,6 +49,13 @@ public class WATERReparation {
 
     }
 
+    /**
+     * This method runs the reparation of a test
+     * @param device The {@link UiDevice} instance to use during the reparation
+     * @param buggyTestCase The broken {@link TestCase} to repair
+     * @return A list of suggestions to repair the test
+     * @throws UiObjectNotFoundException
+     */
     public List<TestCase> repair(UiDevice device, TestCase buggyTestCase) throws UiObjectNotFoundException {
 
         String buggyTestCaseFileName = checkpoints.getFileName(buggyTestCheckpointId);
@@ -73,6 +83,13 @@ public class WATERReparation {
         return repairs;
     }
 
+    /**
+     * This is a static method that extracts the data needed by the WATER approach from a test execution
+     * @param device The {@link UiDevice} instance where the test will be executed
+     * @param bugTestCase The {@link TestCase} from which the data will be extracted
+     * @param fileName The name of the file where the extracted data will be stored (if null, the data will not be stored in the device)
+     * @return A dataset that stores the data extracted from the test execution
+     */
     public static List<Map<String, Map<String, String>>> getTestWATERData(UiDevice device, TestCase bugTestCase, String fileName){
 
         List<Map<String, Map<String, String>>> uiData = new ArrayList<>();

@@ -11,6 +11,7 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import org.junit.Assert;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,12 +33,20 @@ import esadrcanfer.us.alumno.autotesting.util.CheckpointUtil;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 
+
+/**
+ * <p>
+ * This class is the base for all the experiments. It contains the methods needed
+ * to configure and run a experiment.
+ *<p>
+ * Its constructor receive inside each test the test ID, its path and the algorithm to use.
+ */
 public abstract class Experiment {
 
     private String id;
     private String path;
     private String algorithm;
-    private long timeout;
+    private long timeout; // In seconds
 
     public Experiment(String id, String path, String algorithm) {
         this.id = id;
@@ -45,6 +54,14 @@ public abstract class Experiment {
         this.algorithm = algorithm;
     }
 
+    /**
+     * <p>
+     *     This static method is used to create the test data for the experiments in the {@link Parameterized.Parameters} section of a JUnit4 test class.
+     * @param tests List of tests' path to execute
+     * @param numberOfExec Number of executions for each test
+     * @param algorithms List of algorithms to use
+     * @return A prepared test suite that will be received by the constructor.
+     */
     protected static Collection<String> createTestData(List<String> tests, int numberOfExec, List<String> algorithms){
 
         List<String> testSuite = new ArrayList<>();
@@ -59,6 +76,11 @@ public abstract class Experiment {
         return checkpoints.getTestSuite();
     }
 
+    /**
+     * This method runs the experiment with the algorithm configured.
+     * @param timeout Timeout for the test execution (in seconds)
+     * @throws UiObjectNotFoundException
+     */
     protected void runTest(long timeout) throws UiObjectNotFoundException {
 
         this.timeout = timeout;

@@ -34,9 +34,9 @@ public class FullExperiment extends Experiment{
                                                                 //"Test Google Calendar/Old/TestEditEvent.txt",
                                                                 //"Test Google Calendar/Old/TestDeleteEvent.txt",
                                                                 /* GOOGLE CHROME */
-                                                                //"Test Google Chrome/Old/TestSearchGoogleChrome.txt",
-                                                                //"Test Google Chrome/Old/TestShareImageGoogleChrome.txt",
-                                                                //"Test Google Chrome/Old/TestClearHistoryGoogleChrome.txt",
+                                                                "Test Google Chrome/Old/TestSearchGoogleChrome.txt",
+                                                                "Test Google Chrome/Old/TestShareImageGoogleChrome.txt",
+                                                                "Test Google Chrome/Old/TestClearHistoryGoogleChrome.txt",
                                                                 /* GOOGLE DOCS */
                                                                 "Test Google Docs/Old/CreateGoogleDocs.txt",
                                                                 "Test Google Docs/Old/EditGoogleDocs.txt",
@@ -96,7 +96,7 @@ public class FullExperiment extends Experiment{
                                                                 "Test Play Games/Old/TestSearchGame.txt");
     private static final int numberOfExec = 4;
     private static final List<String> algorithms = Arrays.asList("WATER Algorithm", "Random Algorithm");
-    private static final int timeout = 60; // In seconds
+    private static final int timeout = 3600;
 
     @Parameterized.Parameters
     public static Collection<String> getData(){
