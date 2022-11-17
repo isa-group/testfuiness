@@ -1,13 +1,10 @@
 com.google.android.calendar
 -1
-10
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/date_picker_text_view],
+7
+BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/date_picker_button],
 BUTTON, UiSelector[CLASS=android.view.View(29)],
 GO_BACK, UiSelector[backButton],
-BUTTON, UiSelector[DESCRIPTION=Prueba ficheros],
+RELATIVE_CLICK, UiSelector[RELATIVE=50, 23],
 BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/info_action_edit_hit],
-SCROLL_TO, UiSelector[RESOURCE_ID=com.google.android.calendar:id/expanded_recycler], toElementByText=Add notification
-BUTTON, UiSelector[TEXT=Add notification],
-BUTTON, UiSelector[TEXT=Hours],
-BUTTON, UiSelector[RESOURCE_ID=com.google.android.calendar:id/done], Done
-BUTTON, UiSelector[TEXT=Save],
+TEXT, UiSelector[TEXT=Prueba ficheros test],Prueba ficheros test MODIFICADO
+BUTTON, UiSelector[TEXT=Save]

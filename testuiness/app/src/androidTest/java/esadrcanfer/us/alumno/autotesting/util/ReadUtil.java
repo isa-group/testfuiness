@@ -5,6 +5,7 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.test.uiautomator.UiDevice;
@@ -26,6 +27,7 @@ import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.EnterAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.GoBackAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.RelativeClickAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScreenshotAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
@@ -186,6 +188,7 @@ public class ReadUtil {
         String selectorValue = "";
         String value = "";
         Integer timeout = 0; // In ms
+        String coordsSelector = null;
 
         if(splitAction.length>1) {
             selector = "UiSelector["+action.split("\\[")[1].split("]")[0].trim()+"]";
@@ -201,9 +204,13 @@ public class ReadUtil {
 
         }
 
+        if(selector.startsWith("UiSelector[RELATIVE=") || selector.startsWith("UiSelector[ABSOLUTE=")){
+            coordsSelector = selector;
+        }
+
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         UiObject object = objectSelector(device, type, selectorType, selectorValue);
-        Action generatedAction = parseAction(type, device, object, seed, value, generatorType, generatorParameters);
+        Action generatedAction = parseAction(type, device, object, coordsSelector, seed, value, generatorType, generatorParameters);
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);
 
@@ -411,7 +418,7 @@ public class ReadUtil {
 
     }
 
-    private Action parseAction(String type, UiDevice device, UiObject object, Long seed, String value, String generatorType, String generatorParameters){
+    private Action parseAction(String type, UiDevice device, UiObject object, String coordsSelector, Long seed, String value, String generatorType, String generatorParameters){
 
         Action generatedAction = null;
 
@@ -454,9 +461,40 @@ public class ReadUtil {
             case "ENTER":
                 generatedAction = new EnterAction(device);
                 break;
+            case "RELATIVE_CLICK":
+                if(coordsSelector != null){
+
+                    Pair<RelativeClickAction.RelativeClickType, Pair<Integer, Integer>> coords = getCoordsConfiguration(coordsSelector);
+
+                    generatedAction = new RelativeClickAction(device, coords.second.first, coords.second.second, coords.first);
+
+                }else {
+                    Log.e("ISA", "Invalid coordinates selector!");
+                }
+                break;
 
         }
 
         return generatedAction;
+    }
+
+    private Pair<RelativeClickAction.RelativeClickType, Pair<Integer, Integer>> getCoordsConfiguration(String coordsSelector){
+
+        RelativeClickAction.RelativeClickType clickType = RelativeClickAction.RelativeClickType.ABSOLUTE;
+
+        String[] splitted = coordsSelector.split("=");
+
+        if (splitted[0].replace("UiSelector[", "").equals("RELATIVE")){
+            Log.e("LOGGER", "U HAVE CHOSEN RELATIVE");
+            clickType = RelativeClickAction.RelativeClickType.RELATIVE;
+        }else{
+            Log.e("LOGGER", "U HAVE CHOSEN ABOSULTE");
+        }
+
+        String[] valueSplitted = splitted[1].split(",");
+
+        Pair<Integer, Integer> coords = new Pair<>(Integer.parseInt(valueSplitted[0].trim()), Integer.parseInt(valueSplitted[1].replace("]", "").trim()));
+
+        return new Pair<>(clickType, coords);
     }
 }
