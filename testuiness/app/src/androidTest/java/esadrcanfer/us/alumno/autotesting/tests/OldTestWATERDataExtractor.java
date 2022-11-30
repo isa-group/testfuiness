@@ -28,7 +28,7 @@ public class OldTestWATERDataExtractor {
     @Parameterized.Parameters
     public static Collection<String> data() {
 
-        List<String> tests = Arrays.asList("Test Google Calendar/Old/TestDeleteReminder.txt");
+        List<String> tests = Arrays.asList("Test Simple Input App/WriteInputTest.txt");
 
         return tests;
     }

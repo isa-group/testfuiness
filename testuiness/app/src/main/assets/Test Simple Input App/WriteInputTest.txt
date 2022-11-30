@@ -1,0 +1,5 @@
+esadrcanfer.us.alumno.textinputapp
+-1
+1
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.textinputapp:id/button1],
+finalState.contains("Se ha pulsado el botón")

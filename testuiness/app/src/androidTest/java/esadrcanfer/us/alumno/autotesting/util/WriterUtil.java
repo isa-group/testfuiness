@@ -145,13 +145,13 @@ public class WriterUtil {
 		return logFile;
 	}
 
-	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime, String checkpointId, String algorithm){
+	public static void saveInDevice(TestCase testCase, Long seed, String fileName, Long reparationTime, String checkpointId, String algorithm, String experimentPath){
 
 		String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		WriterUtil writer = new WriterUtil(downloadsPath+"/reparation_experiment/repairedTests", fileName+"-"+algorithm+"-"+timeLog+".txt");
-		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
-		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/reparation_experiment");
+		WriterUtil writer = new WriterUtil(downloadsPath+"/"+ experimentPath +"/repairedTests", fileName+"-"+algorithm+"-"+timeLog+".txt");
+		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/"+ experimentPath, "dataMetrics.csv");
+		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/"+ experimentPath);
 		writer.write(testCase, (long) seed);
 		if(reparationTime != null){
 			int seconds = (int) (reparationTime / 1000) % 60 ;
@@ -166,12 +166,12 @@ public class WriterUtil {
 
 	}
 
-	public static void saveInDeviceWATER(List<TestCase> repairs, Long seed, String fileName, Long reparationTime, String checkpointId, String algorithm){
+	public static void saveInDeviceWATER(List<TestCase> repairs, Long seed, String fileName, Long reparationTime, String checkpointId, String algorithm, String experimentPath){
 
 		String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/reparation_experiment", "dataMetrics.csv");
-		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/reparation_experiment");
+		WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/"+ experimentPath, "dataMetrics.csv");
+		CheckpointUtil checkpointList = new CheckpointUtil(downloadsPath+"/"+ experimentPath);
 		WriterUtil testWriter = null;
 		TestCase repair;
 
@@ -179,7 +179,7 @@ public class WriterUtil {
 
 			repair = repairs.get(i);
 
-			testWriter = new WriterUtil(downloadsPath+"/reparation_experiment/repairedTests", fileName+"-"+algorithm+"-repair"+i+"-"+timeLog+".txt");
+			testWriter = new WriterUtil(downloadsPath+"/"+ experimentPath +"/repairedTests", fileName+"-"+algorithm+"-repair"+i+"-"+timeLog+".txt");
 			testWriter.write(repair, (long) seed);
 
 		}

@@ -207,7 +207,7 @@ public abstract class Experiment {
             WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/"+experimentPath, "dataMetrics.csv");
             dataMetrics.write(name+";"+algorithm+";Reparation Failed");
         }else{
-            WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime, id, algorithm);
+            WriterUtil.saveInDevice(testCase, (long) -1, name, reparationTime, id, algorithm, experimentPath);
         }
     }
 
@@ -228,7 +228,7 @@ public abstract class Experiment {
             WriterUtil dataMetrics = new WriterUtil(downloadsPath+"/"+experimentPath, "dataMetrics.csv");
             dataMetrics.write(name+";"+algorithm+";Reparation Failed");
         }else{
-            WriterUtil.saveInDeviceWATER(repairs, (long) -1, name, reparationTime, id, algorithm);
+            WriterUtil.saveInDeviceWATER(repairs, (long) -1, name, reparationTime, id, algorithm, experimentPath);
         }
     }
 
